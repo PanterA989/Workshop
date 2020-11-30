@@ -29,131 +29,51 @@ namespace Workshop.UserInterface.Forms
         /// </summary>
         private void InitializeComponent()
         {
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.panelLeft = new System.Windows.Forms.Panel();
-            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
-            this.menuToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.pomocToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.jedenToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.panelRight = new System.Windows.Forms.Panel();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.btnCall = new System.Windows.Forms.Button();
             this.btnHistory = new System.Windows.Forms.Button();
             this.btnFinish = new System.Windows.Forms.Button();
             this.btnEdit = new System.Windows.Forms.Button();
             this.btnAdd = new System.Windows.Forms.Button();
-            this.statusStrip1 = new System.Windows.Forms.StatusStrip();
-            this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
+            this.statusStrip = new System.Windows.Forms.StatusStrip();
+            this.tsslVersion = new System.Windows.Forms.ToolStripStatusLabel();
             this.menuStrip = new System.Windows.Forms.MenuStrip();
-            this.panelTop = new System.Windows.Forms.Panel();
             this.placeholderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.placeholderToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.placeholderToolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
             this.placeholderToolStripMenuItem3 = new System.Windows.Forms.ToolStripMenuItem();
-            this.placeholderToolStripMenuItem4 = new System.Windows.Forms.ToolStripMenuItem();
-            this.placeholderToolStripMenuItem5 = new System.Windows.Forms.ToolStripMenuItem();
-            this.placeholderToolStripMenuItem6 = new System.Windows.Forms.ToolStripMenuItem();
-            this.placeholderToolStripMenuItem7 = new System.Windows.Forms.ToolStripMenuItem();
-            this.placeholderToolStripMenuItem8 = new System.Windows.Forms.ToolStripMenuItem();
-            this.placeholderToolStripMenuItem9 = new System.Windows.Forms.ToolStripMenuItem();
-            this.placeholderToolStripMenuItem10 = new System.Windows.Forms.ToolStripMenuItem();
-            this.placeholderToolStripMenuItem11 = new System.Windows.Forms.ToolStripMenuItem();
-            this.placeholderToolStripMenuItem12 = new System.Windows.Forms.ToolStripMenuItem();
-            this.placeholderToolStripMenuItem13 = new System.Windows.Forms.ToolStripMenuItem();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
-            this.panelLeft.SuspendLayout();
-            this.menuStrip1.SuspendLayout();
-            this.panelRight.SuspendLayout();
-            this.statusStrip1.SuspendLayout();
+            this.dgvData = new System.Windows.Forms.DataGridView();
+            this.panelContent = new System.Windows.Forms.Panel();
+            this.panelData = new System.Windows.Forms.Panel();
+            this.panelControl = new System.Windows.Forms.Panel();
+            this.statusStrip.SuspendLayout();
             this.menuStrip.SuspendLayout();
-            this.panelTop.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvData)).BeginInit();
+            this.panelContent.SuspendLayout();
+            this.panelData.SuspendLayout();
+            this.panelControl.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // dataGridView1
-            // 
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dataGridView1.Location = new System.Drawing.Point(0, 24);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.Size = new System.Drawing.Size(1080, 521);
-            this.dataGridView1.TabIndex = 0;
-            // 
-            // panelLeft
-            // 
-            this.panelLeft.Controls.Add(this.dataGridView1);
-            this.panelLeft.Controls.Add(this.menuStrip1);
-            this.panelLeft.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panelLeft.Location = new System.Drawing.Point(0, 0);
-            this.panelLeft.Name = "panelLeft";
-            this.panelLeft.Size = new System.Drawing.Size(1080, 545);
-            this.panelLeft.TabIndex = 3;
-            // 
-            // menuStrip1
-            // 
-            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.menuToolStripMenuItem,
-            this.pomocToolStripMenuItem});
-            this.menuStrip1.Location = new System.Drawing.Point(0, 0);
-            this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(1080, 24);
-            this.menuStrip1.TabIndex = 1;
-            this.menuStrip1.Text = "menuStrip1";
-            // 
-            // menuToolStripMenuItem
-            // 
-            this.menuToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.jedenToolStripMenuItem});
-            this.menuToolStripMenuItem.Name = "menuToolStripMenuItem";
-            this.menuToolStripMenuItem.Size = new System.Drawing.Size(50, 20);
-            this.menuToolStripMenuItem.Text = "Menu";
-            // 
-            // pomocToolStripMenuItem
-            // 
-            this.pomocToolStripMenuItem.Name = "pomocToolStripMenuItem";
-            this.pomocToolStripMenuItem.Size = new System.Drawing.Size(57, 20);
-            this.pomocToolStripMenuItem.Text = "Pomoc";
-            // 
-            // jedenToolStripMenuItem
-            // 
-            this.jedenToolStripMenuItem.Name = "jedenToolStripMenuItem";
-            this.jedenToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.jedenToolStripMenuItem.Text = "jeden";
-            // 
-            // panelRight
-            // 
-            this.panelRight.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panelRight.Controls.Add(this.btnCall);
-            this.panelRight.Controls.Add(this.btnHistory);
-            this.panelRight.Controls.Add(this.btnFinish);
-            this.panelRight.Controls.Add(this.btnEdit);
-            this.panelRight.Controls.Add(this.btnAdd);
-            this.panelRight.Controls.Add(this.statusStrip1);
-            this.panelRight.Dock = System.Windows.Forms.DockStyle.Right;
-            this.panelRight.Location = new System.Drawing.Point(880, 24);
-            this.panelRight.Name = "panelRight";
-            this.panelRight.Size = new System.Drawing.Size(200, 521);
-            this.panelRight.TabIndex = 3;
             // 
             // btnCall
             // 
-            this.btnCall.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.btnCall.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnCall.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.btnCall.Image = global::Workshop.UserInterface.Properties.Resources.phone64;
             this.btnCall.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnCall.Location = new System.Drawing.Point(0, 417);
+            this.btnCall.Location = new System.Drawing.Point(7, 430);
             this.btnCall.Name = "btnCall";
             this.btnCall.Padding = new System.Windows.Forms.Padding(20, 0, 0, 0);
-            this.btnCall.Size = new System.Drawing.Size(198, 80);
+            this.btnCall.Size = new System.Drawing.Size(200, 80);
             this.btnCall.TabIndex = 4;
             this.btnCall.Text = "Zadzwoń";
             this.btnCall.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnCall.UseVisualStyleBackColor = true;
+            this.btnCall.Click += new System.EventHandler(this.btnCall_Click);
             // 
             // btnHistory
             // 
             this.btnHistory.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.btnHistory.Image = global::Workshop.UserInterface.Properties.Resources.history64;
             this.btnHistory.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnHistory.Location = new System.Drawing.Point(-2, 257);
+            this.btnHistory.Location = new System.Drawing.Point(6, 261);
             this.btnHistory.Name = "btnHistory";
             this.btnHistory.Padding = new System.Windows.Forms.Padding(20, 0, 0, 0);
             this.btnHistory.Size = new System.Drawing.Size(200, 80);
@@ -167,7 +87,7 @@ namespace Workshop.UserInterface.Forms
             this.btnFinish.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.btnFinish.Image = global::Workshop.UserInterface.Properties.Resources.checked64;
             this.btnFinish.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnFinish.Location = new System.Drawing.Point(-2, 171);
+            this.btnFinish.Location = new System.Drawing.Point(6, 175);
             this.btnFinish.Name = "btnFinish";
             this.btnFinish.Padding = new System.Windows.Forms.Padding(20, 0, 0, 0);
             this.btnFinish.Size = new System.Drawing.Size(200, 80);
@@ -181,7 +101,7 @@ namespace Workshop.UserInterface.Forms
             this.btnEdit.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.btnEdit.Image = global::Workshop.UserInterface.Properties.Resources.edit64;
             this.btnEdit.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnEdit.Location = new System.Drawing.Point(-2, 85);
+            this.btnEdit.Location = new System.Drawing.Point(6, 89);
             this.btnEdit.Name = "btnEdit";
             this.btnEdit.Padding = new System.Windows.Forms.Padding(20, 0, 0, 0);
             this.btnEdit.Size = new System.Drawing.Size(200, 80);
@@ -195,7 +115,7 @@ namespace Workshop.UserInterface.Forms
             this.btnAdd.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.btnAdd.Image = global::Workshop.UserInterface.Properties.Resources.add64;
             this.btnAdd.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnAdd.Location = new System.Drawing.Point(-2, -1);
+            this.btnAdd.Location = new System.Drawing.Point(6, 3);
             this.btnAdd.Name = "btnAdd";
             this.btnAdd.Padding = new System.Windows.Forms.Padding(20, 0, 0, 0);
             this.btnAdd.Size = new System.Drawing.Size(200, 80);
@@ -204,206 +124,128 @@ namespace Workshop.UserInterface.Forms
             this.btnAdd.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnAdd.UseVisualStyleBackColor = true;
             // 
-            // statusStrip1
+            // statusStrip
             // 
-            this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripStatusLabel1});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 497);
-            this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(198, 22);
-            this.statusStrip1.TabIndex = 5;
-            this.statusStrip1.Text = "statusStrip1";
+            this.statusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tsslVersion});
+            this.statusStrip.Location = new System.Drawing.Point(0, 539);
+            this.statusStrip.Name = "statusStrip";
+            this.statusStrip.Size = new System.Drawing.Size(1084, 22);
+            this.statusStrip.TabIndex = 5;
+            this.statusStrip.Text = "statusStrip1";
             // 
-            // toolStripStatusLabel1
+            // tsslVersion
             // 
-            this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
-            this.toolStripStatusLabel1.Size = new System.Drawing.Size(183, 17);
-            this.toolStripStatusLabel1.Spring = true;
-            this.toolStripStatusLabel1.Text = "Wersja: 1.0.0";
-            this.toolStripStatusLabel1.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.tsslVersion.Name = "tsslVersion";
+            this.tsslVersion.Size = new System.Drawing.Size(1069, 17);
+            this.tsslVersion.Spring = true;
+            this.tsslVersion.Text = "Wersja: 1.0.0";
+            this.tsslVersion.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // menuStrip
             // 
-            this.menuStrip.Dock = System.Windows.Forms.DockStyle.Fill;
             this.menuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.placeholderToolStripMenuItem,
-            this.placeholderToolStripMenuItem3,
-            this.placeholderToolStripMenuItem6,
-            this.placeholderToolStripMenuItem7});
+            this.placeholderToolStripMenuItem3});
             this.menuStrip.Location = new System.Drawing.Point(0, 0);
             this.menuStrip.Name = "menuStrip";
-            this.menuStrip.Size = new System.Drawing.Size(1080, 24);
+            this.menuStrip.Size = new System.Drawing.Size(1084, 24);
             this.menuStrip.TabIndex = 0;
             this.menuStrip.Text = "menuStrip2";
             // 
-            // panelTop
-            // 
-            this.panelTop.Controls.Add(this.menuStrip);
-            this.panelTop.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panelTop.Location = new System.Drawing.Point(0, 0);
-            this.panelTop.Name = "panelTop";
-            this.panelTop.Size = new System.Drawing.Size(1080, 24);
-            this.panelTop.TabIndex = 2;
-            // 
             // placeholderToolStripMenuItem
             // 
-            this.placeholderToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.placeholderToolStripMenuItem1,
-            this.placeholderToolStripMenuItem2});
             this.placeholderToolStripMenuItem.Name = "placeholderToolStripMenuItem";
             this.placeholderToolStripMenuItem.Size = new System.Drawing.Size(81, 20);
             this.placeholderToolStripMenuItem.Text = "Placeholder";
             // 
-            // placeholderToolStripMenuItem1
-            // 
-            this.placeholderToolStripMenuItem1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.placeholderToolStripMenuItem9,
-            this.placeholderToolStripMenuItem10});
-            this.placeholderToolStripMenuItem1.Image = global::Workshop.UserInterface.Properties.Resources.add24;
-            this.placeholderToolStripMenuItem1.Name = "placeholderToolStripMenuItem1";
-            this.placeholderToolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
-            this.placeholderToolStripMenuItem1.Text = "Placeholder";
-            // 
-            // placeholderToolStripMenuItem2
-            // 
-            this.placeholderToolStripMenuItem2.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.placeholderToolStripMenuItem11,
-            this.placeholderToolStripMenuItem12,
-            this.placeholderToolStripMenuItem13});
-            this.placeholderToolStripMenuItem2.Name = "placeholderToolStripMenuItem2";
-            this.placeholderToolStripMenuItem2.Size = new System.Drawing.Size(180, 22);
-            this.placeholderToolStripMenuItem2.Text = "Placeholder";
-            // 
             // placeholderToolStripMenuItem3
             // 
-            this.placeholderToolStripMenuItem3.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.placeholderToolStripMenuItem4,
-            this.placeholderToolStripMenuItem5});
             this.placeholderToolStripMenuItem3.Name = "placeholderToolStripMenuItem3";
             this.placeholderToolStripMenuItem3.Size = new System.Drawing.Size(81, 20);
             this.placeholderToolStripMenuItem3.Text = "Placeholder";
             // 
-            // placeholderToolStripMenuItem4
+            // dgvData
             // 
-            this.placeholderToolStripMenuItem4.Name = "placeholderToolStripMenuItem4";
-            this.placeholderToolStripMenuItem4.Size = new System.Drawing.Size(180, 22);
-            this.placeholderToolStripMenuItem4.Text = "Placeholder";
+            this.dgvData.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvData.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dgvData.Location = new System.Drawing.Point(0, 0);
+            this.dgvData.Name = "dgvData";
+            this.dgvData.Size = new System.Drawing.Size(869, 515);
+            this.dgvData.TabIndex = 0;
             // 
-            // placeholderToolStripMenuItem5
+            // panelContent
             // 
-            this.placeholderToolStripMenuItem5.Name = "placeholderToolStripMenuItem5";
-            this.placeholderToolStripMenuItem5.Size = new System.Drawing.Size(180, 22);
-            this.placeholderToolStripMenuItem5.Text = "Placeholder";
+            this.panelContent.Controls.Add(this.panelData);
+            this.panelContent.Controls.Add(this.panelControl);
+            this.panelContent.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panelContent.Location = new System.Drawing.Point(0, 24);
+            this.panelContent.Name = "panelContent";
+            this.panelContent.Size = new System.Drawing.Size(1084, 515);
+            this.panelContent.TabIndex = 0;
             // 
-            // placeholderToolStripMenuItem6
+            // panelData
             // 
-            this.placeholderToolStripMenuItem6.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.placeholderToolStripMenuItem8});
-            this.placeholderToolStripMenuItem6.Name = "placeholderToolStripMenuItem6";
-            this.placeholderToolStripMenuItem6.Size = new System.Drawing.Size(81, 20);
-            this.placeholderToolStripMenuItem6.Text = "Placeholder";
+            this.panelData.Controls.Add(this.dgvData);
+            this.panelData.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panelData.Location = new System.Drawing.Point(0, 0);
+            this.panelData.Name = "panelData";
+            this.panelData.Size = new System.Drawing.Size(869, 515);
+            this.panelData.TabIndex = 5;
             // 
-            // placeholderToolStripMenuItem7
+            // panelControl
             // 
-            this.placeholderToolStripMenuItem7.Name = "placeholderToolStripMenuItem7";
-            this.placeholderToolStripMenuItem7.Size = new System.Drawing.Size(81, 20);
-            this.placeholderToolStripMenuItem7.Text = "Placeholder";
-            // 
-            // placeholderToolStripMenuItem8
-            // 
-            this.placeholderToolStripMenuItem8.Name = "placeholderToolStripMenuItem8";
-            this.placeholderToolStripMenuItem8.Size = new System.Drawing.Size(180, 22);
-            this.placeholderToolStripMenuItem8.Text = "Placeholder";
-            // 
-            // placeholderToolStripMenuItem9
-            // 
-            this.placeholderToolStripMenuItem9.Name = "placeholderToolStripMenuItem9";
-            this.placeholderToolStripMenuItem9.Size = new System.Drawing.Size(180, 22);
-            this.placeholderToolStripMenuItem9.Text = "Placeholder";
-            // 
-            // placeholderToolStripMenuItem10
-            // 
-            this.placeholderToolStripMenuItem10.Name = "placeholderToolStripMenuItem10";
-            this.placeholderToolStripMenuItem10.Size = new System.Drawing.Size(180, 22);
-            this.placeholderToolStripMenuItem10.Text = "Placeholder";
-            // 
-            // placeholderToolStripMenuItem11
-            // 
-            this.placeholderToolStripMenuItem11.Name = "placeholderToolStripMenuItem11";
-            this.placeholderToolStripMenuItem11.Size = new System.Drawing.Size(180, 22);
-            this.placeholderToolStripMenuItem11.Text = "Placeholder";
-            // 
-            // placeholderToolStripMenuItem12
-            // 
-            this.placeholderToolStripMenuItem12.Name = "placeholderToolStripMenuItem12";
-            this.placeholderToolStripMenuItem12.Size = new System.Drawing.Size(180, 22);
-            this.placeholderToolStripMenuItem12.Text = "Placeholder";
-            // 
-            // placeholderToolStripMenuItem13
-            // 
-            this.placeholderToolStripMenuItem13.Name = "placeholderToolStripMenuItem13";
-            this.placeholderToolStripMenuItem13.Size = new System.Drawing.Size(180, 22);
-            this.placeholderToolStripMenuItem13.Text = "Placeholder";
+            this.panelControl.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panelControl.Controls.Add(this.btnAdd);
+            this.panelControl.Controls.Add(this.btnEdit);
+            this.panelControl.Controls.Add(this.btnFinish);
+            this.panelControl.Controls.Add(this.btnHistory);
+            this.panelControl.Controls.Add(this.btnCall);
+            this.panelControl.Dock = System.Windows.Forms.DockStyle.Right;
+            this.panelControl.Location = new System.Drawing.Point(869, 0);
+            this.panelControl.Name = "panelControl";
+            this.panelControl.Size = new System.Drawing.Size(215, 515);
+            this.panelControl.TabIndex = 6;
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1080, 545);
-            this.Controls.Add(this.panelRight);
-            this.Controls.Add(this.panelTop);
-            this.Controls.Add(this.panelLeft);
-            this.MainMenuStrip = this.menuStrip1;
-            this.MinimumSize = new System.Drawing.Size(1096, 584);
+            this.ClientSize = new System.Drawing.Size(1084, 561);
+            this.Controls.Add(this.panelContent);
+            this.Controls.Add(this.menuStrip);
+            this.Controls.Add(this.statusStrip);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.MinimumSize = new System.Drawing.Size(1100, 600);
             this.Name = "MainForm";
-            this.Text = "MainForm";
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
-            this.panelLeft.ResumeLayout(false);
-            this.panelLeft.PerformLayout();
-            this.menuStrip1.ResumeLayout(false);
-            this.menuStrip1.PerformLayout();
-            this.panelRight.ResumeLayout(false);
-            this.panelRight.PerformLayout();
-            this.statusStrip1.ResumeLayout(false);
-            this.statusStrip1.PerformLayout();
+            this.Text = "Mój e-warsztat";
+            this.statusStrip.ResumeLayout(false);
+            this.statusStrip.PerformLayout();
             this.menuStrip.ResumeLayout(false);
             this.menuStrip.PerformLayout();
-            this.panelTop.ResumeLayout(false);
-            this.panelTop.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvData)).EndInit();
+            this.panelContent.ResumeLayout(false);
+            this.panelData.ResumeLayout(false);
+            this.panelControl.ResumeLayout(false);
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
         #endregion
-        private System.Windows.Forms.DataGridView dataGridView1;
-        private System.Windows.Forms.Panel panelLeft;
-        private System.Windows.Forms.MenuStrip menuStrip1;
-        private System.Windows.Forms.ToolStripMenuItem menuToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem jedenToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem pomocToolStripMenuItem;
-        private System.Windows.Forms.Panel panelRight;
         private System.Windows.Forms.Button btnCall;
         private System.Windows.Forms.Button btnHistory;
         private System.Windows.Forms.Button btnFinish;
         private System.Windows.Forms.Button btnEdit;
         private System.Windows.Forms.Button btnAdd;
-        private System.Windows.Forms.StatusStrip statusStrip1;
-        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1;
+        private System.Windows.Forms.StatusStrip statusStrip;
+        private System.Windows.Forms.ToolStripStatusLabel tsslVersion;
         private System.Windows.Forms.MenuStrip menuStrip;
-        private System.Windows.Forms.Panel panelTop;
         private System.Windows.Forms.ToolStripMenuItem placeholderToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem placeholderToolStripMenuItem1;
-        private System.Windows.Forms.ToolStripMenuItem placeholderToolStripMenuItem9;
-        private System.Windows.Forms.ToolStripMenuItem placeholderToolStripMenuItem10;
-        private System.Windows.Forms.ToolStripMenuItem placeholderToolStripMenuItem2;
-        private System.Windows.Forms.ToolStripMenuItem placeholderToolStripMenuItem11;
-        private System.Windows.Forms.ToolStripMenuItem placeholderToolStripMenuItem12;
         private System.Windows.Forms.ToolStripMenuItem placeholderToolStripMenuItem3;
-        private System.Windows.Forms.ToolStripMenuItem placeholderToolStripMenuItem4;
-        private System.Windows.Forms.ToolStripMenuItem placeholderToolStripMenuItem5;
-        private System.Windows.Forms.ToolStripMenuItem placeholderToolStripMenuItem6;
-        private System.Windows.Forms.ToolStripMenuItem placeholderToolStripMenuItem8;
-        private System.Windows.Forms.ToolStripMenuItem placeholderToolStripMenuItem7;
-        private System.Windows.Forms.ToolStripMenuItem placeholderToolStripMenuItem13;
+        private System.Windows.Forms.DataGridView dgvData;
+        private System.Windows.Forms.Panel panelContent;
+        private System.Windows.Forms.Panel panelData;
+        private System.Windows.Forms.Panel panelControl;
     }
 }

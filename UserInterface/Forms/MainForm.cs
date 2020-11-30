@@ -24,13 +24,15 @@ namespace Workshop.UserInterface.Forms
             }
             private set { }
         }
-        static MainForm()
-        {
-            Instance = new MainForm();
-        }
+
         private MainForm()
         {
             InitializeComponent();
+        }
+
+        private void btnCall_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("Funkcja nie jest jeszcze wspierana.", "Uwaga!", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
     }
 }
