@@ -63,6 +63,16 @@ namespace Workshop.UserInterface.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap add_24 {
+            get {
+                object obj = ResourceManager.GetObject("add_24", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap add24 {
             get {
                 object obj = ResourceManager.GetObject("add24", resourceCulture);
@@ -96,6 +106,26 @@ namespace Workshop.UserInterface.Properties {
         internal static System.Drawing.Bitmap checked64 {
             get {
                 object obj = ResourceManager.GetObject("checked64", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap delete_24 {
+            get {
+                object obj = ResourceManager.GetObject("delete_24", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap dismiss_24 {
+            get {
+                object obj = ResourceManager.GetObject("dismiss_24", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

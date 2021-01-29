@@ -31,18 +31,12 @@ namespace Workshop.UserInterface.Forms
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
-            this.btnCall = new System.Windows.Forms.Button();
-            this.btnHistory = new System.Windows.Forms.Button();
-            this.btnFinish = new System.Windows.Forms.Button();
-            this.btnEdit = new System.Windows.Forms.Button();
-            this.btnAdd = new System.Windows.Forms.Button();
             this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.tsslVersion = new System.Windows.Forms.ToolStripStatusLabel();
             this.menuStrip = new System.Windows.Forms.MenuStrip();
             this.placeholderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.placeholderToolStripMenuItem3 = new System.Windows.Forms.ToolStripMenuItem();
             this.dgvTasks = new System.Windows.Forms.DataGridView();
-            this.bsTasks = new System.Windows.Forms.BindingSource(this.components);
             this.panelContent = new System.Windows.Forms.Panel();
             this.panelData = new System.Windows.Forms.Panel();
             this.panelControl = new System.Windows.Forms.Panel();
@@ -52,86 +46,20 @@ namespace Workshop.UserInterface.Forms
             this.startDateDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.endDateDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.statusDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.bsTasks = new System.Windows.Forms.BindingSource(this.components);
+            this.btnAdd = new System.Windows.Forms.Button();
+            this.btnEdit = new System.Windows.Forms.Button();
+            this.btnFinish = new System.Windows.Forms.Button();
+            this.btnHistory = new System.Windows.Forms.Button();
+            this.btnCall = new System.Windows.Forms.Button();
             this.statusStrip.SuspendLayout();
             this.menuStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvTasks)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.bsTasks)).BeginInit();
             this.panelContent.SuspendLayout();
             this.panelData.SuspendLayout();
             this.panelControl.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.bsTasks)).BeginInit();
             this.SuspendLayout();
-            // 
-            // btnCall
-            // 
-            this.btnCall.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnCall.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.btnCall.Image = global::Workshop.UserInterface.Properties.Resources.phone64;
-            this.btnCall.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnCall.Location = new System.Drawing.Point(7, 425);
-            this.btnCall.Name = "btnCall";
-            this.btnCall.Padding = new System.Windows.Forms.Padding(20, 0, 0, 0);
-            this.btnCall.Size = new System.Drawing.Size(200, 80);
-            this.btnCall.TabIndex = 4;
-            this.btnCall.Text = "Zadzwoń";
-            this.btnCall.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.btnCall.UseVisualStyleBackColor = true;
-            this.btnCall.Click += new System.EventHandler(this.btnCall_Click);
-            // 
-            // btnHistory
-            // 
-            this.btnHistory.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.btnHistory.Image = global::Workshop.UserInterface.Properties.Resources.history64;
-            this.btnHistory.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnHistory.Location = new System.Drawing.Point(7, 266);
-            this.btnHistory.Name = "btnHistory";
-            this.btnHistory.Padding = new System.Windows.Forms.Padding(20, 0, 0, 0);
-            this.btnHistory.Size = new System.Drawing.Size(200, 80);
-            this.btnHistory.TabIndex = 3;
-            this.btnHistory.Text = "Historia zleceń";
-            this.btnHistory.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.btnHistory.UseVisualStyleBackColor = true;
-            // 
-            // btnFinish
-            // 
-            this.btnFinish.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.btnFinish.Image = global::Workshop.UserInterface.Properties.Resources.checked64;
-            this.btnFinish.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnFinish.Location = new System.Drawing.Point(7, 180);
-            this.btnFinish.Name = "btnFinish";
-            this.btnFinish.Padding = new System.Windows.Forms.Padding(20, 0, 0, 0);
-            this.btnFinish.Size = new System.Drawing.Size(200, 80);
-            this.btnFinish.TabIndex = 2;
-            this.btnFinish.Text = "Zakończ";
-            this.btnFinish.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.btnFinish.UseVisualStyleBackColor = true;
-            // 
-            // btnEdit
-            // 
-            this.btnEdit.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.btnEdit.Image = global::Workshop.UserInterface.Properties.Resources.edit64;
-            this.btnEdit.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnEdit.Location = new System.Drawing.Point(7, 94);
-            this.btnEdit.Name = "btnEdit";
-            this.btnEdit.Padding = new System.Windows.Forms.Padding(20, 0, 0, 0);
-            this.btnEdit.Size = new System.Drawing.Size(200, 80);
-            this.btnEdit.TabIndex = 1;
-            this.btnEdit.Text = "Edytuj";
-            this.btnEdit.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.btnEdit.UseVisualStyleBackColor = true;
-            // 
-            // btnAdd
-            // 
-            this.btnAdd.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.btnAdd.Image = global::Workshop.UserInterface.Properties.Resources.add64;
-            this.btnAdd.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnAdd.Location = new System.Drawing.Point(7, 8);
-            this.btnAdd.Name = "btnAdd";
-            this.btnAdd.Padding = new System.Windows.Forms.Padding(20, 0, 0, 0);
-            this.btnAdd.Size = new System.Drawing.Size(200, 80);
-            this.btnAdd.TabIndex = 0;
-            this.btnAdd.Text = "Dodaj";
-            this.btnAdd.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.btnAdd.UseVisualStyleBackColor = true;
             // 
             // statusStrip
             // 
@@ -199,10 +127,6 @@ namespace Workshop.UserInterface.Forms
             this.dgvTasks.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvTasks.Size = new System.Drawing.Size(869, 515);
             this.dgvTasks.TabIndex = 0;
-            // 
-            // bsTasks
-            // 
-            this.bsTasks.DataSource = typeof(Workshop.DataAccessLayer.ViewModel.TaskViewModel);
             // 
             // panelContent
             // 
@@ -286,6 +210,83 @@ namespace Workshop.UserInterface.Forms
             this.statusDataGridViewTextBoxColumn.ReadOnly = true;
             this.statusDataGridViewTextBoxColumn.ToolTipText = "Status zlecenia";
             // 
+            // bsTasks
+            // 
+            this.bsTasks.DataSource = typeof(Workshop.DataAccessLayer.ViewModel.TaskViewModel);
+            // 
+            // btnAdd
+            // 
+            this.btnAdd.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.btnAdd.Image = global::Workshop.UserInterface.Properties.Resources.add64;
+            this.btnAdd.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnAdd.Location = new System.Drawing.Point(7, 8);
+            this.btnAdd.Name = "btnAdd";
+            this.btnAdd.Padding = new System.Windows.Forms.Padding(20, 0, 0, 0);
+            this.btnAdd.Size = new System.Drawing.Size(200, 80);
+            this.btnAdd.TabIndex = 0;
+            this.btnAdd.Text = "Dodaj";
+            this.btnAdd.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.btnAdd.UseVisualStyleBackColor = true;
+            this.btnAdd.Click += new System.EventHandler(this.btnAdd_Click);
+            // 
+            // btnEdit
+            // 
+            this.btnEdit.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.btnEdit.Image = global::Workshop.UserInterface.Properties.Resources.edit64;
+            this.btnEdit.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnEdit.Location = new System.Drawing.Point(7, 94);
+            this.btnEdit.Name = "btnEdit";
+            this.btnEdit.Padding = new System.Windows.Forms.Padding(20, 0, 0, 0);
+            this.btnEdit.Size = new System.Drawing.Size(200, 80);
+            this.btnEdit.TabIndex = 1;
+            this.btnEdit.Text = "Edytuj";
+            this.btnEdit.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.btnEdit.UseVisualStyleBackColor = true;
+            // 
+            // btnFinish
+            // 
+            this.btnFinish.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.btnFinish.Image = global::Workshop.UserInterface.Properties.Resources.checked64;
+            this.btnFinish.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnFinish.Location = new System.Drawing.Point(7, 180);
+            this.btnFinish.Name = "btnFinish";
+            this.btnFinish.Padding = new System.Windows.Forms.Padding(20, 0, 0, 0);
+            this.btnFinish.Size = new System.Drawing.Size(200, 80);
+            this.btnFinish.TabIndex = 2;
+            this.btnFinish.Text = "Zakończ";
+            this.btnFinish.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.btnFinish.UseVisualStyleBackColor = true;
+            // 
+            // btnHistory
+            // 
+            this.btnHistory.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.btnHistory.Image = global::Workshop.UserInterface.Properties.Resources.history64;
+            this.btnHistory.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnHistory.Location = new System.Drawing.Point(7, 266);
+            this.btnHistory.Name = "btnHistory";
+            this.btnHistory.Padding = new System.Windows.Forms.Padding(20, 0, 0, 0);
+            this.btnHistory.Size = new System.Drawing.Size(200, 80);
+            this.btnHistory.TabIndex = 3;
+            this.btnHistory.Text = "Historia zleceń";
+            this.btnHistory.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.btnHistory.UseVisualStyleBackColor = true;
+            // 
+            // btnCall
+            // 
+            this.btnCall.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnCall.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.btnCall.Image = global::Workshop.UserInterface.Properties.Resources.phone64;
+            this.btnCall.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnCall.Location = new System.Drawing.Point(7, 425);
+            this.btnCall.Name = "btnCall";
+            this.btnCall.Padding = new System.Windows.Forms.Padding(20, 0, 0, 0);
+            this.btnCall.Size = new System.Drawing.Size(200, 80);
+            this.btnCall.TabIndex = 4;
+            this.btnCall.Text = "Zadzwoń";
+            this.btnCall.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.btnCall.UseVisualStyleBackColor = true;
+            this.btnCall.Click += new System.EventHandler(this.btnCall_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -303,10 +304,10 @@ namespace Workshop.UserInterface.Forms
             this.menuStrip.ResumeLayout(false);
             this.menuStrip.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvTasks)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.bsTasks)).EndInit();
             this.panelContent.ResumeLayout(false);
             this.panelData.ResumeLayout(false);
             this.panelControl.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.bsTasks)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 

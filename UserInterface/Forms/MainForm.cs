@@ -180,5 +180,10 @@ namespace Workshop.UserInterface.Forms
             MessageBox.Show("Funkcja nie jest jeszcze wspierana.", "Uwaga!", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
+        private void btnAdd_Click(object sender, EventArgs e)
+        {
+            AddTaskForm addTaskForm = new AddTaskForm();
+            addTaskForm.Show();
+        }
     }
 }
