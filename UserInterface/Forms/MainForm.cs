@@ -183,7 +183,13 @@ namespace Workshop.UserInterface.Forms
         private void btnAdd_Click(object sender, EventArgs e)
         {
             AddTaskForm addTaskForm = new AddTaskForm();
-            addTaskForm.Show();
+            addTaskForm.ShowDialog();
+        }
+
+        private void btnEdit_Click(object sender, EventArgs e)
+        {
+            EditTaskForm editTaskForm = new EditTaskForm();
+            editTaskForm.ShowDialog();
         }
     }
 }

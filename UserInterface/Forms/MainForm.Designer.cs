@@ -242,6 +242,7 @@ namespace Workshop.UserInterface.Forms
             this.btnEdit.Text = "Edytuj";
             this.btnEdit.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnEdit.UseVisualStyleBackColor = true;
+            this.btnEdit.Click += new System.EventHandler(this.btnEdit_Click);
             // 
             // btnFinish
             // 
