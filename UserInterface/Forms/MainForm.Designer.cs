@@ -37,9 +37,6 @@ namespace Workshop.UserInterface.Forms
             this.placeholderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.placeholderToolStripMenuItem3 = new System.Windows.Forms.ToolStripMenuItem();
             this.dgvTasks = new System.Windows.Forms.DataGridView();
-            this.panelContent = new System.Windows.Forms.Panel();
-            this.panelData = new System.Windows.Forms.Panel();
-            this.panelControl = new System.Windows.Forms.Panel();
             this.idDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.bikeManufacturerDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.bikeModelDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -47,6 +44,9 @@ namespace Workshop.UserInterface.Forms
             this.endDateDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.statusDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.bsTasks = new System.Windows.Forms.BindingSource(this.components);
+            this.panelContent = new System.Windows.Forms.Panel();
+            this.panelData = new System.Windows.Forms.Panel();
+            this.panelControl = new System.Windows.Forms.Panel();
             this.btnAdd = new System.Windows.Forms.Button();
             this.btnEdit = new System.Windows.Forms.Button();
             this.btnFinish = new System.Windows.Forms.Button();
@@ -55,10 +55,10 @@ namespace Workshop.UserInterface.Forms
             this.statusStrip.SuspendLayout();
             this.menuStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvTasks)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.bsTasks)).BeginInit();
             this.panelContent.SuspendLayout();
             this.panelData.SuspendLayout();
             this.panelControl.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.bsTasks)).BeginInit();
             this.SuspendLayout();
             // 
             // statusStrip
@@ -127,40 +127,7 @@ namespace Workshop.UserInterface.Forms
             this.dgvTasks.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvTasks.Size = new System.Drawing.Size(869, 515);
             this.dgvTasks.TabIndex = 0;
-            // 
-            // panelContent
-            // 
-            this.panelContent.Controls.Add(this.panelData);
-            this.panelContent.Controls.Add(this.panelControl);
-            this.panelContent.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panelContent.Location = new System.Drawing.Point(0, 24);
-            this.panelContent.Name = "panelContent";
-            this.panelContent.Size = new System.Drawing.Size(1084, 515);
-            this.panelContent.TabIndex = 0;
-            // 
-            // panelData
-            // 
-            this.panelData.Controls.Add(this.dgvTasks);
-            this.panelData.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panelData.Location = new System.Drawing.Point(0, 0);
-            this.panelData.Name = "panelData";
-            this.panelData.Size = new System.Drawing.Size(869, 515);
-            this.panelData.TabIndex = 5;
-            // 
-            // panelControl
-            // 
-            this.panelControl.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panelControl.Controls.Add(this.btnAdd);
-            this.panelControl.Controls.Add(this.btnEdit);
-            this.panelControl.Controls.Add(this.btnFinish);
-            this.panelControl.Controls.Add(this.btnHistory);
-            this.panelControl.Controls.Add(this.btnCall);
-            this.panelControl.Dock = System.Windows.Forms.DockStyle.Right;
-            this.panelControl.Location = new System.Drawing.Point(869, 0);
-            this.panelControl.Name = "panelControl";
-            this.panelControl.Padding = new System.Windows.Forms.Padding(0, 5, 0, 5);
-            this.panelControl.Size = new System.Drawing.Size(215, 515);
-            this.panelControl.TabIndex = 6;
+            this.dgvTasks.CellContentDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvTasks_CellContentDoubleClick);
             // 
             // idDataGridViewTextBoxColumn
             // 
@@ -213,6 +180,40 @@ namespace Workshop.UserInterface.Forms
             // bsTasks
             // 
             this.bsTasks.DataSource = typeof(Workshop.DataAccessLayer.ViewModel.TaskViewModel);
+            // 
+            // panelContent
+            // 
+            this.panelContent.Controls.Add(this.panelData);
+            this.panelContent.Controls.Add(this.panelControl);
+            this.panelContent.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panelContent.Location = new System.Drawing.Point(0, 24);
+            this.panelContent.Name = "panelContent";
+            this.panelContent.Size = new System.Drawing.Size(1084, 515);
+            this.panelContent.TabIndex = 0;
+            // 
+            // panelData
+            // 
+            this.panelData.Controls.Add(this.dgvTasks);
+            this.panelData.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panelData.Location = new System.Drawing.Point(0, 0);
+            this.panelData.Name = "panelData";
+            this.panelData.Size = new System.Drawing.Size(869, 515);
+            this.panelData.TabIndex = 5;
+            // 
+            // panelControl
+            // 
+            this.panelControl.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panelControl.Controls.Add(this.btnAdd);
+            this.panelControl.Controls.Add(this.btnEdit);
+            this.panelControl.Controls.Add(this.btnFinish);
+            this.panelControl.Controls.Add(this.btnHistory);
+            this.panelControl.Controls.Add(this.btnCall);
+            this.panelControl.Dock = System.Windows.Forms.DockStyle.Right;
+            this.panelControl.Location = new System.Drawing.Point(869, 0);
+            this.panelControl.Name = "panelControl";
+            this.panelControl.Padding = new System.Windows.Forms.Padding(0, 5, 0, 5);
+            this.panelControl.Size = new System.Drawing.Size(215, 515);
+            this.panelControl.TabIndex = 6;
             // 
             // btnAdd
             // 
@@ -305,10 +306,10 @@ namespace Workshop.UserInterface.Forms
             this.menuStrip.ResumeLayout(false);
             this.menuStrip.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvTasks)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.bsTasks)).EndInit();
             this.panelContent.ResumeLayout(false);
             this.panelData.ResumeLayout(false);
             this.panelControl.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.bsTasks)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 

@@ -46,23 +46,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Forms\AddTaskForm.cs">
+    <Compile Include="Forms\ManageTaskForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\AddTaskForm.Designer.cs">
-      <DependentUpon>AddTaskForm.cs</DependentUpon>
+    <Compile Include="Forms\ManageTaskForm.Designer.cs">
+      <DependentUpon>ManageTaskForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\Base\BaseAddEditForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Forms\Base\BaseAddEditForm.Designer.cs">
       <DependentUpon>BaseAddEditForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Forms\EditTaskForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\EditTaskForm.Designer.cs">
-      <DependentUpon>EditTaskForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\HistoryForm.cs">
       <SubType>Form</SubType>
@@ -79,14 +73,11 @@
     <Compile Include="Helpers\ValidatorHelper.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="Forms\AddTaskForm.resx">
-      <DependentUpon>AddTaskForm.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\ManageTaskForm.resx">
+      <DependentUpon>ManageTaskForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Base\BaseAddEditForm.resx">
       <DependentUpon>BaseAddEditForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\EditTaskForm.resx">
-      <DependentUpon>EditTaskForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\HistoryForm.resx">
       <DependentUpon>HistoryForm.cs</DependentUpon>

@@ -7,19 +7,38 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Workshop.DataAccessLayer.Models;
+using Workshop.DataAccessLayer.Models.Dictionaries;
 using Workshop.UserInterface.Forms.Base;
 using Workshop.UserInterface.Helpers;
 
 namespace Workshop.UserInterface.Forms
 {
-    public partial class AddTaskForm : BaseAddEditForm
+    public partial class ManageTaskForm : BaseAddEditForm
     {
-        public AddTaskForm()
+        private readonly int editId;
+
+        public ManageTaskForm()
         {
             InitializeComponent();
             InitializeErrorProviders();
-            InitializeData();
+
+            tlpStatus.Visible = false;
+
         }
+
+        public ManageTaskForm(TaskModel taskModel)
+        {
+            //TODO:Handle null taskMocel
+            InitializeComponent();
+            InitializeData(taskModel);
+            cbStartDateEditable.Text = "inna data";
+            buttonConfirm.Image = Properties.Resources.edit_24;
+            buttonConfirm.Text = "Edytuj";
+            this.Text = "Edycja zlecenie";
+            editId = taskModel.Id;
+        }
+
 
         private void InitializeErrorProviders()
         {
@@ -73,14 +92,41 @@ namespace Workshop.UserInterface.Forms
             return validationResult;
         }
 
-        private void InitializeData()
+        private void InitializeData(TaskModel task)
         {
-            
+            List<StatusModel> statuses = new List<StatusModel>()
+            {
+                new StatusModel("Przyjęty"),
+                new StatusModel("Do odbioru"),
+                new StatusModel("Zrealizowany"),
+                new StatusModel("Anulowany - do odbioru"),
+                new StatusModel("Anulowany - odebrany")
+            };
+
+            bsStatus.DataSource = statuses;
+
+            tbFirstName.Text = task?.FirstName;
+            tbLastName.Text = task?.LastName;
+            tbPhone.Text = task.PhoneNumber;
+            tbEmail.Text = task?.Email;
+            tbManufacturer.Text = task.BikeManufacturer;
+            tbModel.Text = task.BikeModel;
+            tbFrameNo.Text = task?.FrameNumber;
+            tbAdditionalInfo.Text = task?.AdditionalInfo;
+            dtpStartDate.Value = task.StartDate;
+            if (task.EndDate.HasValue)
+            {
+                dtpEndDate.Value = task.EndDate.Value;
+            }
+            tbCost.Text = task?.Cost.ToString();
+            tbDescription.Text = task.TaskDescription;
+            cbStatus.Text = task.Status.Value;
+
         }
 
         private void isStartDateNotToday_CheckedChanged(object sender, EventArgs e)
         {
-            if(cbStartDateNotToday.Checked == true)
+            if(cbStartDateEditable.Checked == true)
             {
                 dtpStartDate.Enabled = true;
             }
@@ -91,7 +137,7 @@ namespace Workshop.UserInterface.Forms
             }
         }
 
-        private void buttonAdd_Click(object sender, EventArgs e)
+        private void buttonConfirm_Click(object sender, EventArgs e)
         {
             Save();
         }
@@ -110,9 +156,7 @@ namespace Workshop.UserInterface.Forms
             TrimFields();
             if (ValidateControls())
             {
-                /*TODO:
-                 * Adding data to database
-                 */
+                //TODO: Adding data to database
                 MessageBox.Show("Zapisano");
             }
             else
@@ -166,7 +210,6 @@ namespace Workshop.UserInterface.Forms
         {
             ModelValidation(tbModel.Text);
         }
-
 
 
         private bool FirstNameValidation(string firstName)
@@ -245,6 +288,7 @@ namespace Workshop.UserInterface.Forms
             {
                 epStartDate.SetError(labelStartDate, null);
             }
+
             if (errors.HasFlag(Errors.EndBeforeStart))
             {
                 epEndDate.SetError(labelEndDate, "Data zakończenia przed przyjęciem.");
@@ -253,6 +297,7 @@ namespace Workshop.UserInterface.Forms
             {
                 epEndDate.SetError(labelEndDate, null);
             }
+
             if (errors != 0)
             {
                 return false;

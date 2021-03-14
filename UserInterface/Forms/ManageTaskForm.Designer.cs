@@ -1,7 +1,7 @@
 ﻿
 namespace Workshop.UserInterface.Forms
 {
-    partial class AddTaskForm
+    partial class ManageTaskForm
     {
         /// <summary>
         /// Required designer variable.
@@ -31,6 +31,10 @@ namespace Workshop.UserInterface.Forms
         {
             this.components = new System.ComponentModel.Container();
             this.tlpForm = new System.Windows.Forms.TableLayoutPanel();
+            this.tlpStatus = new System.Windows.Forms.TableLayoutPanel();
+            this.labelStatus = new System.Windows.Forms.Label();
+            this.cbStatus = new System.Windows.Forms.ComboBox();
+            this.bsStatus = new System.Windows.Forms.BindingSource(this.components);
             this.tlpLeft = new System.Windows.Forms.TableLayoutPanel();
             this.gbClient = new System.Windows.Forms.GroupBox();
             this.tlpKlient = new System.Windows.Forms.TableLayoutPanel();
@@ -58,7 +62,7 @@ namespace Workshop.UserInterface.Forms
             this.tlpTaskUpper = new System.Windows.Forms.TableLayoutPanel();
             this.labelStartDate = new System.Windows.Forms.Label();
             this.dtpStartDate = new System.Windows.Forms.DateTimePicker();
-            this.cbStartDateNotToday = new System.Windows.Forms.CheckBox();
+            this.cbStartDateEditable = new System.Windows.Forms.CheckBox();
             this.labelEndDate = new System.Windows.Forms.Label();
             this.dtpEndDate = new System.Windows.Forms.DateTimePicker();
             this.labelCost = new System.Windows.Forms.Label();
@@ -67,7 +71,7 @@ namespace Workshop.UserInterface.Forms
             this.labelDescription = new System.Windows.Forms.Label();
             this.tbDescription = new System.Windows.Forms.TextBox();
             this.tlpButtons = new System.Windows.Forms.TableLayoutPanel();
-            this.buttonAdd = new System.Windows.Forms.Button();
+            this.buttonConfirm = new System.Windows.Forms.Button();
             this.buttonCancel = new System.Windows.Forms.Button();
             this.epPhone = new System.Windows.Forms.ErrorProvider(this.components);
             this.epManufacturer = new System.Windows.Forms.ErrorProvider(this.components);
@@ -82,6 +86,8 @@ namespace Workshop.UserInterface.Forms
             this.epEndDate = new System.Windows.Forms.ErrorProvider(this.components);
             this.epCost = new System.Windows.Forms.ErrorProvider(this.components);
             this.tlpForm.SuspendLayout();
+            this.tlpStatus.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.bsStatus)).BeginInit();
             this.tlpLeft.SuspendLayout();
             this.gbClient.SuspendLayout();
             this.tlpKlient.SuspendLayout();
@@ -112,6 +118,7 @@ namespace Workshop.UserInterface.Forms
             this.tlpForm.ColumnCount = 2;
             this.tlpForm.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tlpForm.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tlpForm.Controls.Add(this.tlpStatus, 0, 1);
             this.tlpForm.Controls.Add(this.tlpLeft, 0, 0);
             this.tlpForm.Controls.Add(this.tlpRight, 1, 0);
             this.tlpForm.Controls.Add(this.tlpButtons, 1, 1);
@@ -123,6 +130,49 @@ namespace Workshop.UserInterface.Forms
             this.tlpForm.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 45F));
             this.tlpForm.Size = new System.Drawing.Size(800, 450);
             this.tlpForm.TabIndex = 0;
+            // 
+            // tlpStatus
+            // 
+            this.tlpStatus.ColumnCount = 2;
+            this.tlpStatus.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 100F));
+            this.tlpStatus.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tlpStatus.Controls.Add(this.labelStatus, 0, 0);
+            this.tlpStatus.Controls.Add(this.cbStatus, 1, 0);
+            this.tlpStatus.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tlpStatus.Location = new System.Drawing.Point(9, 408);
+            this.tlpStatus.Margin = new System.Windows.Forms.Padding(9, 3, 9, 3);
+            this.tlpStatus.Name = "tlpStatus";
+            this.tlpStatus.RowCount = 1;
+            this.tlpStatus.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tlpStatus.Size = new System.Drawing.Size(382, 39);
+            this.tlpStatus.TabIndex = 5;
+            // 
+            // labelStatus
+            // 
+            this.labelStatus.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.labelStatus.AutoSize = true;
+            this.labelStatus.Location = new System.Drawing.Point(57, 13);
+            this.labelStatus.Name = "labelStatus";
+            this.labelStatus.Size = new System.Drawing.Size(40, 13);
+            this.labelStatus.TabIndex = 0;
+            this.labelStatus.Text = "Status:";
+            // 
+            // cbStatus
+            // 
+            this.cbStatus.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.cbStatus.DataSource = this.bsStatus;
+            this.cbStatus.DisplayMember = "Value";
+            this.cbStatus.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbStatus.FormattingEnabled = true;
+            this.cbStatus.Location = new System.Drawing.Point(103, 9);
+            this.cbStatus.Name = "cbStatus";
+            this.cbStatus.Size = new System.Drawing.Size(276, 21);
+            this.cbStatus.TabIndex = 1;
+            this.cbStatus.ValueMember = "Id";
+            // 
+            // bsStatus
+            // 
+            this.bsStatus.DataSource = typeof(Workshop.DataAccessLayer.Models.Dictionaries.StatusModel);
             // 
             // tlpLeft
             // 
@@ -417,7 +467,7 @@ namespace Workshop.UserInterface.Forms
             this.tlpTaskUpper.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tlpTaskUpper.Controls.Add(this.labelStartDate, 0, 0);
             this.tlpTaskUpper.Controls.Add(this.dtpStartDate, 1, 0);
-            this.tlpTaskUpper.Controls.Add(this.cbStartDateNotToday, 0, 1);
+            this.tlpTaskUpper.Controls.Add(this.cbStartDateEditable, 0, 1);
             this.tlpTaskUpper.Controls.Add(this.labelEndDate, 0, 2);
             this.tlpTaskUpper.Controls.Add(this.dtpEndDate, 1, 2);
             this.tlpTaskUpper.Controls.Add(this.labelCost, 0, 3);
@@ -453,20 +503,20 @@ namespace Workshop.UserInterface.Forms
             this.dtpStartDate.Size = new System.Drawing.Size(270, 20);
             this.dtpStartDate.TabIndex = 10;
             // 
-            // cbStartDateNotToday
+            // cbStartDateEditable
             // 
-            this.cbStartDateNotToday.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.cbStartDateNotToday.AutoSize = true;
-            this.cbStartDateNotToday.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.cbStartDateNotToday.Location = new System.Drawing.Point(14, 35);
-            this.cbStartDateNotToday.Margin = new System.Windows.Forms.Padding(3, 0, 3, 3);
-            this.cbStartDateNotToday.Name = "cbStartDateNotToday";
-            this.cbStartDateNotToday.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.cbStartDateNotToday.Size = new System.Drawing.Size(83, 16);
-            this.cbStartDateNotToday.TabIndex = 9;
-            this.cbStartDateNotToday.Text = "inna niż dzisiaj";
-            this.cbStartDateNotToday.UseVisualStyleBackColor = true;
-            this.cbStartDateNotToday.CheckedChanged += new System.EventHandler(this.isStartDateNotToday_CheckedChanged);
+            this.cbStartDateEditable.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.cbStartDateEditable.AutoSize = true;
+            this.cbStartDateEditable.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.cbStartDateEditable.Location = new System.Drawing.Point(14, 35);
+            this.cbStartDateEditable.Margin = new System.Windows.Forms.Padding(3, 0, 3, 3);
+            this.cbStartDateEditable.Name = "cbStartDateEditable";
+            this.cbStartDateEditable.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.cbStartDateEditable.Size = new System.Drawing.Size(83, 16);
+            this.cbStartDateEditable.TabIndex = 9;
+            this.cbStartDateEditable.Text = "inna niż dzisiaj";
+            this.cbStartDateEditable.UseVisualStyleBackColor = true;
+            this.cbStartDateEditable.CheckedChanged += new System.EventHandler(this.isStartDateNotToday_CheckedChanged);
             // 
             // labelEndDate
             // 
@@ -530,9 +580,9 @@ namespace Workshop.UserInterface.Forms
             this.labelDescription.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.labelDescription.Location = new System.Drawing.Point(3, 11);
             this.labelDescription.Name = "labelDescription";
-            this.labelDescription.Size = new System.Drawing.Size(78, 13);
+            this.labelDescription.Size = new System.Drawing.Size(87, 13);
             this.labelDescription.TabIndex = 10;
-            this.labelDescription.Text = "Opis usterki:";
+            this.labelDescription.Text = "Opis zlecenia:";
             // 
             // tbDescription
             // 
@@ -553,7 +603,7 @@ namespace Workshop.UserInterface.Forms
             this.tlpButtons.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tlpButtons.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 100F));
             this.tlpButtons.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 100F));
-            this.tlpButtons.Controls.Add(this.buttonAdd, 1, 0);
+            this.tlpButtons.Controls.Add(this.buttonConfirm, 1, 0);
             this.tlpButtons.Controls.Add(this.buttonCancel, 2, 0);
             this.tlpButtons.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tlpButtons.Location = new System.Drawing.Point(403, 408);
@@ -563,22 +613,22 @@ namespace Workshop.UserInterface.Forms
             this.tlpButtons.Size = new System.Drawing.Size(394, 39);
             this.tlpButtons.TabIndex = 3;
             // 
-            // buttonAdd
+            // buttonConfirm
             // 
-            this.buttonAdd.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.buttonConfirm.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonAdd.Image = global::Workshop.UserInterface.Properties.Resources.add_24;
-            this.buttonAdd.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.buttonAdd.Location = new System.Drawing.Point(197, 3);
-            this.buttonAdd.Name = "buttonAdd";
-            this.buttonAdd.Padding = new System.Windows.Forms.Padding(0, 0, 15, 0);
-            this.buttonAdd.Size = new System.Drawing.Size(94, 33);
-            this.buttonAdd.TabIndex = 14;
-            this.buttonAdd.Text = "Dodaj";
-            this.buttonAdd.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.buttonAdd.UseVisualStyleBackColor = true;
-            this.buttonAdd.Click += new System.EventHandler(this.buttonAdd_Click);
+            this.buttonConfirm.Image = global::Workshop.UserInterface.Properties.Resources.add_24;
+            this.buttonConfirm.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.buttonConfirm.Location = new System.Drawing.Point(197, 3);
+            this.buttonConfirm.Name = "buttonConfirm";
+            this.buttonConfirm.Padding = new System.Windows.Forms.Padding(0, 0, 15, 0);
+            this.buttonConfirm.Size = new System.Drawing.Size(94, 33);
+            this.buttonConfirm.TabIndex = 14;
+            this.buttonConfirm.Text = "Dodaj";
+            this.buttonConfirm.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.buttonConfirm.UseVisualStyleBackColor = true;
+            this.buttonConfirm.Click += new System.EventHandler(this.buttonConfirm_Click);
             // 
             // buttonCancel
             // 
@@ -657,16 +707,19 @@ namespace Workshop.UserInterface.Forms
             this.epCost.BlinkStyle = System.Windows.Forms.ErrorBlinkStyle.NeverBlink;
             this.epCost.ContainerControl = this;
             // 
-            // AddTaskForm
+            // ManageTaskForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
             this.Controls.Add(this.tlpForm);
-            this.Name = "AddTaskForm";
+            this.Name = "ManageTaskForm";
             this.ShowIcon = false;
             this.Text = "Dodawanie nowego zlecenia";
             this.tlpForm.ResumeLayout(false);
+            this.tlpStatus.ResumeLayout(false);
+            this.tlpStatus.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.bsStatus)).EndInit();
             this.tlpLeft.ResumeLayout(false);
             this.gbClient.ResumeLayout(false);
             this.tlpKlient.ResumeLayout(false);
@@ -714,7 +767,7 @@ namespace Workshop.UserInterface.Forms
         private System.Windows.Forms.Label labelEmail;
         private System.Windows.Forms.TextBox tbFirstName;
         private System.Windows.Forms.TableLayoutPanel tlpButtons;
-        private System.Windows.Forms.Button buttonAdd;
+        private System.Windows.Forms.Button buttonConfirm;
         private System.Windows.Forms.Button buttonCancel;
         private System.Windows.Forms.TableLayoutPanel tlpBike;
         private System.Windows.Forms.Label labelManufacturer;
@@ -735,7 +788,7 @@ namespace Workshop.UserInterface.Forms
         private System.Windows.Forms.Label labelCost;
         private System.Windows.Forms.DateTimePicker dtpStartDate;
         private System.Windows.Forms.Label labelStartDate;
-        private System.Windows.Forms.CheckBox cbStartDateNotToday;
+        private System.Windows.Forms.CheckBox cbStartDateEditable;
         private System.Windows.Forms.TableLayoutPanel tlpTaskLower;
         private System.Windows.Forms.TextBox tbDescription;
         private System.Windows.Forms.Label labelDescription;
@@ -751,5 +804,9 @@ namespace Workshop.UserInterface.Forms
         private System.Windows.Forms.ErrorProvider epAddidtionalInfo;
         private System.Windows.Forms.ErrorProvider epEndDate;
         private System.Windows.Forms.ErrorProvider epCost;
+        private System.Windows.Forms.TableLayoutPanel tlpStatus;
+        private System.Windows.Forms.Label labelStatus;
+        private System.Windows.Forms.ComboBox cbStatus;
+        private System.Windows.Forms.BindingSource bsStatus;
     }
 }

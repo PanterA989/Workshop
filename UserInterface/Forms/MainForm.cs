@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Workshop.DataAccessLayer.DatabaseConnection;
 using Workshop.DataAccessLayer.Models;
 using Workshop.DataAccessLayer.Models.Dictionaries;
 using Workshop.DataAccessLayer.ViewModel;
@@ -15,40 +16,47 @@ namespace Workshop.UserInterface.Forms
 {
     public partial class MainForm : Form
     {
-        private static IList<TaskViewModel> fakeTasks;
+        //private List<TaskViewModel> fakeTasks;
+        private List<TaskModel> fakeTasksModel;
 
+        private List<TaskViewModel> tasksViewModels = new List<TaskViewModel>();
+        MyDbConnection db = new MyDbConnection();
 
         //Singleton
-        private static MainForm _instance = null;
-        public static MainForm Instance { 
-            get {
-                if (_instance == null)
-                {
-                    _instance = new MainForm();
-                    return _instance;
-                }
-                else return _instance;
-            }
-            private set { }
-        }
+        //private static MainForm _instance = null;
+        //public static MainForm Instance { 
+        //    get {
+        //        if (_instance == null)
+        //        {
+        //            _instance = new MainForm();
+        //            return _instance;
+        //        }
+        //        else return _instance;
+        //    }
+        //    private set { }
+        //}
 
-        private MainForm()
+        public MainForm()
         {
             InitializeComponent();
 
-            fakeTasks = GetFakeTasks();
+            dgvTasks.RowTemplate.MinimumHeight = 22;
+
+            tasksViewModels = db.GetTaskViewModels();
+            //OLD
+            //fakeTasks = GetFakeTasks();
             PrepareTasksData();
         }
 
         private void PrepareTasksData()
         {
-            bsTasks.DataSource = new BindingList<TaskViewModel>(fakeTasks);
+            bsTasks.DataSource = new BindingList<TaskViewModel>(tasksViewModels/*fakeTasks*/);
             dgvTasks.DataSource = bsTasks;
         }
 
-        private IList<TaskViewModel> GetFakeTasks()
+        private List<TaskViewModel> GetFakeTasks()
         {
-            IList<TaskModel> fakeTasksModel = new List<TaskModel>()
+            fakeTasksModel = new List<TaskModel>()
             {
                 new TaskModel()
                 {
@@ -61,7 +69,7 @@ namespace Workshop.UserInterface.Forms
                         Email = "tomasz12@gmail.com",
 
                         BikeManufacturer = "Kross",
-                        BikeModel = "Vento 2 (czarno-limonkowy) 2020 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                        BikeModel = "Vento 2 (czarno-limonkowy) 2020",
                         FrameNumber = "LX9370137430",
                         AdditionalInfo ="Serwisowany regularnie u nas",
 
@@ -156,7 +164,7 @@ namespace Workshop.UserInterface.Forms
                 }
             };
 
-            IList<TaskViewModel> fakeTasksViewModel = new List<TaskViewModel>();
+            List<TaskViewModel> fakeTasksViewModel = new List<TaskViewModel>();
 
             foreach (TaskModel fakeTaskModel in fakeTasksModel)
             {
@@ -182,14 +190,23 @@ namespace Workshop.UserInterface.Forms
 
         private void btnAdd_Click(object sender, EventArgs e)
         {
-            AddTaskForm addTaskForm = new AddTaskForm();
+            ManageTaskForm addTaskForm = new ManageTaskForm();
             addTaskForm.ShowDialog();
         }
 
         private void btnEdit_Click(object sender, EventArgs e)
         {
-            EditTaskForm editTaskForm = new EditTaskForm();
-            editTaskForm.ShowDialog();
+            //TODO: Handle null on EditTaskForm creation while editing
+            //ManageTaskForm addTaskForm = new ManageTaskForm(null);
+
+            var id = (int)dgvTasks.CurrentRow.Cells[0].Value;
+            ManageTaskForm manageTaskForm = new ManageTaskForm(db.GetTaskModel(id));
+            manageTaskForm.ShowDialog();
+        }
+
+        private void dgvTasks_CellContentDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            
         }
     }
 }
