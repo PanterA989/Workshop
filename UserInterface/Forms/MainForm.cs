@@ -17,7 +17,7 @@ namespace Workshop.UserInterface.Forms
     public partial class MainForm : Form
     {
         //private List<TaskViewModel> fakeTasks;
-        private List<TaskModel> fakeTasksModel;
+        //private List<TaskModel> fakeTasksModel;
 
         private List<TaskViewModel> tasksViewModels = new List<TaskViewModel>();
         MyDbConnection db = new MyDbConnection();
@@ -39,149 +39,145 @@ namespace Workshop.UserInterface.Forms
         public MainForm()
         {
             InitializeComponent();
-
             dgvTasks.RowTemplate.MinimumHeight = 22;
-
-            tasksViewModels = db.GetTaskViewModels();
-            //OLD
-            //fakeTasks = GetFakeTasks();
             PrepareTasksData();
         }
 
         private void PrepareTasksData()
         {
+            tasksViewModels = db.GetTaskViewModels();
             bsTasks.DataSource = new BindingList<TaskViewModel>(tasksViewModels/*fakeTasks*/);
             dgvTasks.DataSource = bsTasks;
         }
 
-        private List<TaskViewModel> GetFakeTasks()
-        {
-            fakeTasksModel = new List<TaskModel>()
-            {
-                new TaskModel()
-                {
-                        Id = 1,
-                        Status = new StatusModel("Przyjęty"),
+        //private List<TaskViewModel> GetFakeTasks()
+        //{
+        //    fakeTasksModel = new List<TaskModel>()
+        //    {
+        //        new TaskModel()
+        //        {
+        //                Id = 1,
+        //                Status = new StatusModel("Przyjęty"),
 
-                        FirstName = "Tomasz",
-                        LastName = "Kasacki",
-                        PhoneNumber ="664 123 767",
-                        Email = "tomasz12@gmail.com",
+        //                FirstName = "Tomasz",
+        //                LastName = "Kasacki",
+        //                PhoneNumber ="664 123 767",
+        //                Email = "tomasz12@gmail.com",
 
-                        BikeManufacturer = "Kross",
-                        BikeModel = "Vento 2 (czarno-limonkowy) 2020",
-                        FrameNumber = "LX9370137430",
-                        AdditionalInfo ="Serwisowany regularnie u nas",
+        //                BikeManufacturer = "Kross",
+        //                BikeModel = "Vento 2 (czarno-limonkowy) 2020",
+        //                FrameNumber = "LX9370137430",
+        //                AdditionalInfo ="Serwisowany regularnie u nas",
 
-                        StartDate = DateTime.Today,
-                        EndDate = DateTime.Today.AddDays(7),
-                        Cost = 120.00m ,
-                        TaskDescription ="Przegląd sezonowy"
-                },
+        //                StartDate = DateTime.Today,
+        //                EndDate = DateTime.Today.AddDays(7),
+        //                Cost = 120.00m ,
+        //                TaskDescription ="Przegląd sezonowy"
+        //        },
 
-                new TaskModel()
-                {
-                        Id = 2,
-                        Status = new StatusModel("Do odbioru"),
+        //        new TaskModel()
+        //        {
+        //                Id = 2,
+        //                Status = new StatusModel("Do odbioru"),
 
-                        FirstName = "Katarzyna",
-                        LastName = "Olbryska",
-                        PhoneNumber ="343 222 787",
-                        Email = "katarzyna@gmail.com",
+        //                FirstName = "Katarzyna",
+        //                LastName = "Olbryska",
+        //                PhoneNumber ="343 222 787",
+        //                Email = "katarzyna@gmail.com",
 
-                        BikeManufacturer = "Rock Machine",
-                        BikeModel = "Manhattan 90-29",
-                        FrameNumber = "LX3242512798",
-                        AdditionalInfo ="Pierwszy raz u nas",
+        //                BikeManufacturer = "Rock Machine",
+        //                BikeModel = "Manhattan 90-29",
+        //                FrameNumber = "LX3242512798",
+        //                AdditionalInfo ="Pierwszy raz u nas",
 
-                        StartDate = DateTime.Today.AddDays(-3),
-                        EndDate = DateTime.Today.AddDays(4),
-                        Cost = 50.15m,
-                        TaskDescription ="Wymiana korby"
-                },
+        //                StartDate = DateTime.Today.AddDays(-3),
+        //                EndDate = DateTime.Today.AddDays(4),
+        //                Cost = 50.15m,
+        //                TaskDescription ="Wymiana korby"
+        //        },
 
-                new TaskModel()
-                {
-                        Id = 3,
-                        Status = new StatusModel("Zrealizowany"),
+        //        new TaskModel()
+        //        {
+        //                Id = 3,
+        //                Status = new StatusModel("Zrealizowany"),
 
-                        FirstName = "Igor",
-                        LastName = "Wąski",
-                        PhoneNumber ="423 323 645",
-                        Email = "igor123@gmail.com",
+        //                FirstName = "Igor",
+        //                LastName = "Wąski",
+        //                PhoneNumber ="423 323 645",
+        //                Email = "igor123@gmail.com",
 
-                        BikeManufacturer = "Trek",
-                        BikeModel = "Excalibur",
-                        FrameNumber = null,
-                        AdditionalInfo ="Stały klient, nowy rower",
+        //                BikeManufacturer = "Trek",
+        //                BikeModel = "Excalibur",
+        //                FrameNumber = null,
+        //                AdditionalInfo ="Stały klient, nowy rower",
 
-                        StartDate = DateTime.Today.AddDays(-7),
-                        EndDate = DateTime.Today,
-                        Cost = 150.00m,
-                        TaskDescription ="Montaż roweru"
-                },
+        //                StartDate = DateTime.Today.AddDays(-7),
+        //                EndDate = DateTime.Today,
+        //                Cost = 150.00m,
+        //                TaskDescription ="Montaż roweru"
+        //        },
 
-                new TaskModel()
-                {
-                        Id = 4,
-                        Status = new StatusModel("Anulowany - do odbioru"),
+        //        new TaskModel()
+        //        {
+        //                Id = 4,
+        //                Status = new StatusModel("Anulowany - do odbioru"),
 
-                        FirstName = null,
-                        LastName = null,
-                        PhoneNumber ="556 566 978",
-                        Email = null,
+        //                FirstName = null,
+        //                LastName = null,
+        //                PhoneNumber ="556 566 978",
+        //                Email = null,
 
-                        BikeManufacturer = "Scott",
-                        BikeModel = "Scale RC 900",
-                        FrameNumber = null,
-                        AdditionalInfo = null,
+        //                BikeManufacturer = "Scott",
+        //                BikeModel = "Scale RC 900",
+        //                FrameNumber = null,
+        //                AdditionalInfo = null,
 
-                        StartDate = DateTime.Today.AddDays(-9),
-                        EndDate = null,
-                        Cost = null,
-                        TaskDescription ="Sprawdzić"
-                },
+        //                StartDate = DateTime.Today.AddDays(-9),
+        //                EndDate = null,
+        //                Cost = null,
+        //                TaskDescription ="Sprawdzić"
+        //        },
 
-                new TaskModel()
-                {
-                        Id = 4,
-                        Status = new StatusModel("Anulowany - odebrany"),
+        //        new TaskModel()
+        //        {
+        //                Id = 4,
+        //                Status = new StatusModel("Anulowany - odebrany"),
 
-                        FirstName = null,
-                        LastName = null,
-                        PhoneNumber ="767 666 234",
-                        Email = null,
+        //                FirstName = null,
+        //                LastName = null,
+        //                PhoneNumber ="767 666 234",
+        //                Email = null,
 
-                        BikeManufacturer = "Scott",
-                        BikeModel = "Genius 920",
-                        FrameNumber = null,
-                        AdditionalInfo = null,
+        //                BikeManufacturer = "Scott",
+        //                BikeModel = "Genius 920",
+        //                FrameNumber = null,
+        //                AdditionalInfo = null,
 
-                        StartDate = DateTime.Today.AddDays(-12),
-                        EndDate = null,
-                        Cost = null,
-                        TaskDescription ="Test"
-                }
-            };
+        //                StartDate = DateTime.Today.AddDays(-12),
+        //                EndDate = null,
+        //                Cost = null,
+        //                TaskDescription ="Test"
+        //        }
+        //    };
 
-            List<TaskViewModel> fakeTasksViewModel = new List<TaskViewModel>();
+        //    List<TaskViewModel> fakeTasksViewModel = new List<TaskViewModel>();
 
-            foreach (TaskModel fakeTaskModel in fakeTasksModel)
-            {
-                TaskViewModel fakeTaskViewModel = new TaskViewModel();
-                fakeTaskViewModel.Id = fakeTaskModel.Id;
-                fakeTaskViewModel.BikeManufacturer = fakeTaskModel.BikeManufacturer;
-                fakeTaskViewModel.BikeModel = fakeTaskModel.BikeModel;
-                fakeTaskViewModel.StartDate = fakeTaskModel.StartDate;
-                fakeTaskViewModel.EndDate = fakeTaskModel.EndDate;
-                fakeTaskViewModel.Status = fakeTaskModel.Status.ToString();
+        //    foreach (TaskModel fakeTaskModel in fakeTasksModel)
+        //    {
+        //        TaskViewModel fakeTaskViewModel = new TaskViewModel();
+        //        fakeTaskViewModel.Id = fakeTaskModel.Id;
+        //        fakeTaskViewModel.BikeManufacturer = fakeTaskModel.BikeManufacturer;
+        //        fakeTaskViewModel.BikeModel = fakeTaskModel.BikeModel;
+        //        fakeTaskViewModel.StartDate = fakeTaskModel.StartDate;
+        //        fakeTaskViewModel.EndDate = fakeTaskModel.EndDate;
+        //        fakeTaskViewModel.Status = fakeTaskModel.Status.ToString();
 
-                fakeTasksViewModel.Add(fakeTaskViewModel);
-            }
+        //        fakeTasksViewModel.Add(fakeTaskViewModel);
+        //    }
 
-            return fakeTasksViewModel;
+        //    return fakeTasksViewModel;
 
-        }
+        //}
 
         private void btnCall_Click(object sender, EventArgs e)
         {
@@ -192,21 +188,28 @@ namespace Workshop.UserInterface.Forms
         {
             ManageTaskForm addTaskForm = new ManageTaskForm();
             addTaskForm.ShowDialog();
+            PrepareTasksData();
         }
 
         private void btnEdit_Click(object sender, EventArgs e)
         {
-            //TODO: Handle null on EditTaskForm creation while editing
-            //ManageTaskForm addTaskForm = new ManageTaskForm(null);
-
-            var id = (int)dgvTasks.CurrentRow.Cells[0].Value;
-            ManageTaskForm manageTaskForm = new ManageTaskForm(db.GetTaskModel(id));
-            manageTaskForm.ShowDialog();
+            try
+            {
+                var id = (int)dgvTasks.CurrentRow.Cells[0].Value;
+                ManageTaskForm manageTaskForm = new ManageTaskForm(db.GetTaskModel(id));
+                manageTaskForm.ShowDialog();
+                PrepareTasksData();
+            }
+            catch (Exception err)
+            {
+                MessageBox.Show($"Błąd podczas wybierania zlecenia do edycji.\n" +
+                    $"{err.Message}", "Błąd");
+            }
         }
 
         private void dgvTasks_CellContentDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
-            
+            MessageBox.Show("TEST", "TEST");
         }
     }
 }

@@ -531,10 +531,11 @@ namespace Workshop.UserInterface.Forms
             // dtpEndDate
             // 
             this.dtpEndDate.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.dtpEndDate.Checked = false;
             this.dtpEndDate.CustomFormat = " ";
-            this.dtpEndDate.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
             this.dtpEndDate.Location = new System.Drawing.Point(103, 77);
             this.dtpEndDate.Name = "dtpEndDate";
+            this.dtpEndDate.ShowCheckBox = true;
             this.dtpEndDate.Size = new System.Drawing.Size(270, 20);
             this.dtpEndDate.TabIndex = 11;
             this.dtpEndDate.ValueChanged += new System.EventHandler(this.dtpEndDate_ValueChanged);

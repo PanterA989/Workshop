@@ -9,8 +9,6 @@ namespace Workshop.DataAccessLayer.Models
 {
     public class TaskModel : EntityModel
     {
-        public StatusModel Status { get; set; }
-
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string PhoneNumber { get; set; }
@@ -25,5 +23,7 @@ namespace Workshop.DataAccessLayer.Models
         public DateTime? EndDate { get; set; }
         public decimal? Cost { get; set; }
         public string TaskDescription { get; set; }
+
+        public StatusModel Status { get; set; }
     }
 }

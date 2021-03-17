@@ -14,7 +14,7 @@ namespace Workshop.DataAccessLayer.DatabaseConnection
         //Handles how data deserialized into object
         public override StatusModel Parse(object value)
         {
-            return new StatusModel(value.ToString());
+            return new StatusModel(/*value.ToString()*/);
         }
 
         //Handles how data is saved into the database

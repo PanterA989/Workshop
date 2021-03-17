@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Workshop.DataAccessLayer.DatabaseConnection;
 using Workshop.DataAccessLayer.Models;
 using Workshop.DataAccessLayer.Models.Dictionaries;
 using Workshop.UserInterface.Forms.Base;
@@ -16,27 +18,27 @@ namespace Workshop.UserInterface.Forms
 {
     public partial class ManageTaskForm : BaseAddEditForm
     {
-        private readonly int editId;
+        private readonly int? taskId = null;
+        private MyDbConnection db;
+        private List<StatusModel> statuses;
 
         public ManageTaskForm()
         {
+            db = new MyDbConnection();
             InitializeComponent();
             InitializeErrorProviders();
-
-            tlpStatus.Visible = false;
-
+            InitializeStatuses();
         }
 
-        public ManageTaskForm(TaskModel taskModel)
+        public ManageTaskForm(TaskModel taskModel) : this()
         {
-            //TODO:Handle null taskMocel
-            InitializeComponent();
             InitializeData(taskModel);
-            cbStartDateEditable.Text = "inna data";
+
+            cbStartDateEditable.Text = "Inna data";
             buttonConfirm.Image = Properties.Resources.edit_24;
             buttonConfirm.Text = "Edytuj";
             this.Text = "Edycja zlecenie";
-            editId = taskModel.Id;
+            taskId = taskModel.Id;
         }
 
 
@@ -55,8 +57,6 @@ namespace Workshop.UserInterface.Forms
             epCost.SetIconAlignment(labelCost, ErrorIconAlignment.MiddleLeft);
             epDescription.SetIconAlignment(labelDescription, ErrorIconAlignment.MiddleRight);
 
-
-
             //epFirstName.SetError(labelFirstName, "TEST");
             //epLastName.SetError(labelLastName, "TEST");
             //epPhone.SetError(labelPhone, "TEST");
@@ -69,8 +69,6 @@ namespace Workshop.UserInterface.Forms
             //epEndDate.SetError(labelEndDate, "TEST");
             //epCost.SetError(labelCost, "TEST");
             //epDescription.SetError(labelDescription, "TEST");
-
-
         }
 
         private bool ValidateControls()
@@ -94,16 +92,6 @@ namespace Workshop.UserInterface.Forms
 
         private void InitializeData(TaskModel task)
         {
-            List<StatusModel> statuses = new List<StatusModel>()
-            {
-                new StatusModel("Przyjęty"),
-                new StatusModel("Do odbioru"),
-                new StatusModel("Zrealizowany"),
-                new StatusModel("Anulowany - do odbioru"),
-                new StatusModel("Anulowany - odebrany")
-            };
-
-            bsStatus.DataSource = statuses;
 
             tbFirstName.Text = task?.FirstName;
             tbLastName.Text = task?.LastName;
@@ -122,6 +110,20 @@ namespace Workshop.UserInterface.Forms
             tbDescription.Text = task.TaskDescription;
             cbStatus.Text = task.Status.Value;
 
+        }
+
+        private void InitializeStatuses()
+        {
+            statuses = db.GetStatuses();
+            //{
+            //    new StatusModel("Przyjęty"),
+            //    new StatusModel("Do odbioru"),
+            //    new StatusModel("Zrealizowany"),
+            //    new StatusModel("Anulowany - do odbioru"),
+            //    new StatusModel("Anulowany - odebrany")
+            //};
+
+            bsStatus.DataSource = statuses;
         }
 
         private void isStartDateNotToday_CheckedChanged(object sender, EventArgs e)
@@ -156,8 +158,73 @@ namespace Workshop.UserInterface.Forms
             TrimFields();
             if (ValidateControls())
             {
-                //TODO: Adding data to database
-                MessageBox.Show("Zapisano");
+                //TaskModel taskData = new TaskModel
+                //{
+                //    FirstName = tbFirstName.Text,
+                //    LastName = tbLastName.Text,
+                //    PhoneNumber = tbPhone.Text,
+                //    Email = tbEmail.Text,
+                //    BikeManufacturer = tbManufacturer.Text,
+                //    BikeModel = tbModel.Text,
+                //    FrameNumber = tbFrameNo.Text,
+                //    AdditionalInfo = tbAdditionalInfo.Text,
+                //    StartDate = dtpStartDate.Value.Date,
+                //    EndDate = dtpEndDate.Value.Date,
+                //    Cost = decimal.Parse(tbCost.Text, CultureInfo.InvariantCulture),
+                //    TaskDescription = tbDescription.Text,
+                //    Status = (StatusModel)cbStatus.SelectedItem
+                //};
+
+                //TODO:------------ODDZIELNA METODA (REF?)
+                TaskModel taskData = new TaskModel();
+
+                taskData.FirstName = tbFirstName.Text;
+                taskData.LastName = tbLastName.Text;
+                taskData.PhoneNumber = tbPhone.Text;
+                taskData.Email = tbEmail.Text;
+                taskData.BikeManufacturer = tbManufacturer.Text;
+                taskData.BikeModel = tbModel.Text;
+                taskData.FrameNumber = tbFrameNo.Text;
+                taskData.AdditionalInfo = tbAdditionalInfo.Text;
+                taskData.StartDate = dtpStartDate.Value.Date;
+                if(dtpEndDate.Checked) taskData.EndDate = dtpEndDate.Value.Date;
+                if(CostValidation(tbCost.Text) && !string.IsNullOrWhiteSpace(tbCost.Text)) taskData.Cost = decimal.Parse(tbCost.Text, CultureInfo.InvariantCulture);
+                taskData.TaskDescription = tbDescription.Text;
+                taskData.Status = statuses.FirstOrDefault(x => x.Id == (int)cbStatus.SelectedValue);
+                //taskData.Status = cbStatus.SelectedValue;
+
+
+
+                //no taskId means that form is in Add configuration
+                if (taskId == null)
+                {
+
+                    if (!db.AddTask(taskData))
+                    {
+                        MessageBox.Show("Wystąpił błąd podczas dodawania zlecenia", "Błąd", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                    else
+                    {
+                        this.Opacity = 0.0;
+                        MessageBox.Show("Zlecenie zostało dodane.");
+                        this.Close();
+                    }
+                }
+                else
+                {
+                    taskData.Id = (int)taskId;
+                    if (!db.UpdateTask(taskData))
+                    {
+                        MessageBox.Show("Wystąpił błąd podczas edycji zlecenia", "Błąd", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                    else 
+                    {
+                        
+                        this.Opacity = 0.0;
+                        MessageBox.Show("Zlecenie edytowane pomyślnie.");
+                        this.Close();
+                    }
+                }
             }
             else
             {
@@ -190,9 +257,9 @@ namespace Workshop.UserInterface.Forms
             DescriptionValidation(tbDescription.Text);
         }
 
-        //Ability to only use digits, spaces, controls, '+' and '-'
         private void tbPhone_KeyPress(object sender, KeyPressEventArgs e)
         {
+            //Ability to only use digits, spaces, controls, '+' and '-'
             e.Handled = !char.IsDigit(e.KeyChar) && !char.IsControl(e.KeyChar) && e.KeyChar != '-' && e.KeyChar != ' ' && e.KeyChar != '+';
         }
 

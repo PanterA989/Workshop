@@ -6,14 +6,15 @@ using System.Threading.Tasks;
 
 namespace Workshop.DataAccessLayer.Models.Dictionaries
 {
-    public class StatusModel : EntityModel
+    public class StatusModel
     {
+        public int Id { get; set; }
         public string Value { get; set; }
 
-        public StatusModel(string value)
-        {
-            Value = value;
-        }
+        //public StatusModel(string value)
+        //{
+        //    Value = value;
+        //}
 
         public override string ToString()
         {
