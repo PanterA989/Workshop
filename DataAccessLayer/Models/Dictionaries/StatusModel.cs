@@ -11,11 +11,6 @@ namespace Workshop.DataAccessLayer.Models.Dictionaries
         public int Id { get; set; }
         public string Value { get; set; }
 
-        //public StatusModel(string value)
-        //{
-        //    Value = value;
-        //}
-
         public override string ToString()
         {
             return Value;

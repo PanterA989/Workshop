@@ -7,8 +7,9 @@ using Workshop.DataAccessLayer.Models.Dictionaries;
 
 namespace Workshop.DataAccessLayer.Models
 {
-    public class TaskModel : EntityModel
+    public class TaskModel
     {
+        public int Id { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string PhoneNumber { get; set; }

@@ -34,8 +34,7 @@ namespace Workshop.UserInterface.Forms
             this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.tsslVersion = new System.Windows.Forms.ToolStripStatusLabel();
             this.menuStrip = new System.Windows.Forms.MenuStrip();
-            this.placeholderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.placeholderToolStripMenuItem3 = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmiAuthor = new System.Windows.Forms.ToolStripMenuItem();
             this.dgvTasks = new System.Windows.Forms.DataGridView();
             this.idDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.bikeManufacturerDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -82,25 +81,19 @@ namespace Workshop.UserInterface.Forms
             // menuStrip
             // 
             this.menuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.placeholderToolStripMenuItem,
-            this.placeholderToolStripMenuItem3});
+            this.tsmiAuthor});
             this.menuStrip.Location = new System.Drawing.Point(0, 0);
             this.menuStrip.Name = "menuStrip";
             this.menuStrip.Size = new System.Drawing.Size(1084, 24);
             this.menuStrip.TabIndex = 0;
             this.menuStrip.Text = "menuStrip2";
             // 
-            // placeholderToolStripMenuItem
+            // tsmiAuthor
             // 
-            this.placeholderToolStripMenuItem.Name = "placeholderToolStripMenuItem";
-            this.placeholderToolStripMenuItem.Size = new System.Drawing.Size(81, 20);
-            this.placeholderToolStripMenuItem.Text = "Placeholder";
-            // 
-            // placeholderToolStripMenuItem3
-            // 
-            this.placeholderToolStripMenuItem3.Name = "placeholderToolStripMenuItem3";
-            this.placeholderToolStripMenuItem3.Size = new System.Drawing.Size(81, 20);
-            this.placeholderToolStripMenuItem3.Text = "Placeholder";
+            this.tsmiAuthor.Name = "tsmiAuthor";
+            this.tsmiAuthor.Size = new System.Drawing.Size(72, 20);
+            this.tsmiAuthor.Text = "O Autorze";
+            this.tsmiAuthor.Click += new System.EventHandler(this.tsmiAuthor_Click);
             // 
             // dgvTasks
             // 
@@ -272,6 +265,7 @@ namespace Workshop.UserInterface.Forms
             this.btnHistory.Text = "Historia zleceń";
             this.btnHistory.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnHistory.UseVisualStyleBackColor = true;
+            this.btnHistory.Click += new System.EventHandler(this.btnHistory_Click);
             // 
             // btnCall
             // 
@@ -287,6 +281,7 @@ namespace Workshop.UserInterface.Forms
             this.btnCall.Text = "Zadzwoń";
             this.btnCall.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnCall.UseVisualStyleBackColor = true;
+            this.btnCall.Visible = false;
             this.btnCall.Click += new System.EventHandler(this.btnCall_Click);
             // 
             // MainForm
@@ -324,8 +319,7 @@ namespace Workshop.UserInterface.Forms
         private System.Windows.Forms.StatusStrip statusStrip;
         private System.Windows.Forms.ToolStripStatusLabel tsslVersion;
         private System.Windows.Forms.MenuStrip menuStrip;
-        private System.Windows.Forms.ToolStripMenuItem placeholderToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem placeholderToolStripMenuItem3;
+        private System.Windows.Forms.ToolStripMenuItem tsmiAuthor;
         private System.Windows.Forms.DataGridView dgvTasks;
         private System.Windows.Forms.Panel panelContent;
         private System.Windows.Forms.Panel panelData;

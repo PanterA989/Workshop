@@ -9,7 +9,7 @@ namespace Workshop.DataAccessLayer.DatabaseConnection
 {
     public static class ConnectionHelper
     {
-        public static string CnnVal()
+        public static string ConnectionString()
         {
             /*
              * As this is a training project,the login and password will be hardcoded into app.

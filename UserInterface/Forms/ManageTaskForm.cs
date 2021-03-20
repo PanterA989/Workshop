@@ -56,19 +56,6 @@ namespace Workshop.UserInterface.Forms
             epEndDate.SetIconAlignment(labelEndDate, ErrorIconAlignment.MiddleLeft);
             epCost.SetIconAlignment(labelCost, ErrorIconAlignment.MiddleLeft);
             epDescription.SetIconAlignment(labelDescription, ErrorIconAlignment.MiddleRight);
-
-            //epFirstName.SetError(labelFirstName, "TEST");
-            //epLastName.SetError(labelLastName, "TEST");
-            //epPhone.SetError(labelPhone, "TEST");
-            //epEmail.SetError(labelEmail, "TEST");
-            //epManufacturer.SetError(labelManufacturer, "TEST");
-            //epModel.SetError(labelModel, "TEST");
-            //epFrameNo.SetError(labelFrameNo, "TEST");
-            //epAddidtionalInfo.SetError(labelAdditionalInfo, "TEST");
-            //epStartDate.SetError(labelStartDate, "TEST");
-            //epEndDate.SetError(labelEndDate, "TEST");
-            //epCost.SetError(labelCost, "TEST");
-            //epDescription.SetError(labelDescription, "TEST");
         }
 
         private bool ValidateControls()
@@ -102,10 +89,7 @@ namespace Workshop.UserInterface.Forms
             tbFrameNo.Text = task?.FrameNumber;
             tbAdditionalInfo.Text = task?.AdditionalInfo;
             dtpStartDate.Value = task.StartDate;
-            if (task.EndDate.HasValue)
-            {
-                dtpEndDate.Value = task.EndDate.Value;
-            }
+            if (task.EndDate.HasValue) dtpEndDate.Value = task.EndDate.Value;
             tbCost.Text = task?.Cost.ToString();
             tbDescription.Text = task.TaskDescription;
             cbStatus.Text = task.Status.Value;
@@ -115,14 +99,6 @@ namespace Workshop.UserInterface.Forms
         private void InitializeStatuses()
         {
             statuses = db.GetStatuses();
-            //{
-            //    new StatusModel("Przyjęty"),
-            //    new StatusModel("Do odbioru"),
-            //    new StatusModel("Zrealizowany"),
-            //    new StatusModel("Anulowany - do odbioru"),
-            //    new StatusModel("Anulowany - odebrany")
-            //};
-
             bsStatus.DataSource = statuses;
         }
 
@@ -158,42 +134,7 @@ namespace Workshop.UserInterface.Forms
             TrimFields();
             if (ValidateControls())
             {
-                //TaskModel taskData = new TaskModel
-                //{
-                //    FirstName = tbFirstName.Text,
-                //    LastName = tbLastName.Text,
-                //    PhoneNumber = tbPhone.Text,
-                //    Email = tbEmail.Text,
-                //    BikeManufacturer = tbManufacturer.Text,
-                //    BikeModel = tbModel.Text,
-                //    FrameNumber = tbFrameNo.Text,
-                //    AdditionalInfo = tbAdditionalInfo.Text,
-                //    StartDate = dtpStartDate.Value.Date,
-                //    EndDate = dtpEndDate.Value.Date,
-                //    Cost = decimal.Parse(tbCost.Text, CultureInfo.InvariantCulture),
-                //    TaskDescription = tbDescription.Text,
-                //    Status = (StatusModel)cbStatus.SelectedItem
-                //};
-
-                //TODO:------------ODDZIELNA METODA (REF?)
-                TaskModel taskData = new TaskModel();
-
-                taskData.FirstName = tbFirstName.Text;
-                taskData.LastName = tbLastName.Text;
-                taskData.PhoneNumber = tbPhone.Text;
-                taskData.Email = tbEmail.Text;
-                taskData.BikeManufacturer = tbManufacturer.Text;
-                taskData.BikeModel = tbModel.Text;
-                taskData.FrameNumber = tbFrameNo.Text;
-                taskData.AdditionalInfo = tbAdditionalInfo.Text;
-                taskData.StartDate = dtpStartDate.Value.Date;
-                if(dtpEndDate.Checked) taskData.EndDate = dtpEndDate.Value.Date;
-                if(CostValidation(tbCost.Text) && !string.IsNullOrWhiteSpace(tbCost.Text)) taskData.Cost = decimal.Parse(tbCost.Text, CultureInfo.InvariantCulture);
-                taskData.TaskDescription = tbDescription.Text;
-                taskData.Status = statuses.FirstOrDefault(x => x.Id == (int)cbStatus.SelectedValue);
-                //taskData.Status = cbStatus.SelectedValue;
-
-
+                TaskModel taskData = createTaskFromFields();
 
                 //no taskId means that form is in Add configuration
                 if (taskId == null)
@@ -230,6 +171,28 @@ namespace Workshop.UserInterface.Forms
             {
                 MessageBox.Show("Dane wprowadzone do formularza posiadają błędy", "Błędne dane", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
+        }
+
+        private TaskModel createTaskFromFields()
+        {
+            TaskModel taskData = new TaskModel();
+
+            taskData.FirstName = tbFirstName.Text;
+            taskData.LastName = tbLastName.Text;
+            taskData.PhoneNumber = tbPhone.Text;
+            taskData.Email = tbEmail.Text;
+            taskData.BikeManufacturer = tbManufacturer.Text;
+            taskData.BikeModel = tbModel.Text;
+            taskData.FrameNumber = tbFrameNo.Text;
+            taskData.AdditionalInfo = tbAdditionalInfo.Text;
+            taskData.StartDate = dtpStartDate.Value.Date;
+            if (dtpEndDate.Checked) taskData.EndDate = dtpEndDate.Value.Date;
+            if (CostValidation(tbCost.Text) && !string.IsNullOrWhiteSpace(tbCost.Text)) taskData.Cost = decimal.Parse(tbCost.Text, CultureInfo.InvariantCulture);
+            taskData.TaskDescription = tbDescription.Text;
+            taskData.Status = statuses.FirstOrDefault(x => x.Id == (int)cbStatus.SelectedValue);
+            //taskData.Status = cbStatus.SelectedValue;
+
+            return taskData;
         }
 
         private void dtpEndDate_ValueChanged(object sender, EventArgs e)
@@ -279,6 +242,8 @@ namespace Workshop.UserInterface.Forms
         }
 
 
+
+        //TODO: Move validators to ValidatorHelpers class
         private bool FirstNameValidation(string firstName)
         {
             Errors errors = ValidatorHelper.ValidateFirstName(firstName);
