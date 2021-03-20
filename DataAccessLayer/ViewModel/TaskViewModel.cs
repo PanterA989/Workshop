@@ -14,15 +14,5 @@ namespace Workshop.DataAccessLayer.ViewModel
         public DateTime StartDate { get; set; }
         public DateTime? EndDate { get; set; }
         public string Status { get; set; }
-
-        //public TaskViewModel(int id, string manufacturer, string model, DateTime start, DateTime? end, string status)
-        //{
-        //    Id = id;
-        //    BikeManufacturer = manufacturer;
-        //    BikeModel = model;
-        //    StartDate = start;
-        //    EndDate = end;
-        //    Status = status;
-        //}
     }
 }

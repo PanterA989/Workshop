@@ -516,7 +516,7 @@ namespace Workshop.UserInterface.Forms
             this.cbStartDateEditable.TabIndex = 9;
             this.cbStartDateEditable.Text = "inna niż dzisiaj";
             this.cbStartDateEditable.UseVisualStyleBackColor = true;
-            this.cbStartDateEditable.CheckedChanged += new System.EventHandler(this.isStartDateNotToday_CheckedChanged);
+            this.cbStartDateEditable.CheckedChanged += new System.EventHandler(this.IsStartDateNotToday_CheckedChanged);
             // 
             // labelEndDate
             // 

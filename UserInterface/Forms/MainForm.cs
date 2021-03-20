@@ -16,32 +16,15 @@ namespace Workshop.UserInterface.Forms
 {
     public partial class MainForm : Form
     {
-        //private List<TaskViewModel> fakeTasks;
-        //private List<TaskModel> fakeTasksModel;
 
         private List<TaskViewModel> tasksViewModels = new List<TaskViewModel>();
         private MyDbConnection db = new MyDbConnection();
         private bool checkingHistory = false;
 
-        //Singleton
-        //private static MainForm _instance = null;
-        //public static MainForm Instance { 
-        //    get {
-        //        if (_instance == null)
-        //        {
-        //            _instance = new MainForm();
-        //            return _instance;
-        //        }
-        //        else return _instance;
-        //    }
-        //    private set { }
-        //}
-
         public MainForm()
         {
             InitializeComponent();
             dgvTasks.RowTemplate.MinimumHeight = 22;
-
 
             PrepareTasksData();
         }

@@ -84,7 +84,7 @@ namespace Workshop.DataAccessLayer.DatabaseConnection
             using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(ConnectionHelper.ConnectionString()))
             {
                 string addQuery = @"INSERT INTO [dbo].Task (FirstName, LastName, PhoneNumber, Email, BikeManufacturer, BikeModel, FrameNumber, AdditionalInfo, StartDate, EndDate, Cost, TaskDescription, StatusID) VALUES (@FirstName, @LastName, @PhoneNumber, @Email, @BikeManufacturer, @BikeModel, @FrameNumber, @AdditionalInfo, @StartDate, @EndDate, @Cost, @TaskDescription, @StatusID)";
-                if (connection.Execute(addQuery, new { FirstName = taskData.FirstName, LastName = taskData.LastName, PhoneNumber = taskData.PhoneNumber, Email = taskData.Email, BikeManufacturer = taskData.BikeManufacturer, BikeModel = taskData.BikeModel, FrameNumber = taskData.FrameNumber, AdditionalInfo = taskData.AdditionalInfo, StartDate = taskData.StartDate, EndDate = taskData.EndDate, Cost = taskData.Cost, TaskDescription = taskData.TaskDescription, StatusID = taskData.Status.Id }) == 1) return true;
+                if (connection.Execute(addQuery, new { taskData.FirstName, taskData.LastName, taskData.PhoneNumber, taskData.Email, taskData.BikeManufacturer, taskData.BikeModel, taskData.FrameNumber, taskData.AdditionalInfo, taskData.StartDate, taskData.EndDate, taskData.Cost, taskData.TaskDescription, StatusID = taskData.Status.Id }) == 1) return true;
                 else return false;
 
             }

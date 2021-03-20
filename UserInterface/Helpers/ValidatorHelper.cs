@@ -5,6 +5,7 @@ using System.Net.Mail;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace Workshop.UserInterface.Helpers
 {
@@ -234,6 +235,146 @@ namespace Workshop.UserInterface.Helpers
             {
                 return false;
             }
+        }
+
+        public static bool FirstNameValidation(string firstName, ErrorProvider errorProvider, Label label)
+        {
+            Errors errors = ValidateFirstName(firstName);
+            return setAndCheckErrors(errorProvider, label, errors);
+        }
+
+        public static bool LastNameValidation(string lastName, ErrorProvider errorProvider, Label label)
+        {
+            Errors errors = ValidateLastName(lastName);
+            return setAndCheckErrors(errorProvider, label, errors);
+        }
+
+        public static bool PhoneValidation(string phone, ErrorProvider errorProvider, Label label)
+        {
+            Errors errors = ValidatePhone(phone);
+            return setAndCheckErrors(errorProvider, label, errors);
+        }
+
+        public static bool EmailValidation(string email, ErrorProvider errorProvider, Label label)
+        {
+            Errors errors = ValidateEmail(email);
+            return setAndCheckErrors(errorProvider, label, errors);
+        }
+
+        public static bool ManufacturerValidation(string manufacturer, ErrorProvider errorProvider, Label label)
+        {
+            Errors errors = ValidateManufacturer(manufacturer);
+            return setAndCheckErrors(errorProvider, label, errors);
+        }
+
+        public static bool ModelValidation(string model, ErrorProvider errorProvider, Label label)
+        {
+            Errors errors = ValidatorHelper.ValidateModel(model);
+            return setAndCheckErrors(errorProvider, label, errors);
+        }
+
+        public static bool FrameNoValidation(string frameNo, ErrorProvider errorProvider, Label label)
+        {
+            Errors errors = ValidatorHelper.ValidateFrameNo(frameNo);
+            return setAndCheckErrors(errorProvider, label, errors);
+        }
+
+        //In case of need
+        //private bool AdditionalInfoValidation(string additionalInfo, ErrorProvider errorProvider, Label label)
+        //{
+        //    Errors errors = ValidatorHelper.ValidateAdditionalInfo(additionalInfo);
+        //    return setAndCheckErrors(errorProvider, label, errors);
+        //}
+
+        public static bool DatesValidation(DateTime startDate, DateTime endDate, ErrorProvider errorProviderStart, ErrorProvider errorProviderEnd, Label labelStart, Label labelEnd)
+        {
+            Errors errors = ValidatorHelper.ValidateDate(startDate, endDate);
+            if (errors.HasFlag(Errors.StartFromFuture))
+            {
+                errorProviderStart.SetError(labelStart, "Data przyjęcia jest z przyszłości.");
+            }
+            else
+            {
+                errorProviderStart.SetError(labelStart, null);
+            }
+
+            if (errors.HasFlag(Errors.EndBeforeStart))
+            {
+                errorProviderEnd.SetError(labelEnd, "Data zakończenia przed przyjęciem.");
+            }
+            else
+            {
+                errorProviderEnd.SetError(labelEnd, null);
+            }
+
+            return errors == 0;
+            //if (errors != 0)
+            //{
+            //    return false;
+            //}
+            //else
+            //{
+            //    return true;
+            //}
+        }
+
+        public static bool CostValidation(string cost, ErrorProvider errorProvider, Label label, TextBox tbCost)
+        {
+            cost = cost.Replace(',', '.');
+            cost = cost.TrimStart('0');
+            if (cost.IndexOf('.') == 0) cost = "0" + cost;
+            tbCost.Text = cost;
+
+            Errors errors = ValidatorHelper.ValidateCost(cost);
+            return setAndCheckErrors(errorProvider, label, errors);
+        }
+
+        public static bool DescriptionValidation(string description, ErrorProvider errorProvider, Label label)
+        {
+            Errors errors = ValidatorHelper.ValidateDescription(description);
+            return setAndCheckErrors(errorProvider, label, errors);
+        }
+
+        private static string ErrorDescriptionCreator(Errors errors)
+        {
+            string text = null;
+
+            if (errors == 0)
+            {
+                return null;
+            }
+            else
+            {
+                if (errors.HasFlag(Errors.IsEmpty))
+                {
+                    text += "Pole jest puste.\n";
+                }
+                if (errors.HasFlag(Errors.TooManyChars))
+                {
+                    text += "Zbyt duża ilość znaków.\n";
+                }
+                if (errors.HasFlag(Errors.BadFormat))
+                {
+                    text += "Zły format.\n";
+                }
+                if (errors.HasFlag(Errors.EndBeforeStart))
+                {
+                    text += "Data zakończenia przed przyjęciem.\n";
+                }
+                if (errors.HasFlag(Errors.StartFromFuture))
+                {
+                    text += "Data przyjęcia jest z przyszłości.\n";
+                }
+            }
+
+            return text;
+        }
+
+        private static bool setAndCheckErrors(ErrorProvider errorProvider, Label label, Errors errors)
+        {
+            string errorsDescription = ErrorDescriptionCreator(errors);
+            errorProvider.SetError(label, errorsDescription);
+            return string.IsNullOrEmpty(errorsDescription);
         }
     }
 }

@@ -32,13 +32,14 @@ namespace Workshop.UserInterface.Forms
 
         public ManageTaskForm(TaskModel taskModel) : this()
         {
-            InitializeData(taskModel);
-
             cbStartDateEditable.Text = "Inna data";
             buttonConfirm.Image = Properties.Resources.edit_24;
             buttonConfirm.Text = "Edytuj";
             this.Text = "Edycja zlecenie";
+
+            InitializeData(taskModel);
             taskId = taskModel.Id;
+            if (taskModel.EndDate.HasValue) dtpEndDate.Checked = true;
         }
 
 
@@ -62,17 +63,18 @@ namespace Workshop.UserInterface.Forms
         {
             bool validationResult = true;
 
-            if (!FirstNameValidation(tbFirstName.Text)) validationResult = false;
-            if (!LastNameValidation(tbLastName.Text)) validationResult = false;
-            if (!PhoneValidation(tbPhone.Text)) validationResult = false;
-            if (!EmailValidation(tbEmail.Text)) validationResult = false;
-            if (!ManufacturerValidation(tbManufacturer.Text)) validationResult = false;
-            if (!ModelValidation(tbModel.Text)) validationResult = false;
-            if (!FrameNoValidation(tbFrameNo.Text)) validationResult = false;
-            //if (!AdditionalInfoValidation(tbAdditionalInfo.Text)) validationResult = false;
-            if (!DatesValidation(dtpStartDate.Value, dtpEndDate.Value)) validationResult = false;
-            if (!CostValidation(tbCost.Text)) validationResult = false;
-            if (!DescriptionValidation(tbDescription.Text)) validationResult = false;
+            if (!ValidatorHelper.FirstNameValidation(tbFirstName.Text, epFirstName, labelFirstName)) validationResult = false;
+            if (!ValidatorHelper.LastNameValidation(tbLastName.Text, epLastName, labelLastName)) validationResult = false;
+            if (!ValidatorHelper.PhoneValidation(tbPhone.Text, epPhone, labelPhone)) validationResult = false;
+            if (!ValidatorHelper.EmailValidation(tbEmail.Text, epEmail, labelEmail)) validationResult = false;
+            if (!ValidatorHelper.ManufacturerValidation(tbManufacturer.Text, epManufacturer, labelManufacturer)) validationResult = false;
+            if (!ValidatorHelper.ModelValidation(tbModel.Text, epModel, labelModel)) validationResult = false;
+            if (!ValidatorHelper.FrameNoValidation(tbFrameNo.Text, epFrameNo, labelFrameNo)) validationResult = false;
+            //if (!ValidatorHelper.AdditionalInfoValidation(tbAdditionalInfo.Text, epAddidtionalInfo, labelAdditionalInfo)) validationResult = false;
+            if (!ValidatorHelper.DatesValidation(dtpStartDate.Value, dtpEndDate.Value, epStartDate, epEndDate, labelStartDate, labelEndDate)) validationResult = false;
+
+            if (!ValidatorHelper.CostValidation(tbCost.Text, epCost, labelCost, tbCost)) validationResult = false;
+            if (!ValidatorHelper.DescriptionValidation(tbDescription.Text, epDescription, labelDescription)) validationResult = false;
 
             return validationResult;
         }
@@ -102,7 +104,7 @@ namespace Workshop.UserInterface.Forms
             bsStatus.DataSource = statuses;
         }
 
-        private void isStartDateNotToday_CheckedChanged(object sender, EventArgs e)
+        private void IsStartDateNotToday_CheckedChanged(object sender, EventArgs e)
         {
             if(cbStartDateEditable.Checked == true)
             {
@@ -134,7 +136,7 @@ namespace Workshop.UserInterface.Forms
             TrimFields();
             if (ValidateControls())
             {
-                TaskModel taskData = createTaskFromFields();
+                TaskModel taskData = CreateTaskFromFields();
 
                 //no taskId means that form is in Add configuration
                 if (taskId == null)
@@ -173,7 +175,7 @@ namespace Workshop.UserInterface.Forms
             }
         }
 
-        private TaskModel createTaskFromFields()
+        private TaskModel CreateTaskFromFields()
         {
             TaskModel taskData = new TaskModel();
 
@@ -187,7 +189,7 @@ namespace Workshop.UserInterface.Forms
             taskData.AdditionalInfo = tbAdditionalInfo.Text;
             taskData.StartDate = dtpStartDate.Value.Date;
             if (dtpEndDate.Checked) taskData.EndDate = dtpEndDate.Value.Date;
-            if (CostValidation(tbCost.Text) && !string.IsNullOrWhiteSpace(tbCost.Text)) taskData.Cost = decimal.Parse(tbCost.Text, CultureInfo.InvariantCulture);
+            if (ValidatorHelper.CostValidation(tbCost.Text, epCost, labelCost, tbCost) && !string.IsNullOrWhiteSpace(tbCost.Text)) taskData.Cost = decimal.Parse(tbCost.Text, CultureInfo.InvariantCulture);
             taskData.TaskDescription = tbDescription.Text;
             taskData.Status = statuses.FirstOrDefault(x => x.Id == (int)cbStatus.SelectedValue);
             //taskData.Status = cbStatus.SelectedValue;
@@ -202,22 +204,22 @@ namespace Workshop.UserInterface.Forms
 
         private void tbPhone_TextChanged(object sender, EventArgs e)
         {
-            PhoneValidation(tbPhone.Text);
+            ValidatorHelper.PhoneValidation(tbPhone.Text, epPhone, labelPhone);
         }
 
         private void tbManufacturer_TextChanged(object sender, EventArgs e)
         {
-            ManufacturerValidation(tbManufacturer.Text);
+            ValidatorHelper.ManufacturerValidation(tbManufacturer.Text, epManufacturer, labelManufacturer);
         }
 
         private void tbModel_TextChanged(object sender, EventArgs e)
         {
-            ModelValidation(tbModel.Text);
+            ValidatorHelper.ModelValidation(tbModel.Text, epModel, labelModel);
         }
 
         private void tbDescription_TextChanged(object sender, EventArgs e)
         {
-            DescriptionValidation(tbDescription.Text);
+            ValidatorHelper.DescriptionValidation(tbDescription.Text, epDescription, labelDescription);
         }
 
         private void tbPhone_KeyPress(object sender, KeyPressEventArgs e)
@@ -228,173 +230,19 @@ namespace Workshop.UserInterface.Forms
 
         private void tbPhone_Validated(object sender, EventArgs e)
         {
-            PhoneValidation(tbPhone.Text);
+            ValidatorHelper.PhoneValidation(tbPhone.Text, epPhone, labelPhone);
         }
 
         private void tbManufacturer_Validated(object sender, EventArgs e)
         {
-            ManufacturerValidation(tbManufacturer.Text);
+            ValidatorHelper.ManufacturerValidation(tbManufacturer.Text, epManufacturer, labelManufacturer);
         }
 
         private void tbModel_Validated(object sender, EventArgs e)
         {
-            ModelValidation(tbModel.Text);
+            ValidatorHelper.ModelValidation(tbModel.Text, epModel, labelModel);
         }
 
-
-
-        //TODO: Move validators to ValidatorHelpers class
-        private bool FirstNameValidation(string firstName)
-        {
-            Errors errors = ValidatorHelper.ValidateFirstName(firstName);
-            string errorsDescription = ErrorDescriptionCreator(errors);
-            epFirstName.SetError(labelFirstName, errorsDescription);
-            return string.IsNullOrEmpty(errorsDescription);
-        }
-
-        private bool LastNameValidation(string lastName)
-        {
-            Errors errors = ValidatorHelper.ValidateLastName(lastName);
-            string errorsDescription = ErrorDescriptionCreator(errors);
-            epLastName.SetError(labelLastName, errorsDescription);
-            return string.IsNullOrEmpty(errorsDescription);
-        }
-
-        private bool PhoneValidation(string phone)
-        {
-            Errors errors = ValidatorHelper.ValidatePhone(phone);
-            string errorsDescription = ErrorDescriptionCreator(errors);
-            epPhone.SetError(labelPhone, errorsDescription);
-            return string.IsNullOrEmpty(errorsDescription);
-        }
-
-        private bool EmailValidation(string email)
-        {
-            Errors errors = ValidatorHelper.ValidateEmail(email);
-            string errorsDescription = ErrorDescriptionCreator(errors);
-            epEmail.SetError(labelEmail, errorsDescription);
-            return string.IsNullOrEmpty(errorsDescription);
-        }
-
-        private bool ManufacturerValidation(string manufacturer)
-        {
-            Errors errors = ValidatorHelper.ValidateManufacturer(manufacturer);
-            string errorsDescription = ErrorDescriptionCreator(errors);
-            epManufacturer.SetError(labelManufacturer, errorsDescription);
-            return string.IsNullOrEmpty(errorsDescription);
-        }
-
-        private bool ModelValidation(string model)
-        {
-            Errors errors = ValidatorHelper.ValidateModel(model);
-            string errorsDescription = ErrorDescriptionCreator(errors);
-            epModel.SetError(labelModel, errorsDescription);
-            return string.IsNullOrEmpty(errorsDescription);
-        }
-
-        private bool FrameNoValidation(string frameNo)
-        {
-            Errors errors = ValidatorHelper.ValidateFrameNo(frameNo);
-            string errorsDescription = ErrorDescriptionCreator(errors);
-            epFrameNo.SetError(labelFrameNo, errorsDescription);
-            return string.IsNullOrEmpty(errorsDescription);
-        }
-
-        //In case of need
-        //private bool AdditionalInfoValidation(string additionalInfo)
-        //{
-        //    Errors errors = ValidatorHelper.ValidateAdditionalInfo(additionalInfo);
-        //    string errorsDescription = ErrorDescriptionCreator(errors);
-        //    epAddidtionalInfo.SetError(labelAdditionalInfo, errorsDescription);
-        //    return string.IsNullOrEmpty(errorsDescription);
-        //}
-
-        private bool DatesValidation(DateTime startDate, DateTime endDate)
-        {
-            Errors errors = ValidatorHelper.ValidateDate(startDate, endDate);
-            if (errors.HasFlag(Errors.StartFromFuture))
-            {
-                epStartDate.SetError(labelStartDate, "Data przyjęcia jest z przyszłości.");
-            }
-            else
-            {
-                epStartDate.SetError(labelStartDate, null);
-            }
-
-            if (errors.HasFlag(Errors.EndBeforeStart))
-            {
-                epEndDate.SetError(labelEndDate, "Data zakończenia przed przyjęciem.");
-            }
-            else
-            {
-                epEndDate.SetError(labelEndDate, null);
-            }
-
-            if (errors != 0)
-            {
-                return false;
-            }
-            else
-            {
-                return true;
-            }
-        }
-
-        private bool CostValidation(string cost)
-        {
-            cost = cost.Replace(',', '.');
-            cost = cost.TrimStart('0');
-            if (cost.IndexOf('.') == 0) cost = "0" + cost;
-            tbCost.Text = cost;
-
-            Errors errors = ValidatorHelper.ValidateCost(cost);
-            string errorsDescription = ErrorDescriptionCreator(errors);
-            epCost.SetError(labelCost, errorsDescription);
-            return string.IsNullOrEmpty(errorsDescription);
-        }
-
-        private bool DescriptionValidation(string description)
-        {
-            Errors errors = ValidatorHelper.ValidateDescription(description);
-            string errorsDescription = ErrorDescriptionCreator(errors);
-            epDescription.SetError(labelDescription, errorsDescription);
-            return string.IsNullOrEmpty(errorsDescription);
-        }
-
-        private string ErrorDescriptionCreator(Errors errors)
-        {
-            string text = null;
-
-            if(errors == 0)
-            {
-                return null;
-            }
-            else
-            {
-                if (errors.HasFlag(Errors.IsEmpty))
-                {
-                    text += "Pole jest puste.\n";
-                }
-                if (errors.HasFlag(Errors.TooManyChars))
-                {
-                    text += "Zbyt duża ilość znaków.\n";
-                }
-                if (errors.HasFlag(Errors.BadFormat))
-                {
-                    text += "Zły format.\n";
-                }
-                if (errors.HasFlag(Errors.EndBeforeStart))
-                {
-                    text += "Data zakończenia przed przyjęciem.\n";
-                }
-                if (errors.HasFlag(Errors.StartFromFuture))
-                {
-                    text += "Data przyjęcia jest z przyszłości.\n";
-                }
-            }
-
-            return text;
-        }
 
         private void TrimFields()
         {
