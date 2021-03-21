@@ -29,6 +29,9 @@ namespace Workshop.UserInterface.Forms
             PrepareTasksData();
         }
 
+        /// <summary>
+        /// Checks which list of tasks (historical or current) is beeing viewed and updates its content.
+        /// </summary>
         private void PrepareTasksData()
         {
             if (!checkingHistory) tasksViewModels = db.GetActiveTasks();
@@ -68,11 +71,9 @@ namespace Workshop.UserInterface.Forms
             }
         }
 
-        private void dgvTasks_CellContentDoubleClick(object sender, DataGridViewCellEventArgs e)
-        {
-            MessageBox.Show("TEST", "TEST");
-        }
-
+        /// <summary>
+        /// Changes history button image and text and updates list of tasks.
+        /// </summary>
         private void btnHistory_Click(object sender, EventArgs e)
         {
             checkingHistory = !checkingHistory;
@@ -89,6 +90,11 @@ namespace Workshop.UserInterface.Forms
             }
 
             PrepareTasksData();
+        }
+
+        private void dgvTasks_CellContentDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            MessageBox.Show("TEST", "TEST");
         }
 
         private void tsmiAuthor_Click(object sender, EventArgs e)

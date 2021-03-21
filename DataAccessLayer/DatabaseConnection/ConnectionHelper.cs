@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿
 namespace Workshop.DataAccessLayer.DatabaseConnection
 {
     public static class ConnectionHelper
     {
+
+        /// <returns>Database connection string string.</returns>
         public static string ConnectionString()
         {
             /*

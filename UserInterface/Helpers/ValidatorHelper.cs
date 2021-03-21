@@ -9,6 +9,9 @@ using System.Windows.Forms;
 
 namespace Workshop.UserInterface.Helpers
 {
+    /// <summary>
+    /// Flags of errors in form fields.
+    /// </summary>
     [Flags]
     public enum Errors
     {
@@ -25,37 +28,46 @@ namespace Workshop.UserInterface.Helpers
 
     public static class ValidatorHelper
     {
-        public static Errors ValidateFirstName(string firstName)
+        /// <summary>
+        /// Validates first name.
+        /// </summary>
+        /// <param name="firstName">String representing first name.</param>
+        /// <returns>Flags of errors.</returns>
+        private static Errors ValidateFirstName(string firstName)
         {
             Errors errors = Errors.None;
 
-            if (!string.IsNullOrWhiteSpace(firstName))
+            if(firstName.Length > 50)
             {
-                if(firstName.Length > 50)
-                {
-                    errors |= Errors.TooManyChars;
-                }
+                errors |= Errors.TooManyChars;
             }
             
             return errors;
         }
 
-        public static Errors ValidateLastName(string lastName)
+        /// <summary>
+        /// Validates last name.
+        /// </summary>
+        /// <param name="lastName">String representing last name.</param>
+        /// <returns>Flags of errors.</returns>
+        private static Errors ValidateLastName(string lastName)
         {
             Errors errors = Errors.None;
 
-            if (!string.IsNullOrWhiteSpace(lastName))
+            if (lastName.Length > 50)
             {
-                if (lastName.Length > 50)
-                {
-                    errors |= Errors.TooManyChars;
-                }
+                errors |= Errors.TooManyChars;
             }
 
             return errors;
         }
 
-        public static Errors ValidatePhone(string number)
+        /// <summary>
+        /// Validates the phone number.
+        /// </summary>
+        /// <param name="number">String representing phone number.</param>
+        /// <returns>Flags of errors.</returns>
+        private static Errors ValidatePhone(string number)
         {
             Errors errors = Errors.None;
 
@@ -81,9 +93,12 @@ namespace Workshop.UserInterface.Helpers
             return errors;
         }
 
-        
-
-        public static Errors ValidateEmail(string email)
+        /// <summary>
+        /// Validates the e-mail.
+        /// </summary>
+        /// <param name="email">String representing e-mail.</param>
+        /// <returns>Flags of errors.</returns>
+        private static Errors ValidateEmail(string email)
         {
             Errors errors = Errors.None;
 
@@ -109,7 +124,12 @@ namespace Workshop.UserInterface.Helpers
             return errors;
         }
 
-        public static Errors ValidateManufacturer(string manufacturer)
+        /// <summary>
+        /// Validates the bike manufacturer.
+        /// </summary>
+        /// <param name="manufacturer">String representing bike manufacturer.</param>
+        /// <returns>Flags of errors.</returns>
+        private static Errors ValidateManufacturer(string manufacturer)
         {
             Errors errors = Errors.None;
 
@@ -126,7 +146,12 @@ namespace Workshop.UserInterface.Helpers
             return errors;
         }
 
-        public static Errors ValidateModel(string model)
+        /// <summary>
+        /// Validates the bike model.
+        /// </summary>
+        /// <param name="model">String representing bike model.</param>
+        /// <returns>Flags of errors.</returns>
+        private static Errors ValidateModel(string model)
         {
             Errors errors = Errors.None;
 
@@ -142,30 +167,38 @@ namespace Workshop.UserInterface.Helpers
             return errors;
         }
 
-        public static Errors ValidateFrameNo(string frameNo)
+        /// <summary>
+        /// Validates the bike frame number.
+        /// </summary>
+        /// <param name="frameNo">String representing bike frame number.</param>
+        /// <returns>Flags of errors.</returns>
+        private static Errors ValidateFrameNo(string frameNo)
         {
             Errors errors = Errors.None;
 
-            if (!string.IsNullOrWhiteSpace(frameNo))
+            if (frameNo.Length > 50)
             {
-                if (frameNo.Length > 50)
-                {
-                    errors |= Errors.TooManyChars;
-                }
+                errors |= Errors.TooManyChars;
             }
 
             return errors;
         }
 
         //In case of need
-        //public static Errors ValidateAdditionalInfo(string additionalInfo)
+        //private static Errors ValidateAdditionalInfo(string additionalInfo)
         //{
         //    Errors errors = Errors.None;
 
         //    return errors;
         //}
 
-        public static Errors ValidateDate(DateTime startDate, DateTime endDate)
+        /// <summary>
+        /// Checks if given dates are correct. 
+        /// </summary>
+        /// <param name="startDate">DateTime of start</param>
+        /// <param name="endDate">DateTime of end</param>
+        /// <returns>Flags of errors.</returns>
+        private static Errors ValidateDate(DateTime startDate, DateTime endDate)
         {
             Errors errors = Errors.None;
 
@@ -185,7 +218,12 @@ namespace Workshop.UserInterface.Helpers
             return errors;
         }
 
-        public static Errors ValidateCost(string cost)
+        /// <summary>
+        /// Checks that the provided cost is in the correct format.
+        /// </summary>
+        /// <param name="cost">String representing cost.</param>
+        /// <returns>Flags of errors.</returns>
+        private static Errors ValidateCost(string cost)
         {
             Errors errors = Errors.None;
 
@@ -211,7 +249,13 @@ namespace Workshop.UserInterface.Helpers
 
             return errors;
         }
-        public static Errors ValidateDescription(string description)
+
+        /// <summary>
+        /// Validates description.
+        /// </summary>
+        /// <param name="description">String representing description.</param>
+        /// <returns>Flags of errors.</returns>
+        private static Errors ValidateDescription(string description)
         {
             Errors errors = Errors.None;
 
@@ -223,72 +267,130 @@ namespace Workshop.UserInterface.Helpers
             return errors;
         }
 
-        public static bool IsPhoneNumber(string number)
+        /// <summary>
+        /// Checks if given phone number is in valid format.
+        /// </summary>
+        /// <param name="number">String representing phone number.</param>
+        /// <returns>Flags of errors.</returns>
+        private static bool IsPhoneNumber(string number)
         {
             Regex regex = new Regex(@"^\d{3}[\-\s]?\d{3}[\-\.\s]?\d{3}$");
 
-            if (regex.IsMatch(number))
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            return regex.IsMatch(number);
         }
 
-        public static bool FirstNameValidation(string firstName, ErrorProvider errorProvider, Label label)
+
+        /// <summary>
+        /// Validates first name and sets eventual message in errors provider.
+        /// </summary>
+        /// <param name="firstName">String representing first name.</param>
+        /// <param name="errorProvider">ErrorProvider for validated field.</param>
+        /// <param name="label">Label coresponding to error provider.</param>
+        /// <returns>True if field has been validated succesfully.</returns>
+        public static bool FirstNameCheckAndSetErrors(string firstName, ErrorProvider errorProvider, Label label)
         {
             Errors errors = ValidateFirstName(firstName);
-            return setAndCheckErrors(errorProvider, label, errors);
+            return SetAndCheckErrors(errorProvider, label, errors);
         }
 
-        public static bool LastNameValidation(string lastName, ErrorProvider errorProvider, Label label)
+        /// <summary>
+        /// Validates last name and sets eventual message in errors provider.
+        /// </summary>
+        /// <param name="lastName">String representing last name.</param>
+        /// <param name="errorProvider">ErrorProvider for validated field.</param>
+        /// <param name="label">Label coresponding to error provider.</param>
+        /// <returns>True if field has been validated succesfully.</returns>
+        public static bool LastNameCheckAndSetErrors(string lastName, ErrorProvider errorProvider, Label label)
         {
             Errors errors = ValidateLastName(lastName);
-            return setAndCheckErrors(errorProvider, label, errors);
+            return SetAndCheckErrors(errorProvider, label, errors);
         }
 
-        public static bool PhoneValidation(string phone, ErrorProvider errorProvider, Label label)
+        /// <summary>
+        /// Validates phone number and sets eventual message in errors provider.
+        /// </summary>
+        /// <param name="phone">String representing phone number.</param>
+        /// <param name="errorProvider">ErrorProvider for validated field.</param>
+        /// <param name="label">Label coresponding to error provider.</param>
+        /// <returns>True if field has been validated succesfully.</returns>
+        public static bool PhoneCheckAndSetErrors(string phone, ErrorProvider errorProvider, Label label)
         {
             Errors errors = ValidatePhone(phone);
-            return setAndCheckErrors(errorProvider, label, errors);
+            return SetAndCheckErrors(errorProvider, label, errors);
         }
 
-        public static bool EmailValidation(string email, ErrorProvider errorProvider, Label label)
+        /// <summary>
+        /// Validates e-mail and sets eventual message in errors provider.
+        /// </summary>
+        /// <param name="email">String representing e-mail.</param>
+        /// <param name="errorProvider">ErrorProvider for validated field.</param>
+        /// <param name="label">Label coresponding to error provider.</param>
+        /// <returns>True if field has been validated succesfully.</returns>
+        public static bool EmailCheckAndSetErrors(string email, ErrorProvider errorProvider, Label label)
         {
             Errors errors = ValidateEmail(email);
-            return setAndCheckErrors(errorProvider, label, errors);
+            return SetAndCheckErrors(errorProvider, label, errors);
         }
 
-        public static bool ManufacturerValidation(string manufacturer, ErrorProvider errorProvider, Label label)
+        /// <summary>
+        /// Validates bike manufacturer and sets eventual message in errors provider.
+        /// </summary>
+        /// <param name="manufacturer">String representing bike manufacturer.</param>
+        /// <param name="errorProvider">ErrorProvider for validated field.</param>
+        /// <param name="label">Label coresponding to error provider.</param>
+        /// <returns>True if field has been validated succesfully.</returns>
+        public static bool ManufacturerCheckAndSetErrors(string manufacturer, ErrorProvider errorProvider, Label label)
         {
             Errors errors = ValidateManufacturer(manufacturer);
-            return setAndCheckErrors(errorProvider, label, errors);
+            return SetAndCheckErrors(errorProvider, label, errors);
         }
 
-        public static bool ModelValidation(string model, ErrorProvider errorProvider, Label label)
+        /// <summary>
+        /// Validates bike model and sets eventual message in errors provider.
+        /// </summary>
+        /// <param name="model">String representing bike model.</param>
+        /// <param name="errorProvider">ErrorProvider for validated field.</param>
+        /// <param name="label">Label coresponding to error provider.</param>
+        /// <returns>True if field has been validated succesfully.</returns>
+        public static bool ModelCheckAndSetErrors(string model, ErrorProvider errorProvider, Label label)
         {
-            Errors errors = ValidatorHelper.ValidateModel(model);
-            return setAndCheckErrors(errorProvider, label, errors);
+            Errors errors = ValidateModel(model);
+            return SetAndCheckErrors(errorProvider, label, errors);
         }
 
-        public static bool FrameNoValidation(string frameNo, ErrorProvider errorProvider, Label label)
+        /// <summary>
+        /// Validates frame number and sets eventual message in errors provider.
+        /// </summary>
+        /// <param name="frameNo">String representing frame number.</param>
+        /// <param name="errorProvider">ErrorProvider for validated field.</param>
+        /// <param name="label">Label coresponding to error provider.</param>
+        /// <returns>True if field has been validated succesfully.</returns>
+        public static bool FrameNoCheckAndSetErrors(string frameNo, ErrorProvider errorProvider, Label label)
         {
-            Errors errors = ValidatorHelper.ValidateFrameNo(frameNo);
-            return setAndCheckErrors(errorProvider, label, errors);
+            Errors errors = ValidateFrameNo(frameNo);
+            return SetAndCheckErrors(errorProvider, label, errors);
         }
 
         //In case of need
         //private bool AdditionalInfoValidation(string additionalInfo, ErrorProvider errorProvider, Label label)
         //{
         //    Errors errors = ValidatorHelper.ValidateAdditionalInfo(additionalInfo);
-        //    return setAndCheckErrors(errorProvider, label, errors);
+        //    return SetAndCheckErrors(errorProvider, label, errors);
         //}
 
-        public static bool DatesValidation(DateTime startDate, DateTime endDate, ErrorProvider errorProviderStart, ErrorProvider errorProviderEnd, Label labelStart, Label labelEnd)
+        /// <summary>
+        /// Validates start and end date and sets eventual message in errors provider.
+        /// </summary>
+        /// <param name="startDate">DateTime of start date</param>
+        /// <param name="endDate">DateTime of end date</param>
+        /// <param name="errorProviderStart">ErrorProvider for start date.</param>
+        /// <param name="errorProviderEnd">ErrorProvider for end date.</param>
+        /// <param name="labelStart">Label coresponding to start date error provider.</param>
+        /// <param name="labelEnd">Label coresponding to end date error provider.</param>
+        /// <returns>True if field has been validated succesfully.</returns>
+        public static bool DatesCheckAndSetErrors(DateTime startDate, DateTime endDate, ErrorProvider errorProviderStart, ErrorProvider errorProviderEnd, Label labelStart, Label labelEnd)
         {
-            Errors errors = ValidatorHelper.ValidateDate(startDate, endDate);
+            Errors errors = ValidateDate(startDate, endDate);
             if (errors.HasFlag(Errors.StartFromFuture))
             {
                 errorProviderStart.SetError(labelStart, "Data przyjęcia jest z przyszłości.");
@@ -308,33 +410,45 @@ namespace Workshop.UserInterface.Helpers
             }
 
             return errors == 0;
-            //if (errors != 0)
-            //{
-            //    return false;
-            //}
-            //else
-            //{
-            //    return true;
-            //}
         }
 
-        public static bool CostValidation(string cost, ErrorProvider errorProvider, Label label, TextBox tbCost)
+        /// <summary>
+        /// Validates cost and sanitizes its TextBox content.
+        /// </summary>
+        /// <param name="cost">String representing frame cost.</param>
+        /// <param name="errorProvider">ErrorProvider for validated field.</param>
+        /// <param name="label">Label coresponding to error provider.</param>
+        /// <param name="tbCost">TextBox of cost</param>
+        /// <returns>True if field has been validated succesfully.</returns>
+        public static bool CostCheckAndSetErrors(string cost, ErrorProvider errorProvider, Label label, TextBox tbCost)
         {
             cost = cost.Replace(',', '.');
             cost = cost.TrimStart('0');
             if (cost.IndexOf('.') == 0) cost = "0" + cost;
             tbCost.Text = cost;
 
-            Errors errors = ValidatorHelper.ValidateCost(cost);
-            return setAndCheckErrors(errorProvider, label, errors);
+            Errors errors = ValidateCost(cost);
+            return SetAndCheckErrors(errorProvider, label, errors);
         }
 
-        public static bool DescriptionValidation(string description, ErrorProvider errorProvider, Label label)
+        /// <summary>
+        /// Validates description and sets eventual message in errors provider.
+        /// </summary>
+        /// <param name="description">String representing description.</param>
+        /// <param name="errorProvider">ErrorProvider for validated field.</param>
+        /// <param name="label">Label coresponding to error provider.</param>
+        /// <returns>True if field has been validated succesfully.</returns>
+        public static bool DescriptionCheckAndSetErrors(string description, ErrorProvider errorProvider, Label label)
         {
-            Errors errors = ValidatorHelper.ValidateDescription(description);
-            return setAndCheckErrors(errorProvider, label, errors);
+            Errors errors = ValidateDescription(description);
+            return SetAndCheckErrors(errorProvider, label, errors);
         }
 
+        /// <summary>
+        /// Creates error provider messages based on errors flags
+        /// </summary>
+        /// <param name="errors">Flags of errors</param>
+        /// <returns>Full errors description.</returns>
         private static string ErrorDescriptionCreator(Errors errors)
         {
             string text = null;
@@ -355,7 +469,7 @@ namespace Workshop.UserInterface.Helpers
                 }
                 if (errors.HasFlag(Errors.BadFormat))
                 {
-                    text += "Zły format.\n";
+                    text += "Błędny format.\n";
                 }
                 if (errors.HasFlag(Errors.EndBeforeStart))
                 {
@@ -370,7 +484,15 @@ namespace Workshop.UserInterface.Helpers
             return text;
         }
 
-        private static bool setAndCheckErrors(ErrorProvider errorProvider, Label label, Errors errors)
+
+        /// <summary>
+        /// Sets and checks error providers messages.
+        /// </summary>
+        /// <param name="errorProvider">ErrorProvider for validated field.</param>
+        /// <param name="label">Label coresponding to error provider.</param>
+        /// <param name="errors">Flags of errors</param>
+        /// <returns>True if validation returned no errors.</returns>
+        private static bool SetAndCheckErrors(ErrorProvider errorProvider, Label label, Errors errors)
         {
             string errorsDescription = ErrorDescriptionCreator(errors);
             errorProvider.SetError(label, errorsDescription);

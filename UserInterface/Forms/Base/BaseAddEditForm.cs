@@ -27,7 +27,5 @@ namespace Workshop.UserInterface.Forms.Base
                 }
             }
         }
-
-        protected virtual void Save() { }
     }
 }
