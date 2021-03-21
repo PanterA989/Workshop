@@ -6,6 +6,7 @@ using Dapper;
 using System.Data;
 using Workshop.DataAccessLayer.Models;
 using Workshop.DataAccessLayer.Models.Dictionaries;
+using System.Threading.Tasks;
 
 namespace Workshop.DataAccessLayer.DatabaseConnection
 {
@@ -17,27 +18,29 @@ namespace Workshop.DataAccessLayer.DatabaseConnection
         }
 
         /// <summary>
-        /// Executes database query gathering all active tasks.
+        /// Executes asynchronous database query gathering all active tasks.
         /// </summary>
         /// <returns>List of active tasks.</returns>
-        public List<TaskViewModel> GetActiveTasks()
+        public async Task<List<TaskViewModel>> GetActiveTasks()
         {
             using (IDbConnection connection = new SqlConnection(ConnectionHelper.ConnectionString()))
             {
-                return connection.Query<TaskViewModel>("SELECT t.Id, BikeManufacturer, BikeModel, StartDate, EndDate, s.Status FROM Task t INNER JOIN Status s ON t.StatusId = s.Id WHERE s.Status IN ('Przyjęty', 'Do odbioru', 'Anulowany - do odbioru') ORDER BY 1 ASC;").ToList();
+                var result = await connection.QueryAsync<TaskViewModel>("SELECT t.Id, BikeManufacturer, BikeModel, StartDate, EndDate, s.Status FROM Task t INNER JOIN Status s ON t.StatusId = s.Id WHERE s.Status IN ('Przyjęty', 'Do odbioru', 'Anulowany - do odbioru') ORDER BY 1 ASC;");
+                return result.ToList();
             }
 
         }
 
         /// <summary>
-        /// Executes database query gathering all historical tasks.
+        /// Executes asynchronous database query gathering all historical tasks.
         /// </summary>
         /// <returns>List of historical tasks.</returns>
-        public List<TaskViewModel> GetHistoryTasks()
+        public async Task<List<TaskViewModel>> GetHistoryTasks()
         {
             using (IDbConnection connection = new SqlConnection(ConnectionHelper.ConnectionString()))
             {
-                return connection.Query<TaskViewModel>("SELECT t.Id, BikeManufacturer, BikeModel, StartDate, EndDate, s.Status FROM Task t INNER JOIN Status s ON t.StatusId = s.Id WHERE s.Status IN ('Zrealizowany', 'Anulowany - odebrany') ORDER BY 1 DESC;").ToList();
+                var restult = await connection.QueryAsync<TaskViewModel>("SELECT t.Id, BikeManufacturer, BikeModel, StartDate, EndDate, s.Status FROM Task t INNER JOIN Status s ON t.StatusId = s.Id WHERE s.Status IN ('Zrealizowany', 'Anulowany - odebrany') ORDER BY 1 DESC;");
+                return restult.ToList();
             }
         }
 

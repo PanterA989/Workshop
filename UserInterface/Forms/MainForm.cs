@@ -32,10 +32,10 @@ namespace Workshop.UserInterface.Forms
         /// <summary>
         /// Checks which list of tasks (historical or current) is beeing viewed and updates its content.
         /// </summary>
-        private void PrepareTasksData()
+        private async void PrepareTasksData()
         {
-            if (!checkingHistory) tasksViewModels = db.GetActiveTasks();
-            else tasksViewModels = db.GetHistoryTasks();
+            if (!checkingHistory) tasksViewModels = await db.GetActiveTasks();
+            else tasksViewModels = await db.GetHistoryTasks();
             
             
             bsTasks.DataSource = new BindingList<TaskViewModel>(tasksViewModels);

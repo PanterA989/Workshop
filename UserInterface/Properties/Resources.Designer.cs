@@ -123,6 +123,16 @@ namespace Workshop.UserInterface.Properties {
         /// <summary>
         ///   Wyszukuje zlokalizowany zasób typu System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap delete64 {
+            get {
+                object obj = ResourceManager.GetObject("delete64", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Wyszukuje zlokalizowany zasób typu System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap dismiss_24 {
             get {
                 object obj = ResourceManager.GetObject("dismiss_24", resourceCulture);
