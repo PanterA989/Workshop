@@ -82,11 +82,13 @@ namespace Workshop.UserInterface.Forms
             {
                 btnHistory.Image = Properties.Resources.tasks64;
                 btnHistory.Text = "Aktualne zlecenia";
+                btnFinish.Visible = false;
             }
             else 
             {
                 btnHistory.Image = Properties.Resources.history64;
                 btnHistory.Text = "Historia zleceń";
+                btnFinish.Visible = true;
             }
 
             PrepareTasksData();
@@ -100,6 +102,24 @@ namespace Workshop.UserInterface.Forms
         private void tsmiAuthor_Click(object sender, EventArgs e)
         {
             new AuthorForm().ShowDialog();
+        }
+
+        private void btnFinish_Click(object sender, EventArgs e)
+        {
+
+            try
+            {
+                var id = (int)dgvTasks.CurrentRow.Cells[0].Value;
+                FinishTaskForm finishTaskForm = new FinishTaskForm(db.GetTaskModel(id));
+                finishTaskForm.ShowDialog();
+                PrepareTasksData();
+
+            }
+            catch (Exception err)
+            {
+                MessageBox.Show($"Błąd podczas zakończania zlecenia.\n" +
+                    $"{err.Message}", "Błąd");
+            }
         }
     }
 }

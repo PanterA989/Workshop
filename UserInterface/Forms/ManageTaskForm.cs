@@ -125,7 +125,6 @@ namespace Workshop.UserInterface.Forms
         }
 
 
-
         /// <summary>
         /// Uploads task to database and closes form. Uses taskId do determine if action should be executed as INSERT(taskId == null) or UPDATE(taskId != null).
         /// </summary>

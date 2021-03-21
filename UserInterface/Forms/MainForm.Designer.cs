@@ -36,28 +36,28 @@ namespace Workshop.UserInterface.Forms
             this.menuStrip = new System.Windows.Forms.MenuStrip();
             this.tsmiAuthor = new System.Windows.Forms.ToolStripMenuItem();
             this.dgvTasks = new System.Windows.Forms.DataGridView();
+            this.panelContent = new System.Windows.Forms.Panel();
+            this.panelData = new System.Windows.Forms.Panel();
+            this.panelControl = new System.Windows.Forms.Panel();
+            this.bsTasks = new System.Windows.Forms.BindingSource(this.components);
+            this.btnAdd = new System.Windows.Forms.Button();
+            this.btnEdit = new System.Windows.Forms.Button();
+            this.btnFinish = new System.Windows.Forms.Button();
+            this.btnHistory = new System.Windows.Forms.Button();
+            this.btnCall = new System.Windows.Forms.Button();
             this.idDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.bikeManufacturerDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.bikeModelDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.startDateDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.endDateDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.statusDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.bsTasks = new System.Windows.Forms.BindingSource(this.components);
-            this.panelContent = new System.Windows.Forms.Panel();
-            this.panelData = new System.Windows.Forms.Panel();
-            this.panelControl = new System.Windows.Forms.Panel();
-            this.btnAdd = new System.Windows.Forms.Button();
-            this.btnEdit = new System.Windows.Forms.Button();
-            this.btnFinish = new System.Windows.Forms.Button();
-            this.btnHistory = new System.Windows.Forms.Button();
-            this.btnCall = new System.Windows.Forms.Button();
             this.statusStrip.SuspendLayout();
             this.menuStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvTasks)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.bsTasks)).BeginInit();
             this.panelContent.SuspendLayout();
             this.panelData.SuspendLayout();
             this.panelControl.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.bsTasks)).BeginInit();
             this.SuspendLayout();
             // 
             // statusStrip
@@ -122,58 +122,6 @@ namespace Workshop.UserInterface.Forms
             this.dgvTasks.TabIndex = 0;
             this.dgvTasks.CellContentDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvTasks_CellContentDoubleClick);
             // 
-            // idDataGridViewTextBoxColumn
-            // 
-            this.idDataGridViewTextBoxColumn.DataPropertyName = "Id";
-            this.idDataGridViewTextBoxColumn.HeaderText = "Id";
-            this.idDataGridViewTextBoxColumn.Name = "idDataGridViewTextBoxColumn";
-            this.idDataGridViewTextBoxColumn.ReadOnly = true;
-            this.idDataGridViewTextBoxColumn.Visible = false;
-            // 
-            // bikeManufacturerDataGridViewTextBoxColumn
-            // 
-            this.bikeManufacturerDataGridViewTextBoxColumn.DataPropertyName = "BikeManufacturer";
-            this.bikeManufacturerDataGridViewTextBoxColumn.HeaderText = "Marka";
-            this.bikeManufacturerDataGridViewTextBoxColumn.Name = "bikeManufacturerDataGridViewTextBoxColumn";
-            this.bikeManufacturerDataGridViewTextBoxColumn.ReadOnly = true;
-            this.bikeManufacturerDataGridViewTextBoxColumn.ToolTipText = "Producent roweru";
-            // 
-            // bikeModelDataGridViewTextBoxColumn
-            // 
-            this.bikeModelDataGridViewTextBoxColumn.DataPropertyName = "BikeModel";
-            this.bikeModelDataGridViewTextBoxColumn.HeaderText = "Model";
-            this.bikeModelDataGridViewTextBoxColumn.Name = "bikeModelDataGridViewTextBoxColumn";
-            this.bikeModelDataGridViewTextBoxColumn.ReadOnly = true;
-            this.bikeModelDataGridViewTextBoxColumn.ToolTipText = "Model roweru";
-            // 
-            // startDateDataGridViewTextBoxColumn
-            // 
-            this.startDateDataGridViewTextBoxColumn.DataPropertyName = "StartDate";
-            this.startDateDataGridViewTextBoxColumn.HeaderText = "Data przyjecia";
-            this.startDateDataGridViewTextBoxColumn.Name = "startDateDataGridViewTextBoxColumn";
-            this.startDateDataGridViewTextBoxColumn.ReadOnly = true;
-            this.startDateDataGridViewTextBoxColumn.ToolTipText = "Data przyjecia roweru do serwisu";
-            // 
-            // endDateDataGridViewTextBoxColumn
-            // 
-            this.endDateDataGridViewTextBoxColumn.DataPropertyName = "EndDate";
-            this.endDateDataGridViewTextBoxColumn.HeaderText = "Data odbioru";
-            this.endDateDataGridViewTextBoxColumn.Name = "endDateDataGridViewTextBoxColumn";
-            this.endDateDataGridViewTextBoxColumn.ReadOnly = true;
-            this.endDateDataGridViewTextBoxColumn.ToolTipText = "Przewidywana data realizacji zlecenia";
-            // 
-            // statusDataGridViewTextBoxColumn
-            // 
-            this.statusDataGridViewTextBoxColumn.DataPropertyName = "Status";
-            this.statusDataGridViewTextBoxColumn.HeaderText = "Status";
-            this.statusDataGridViewTextBoxColumn.Name = "statusDataGridViewTextBoxColumn";
-            this.statusDataGridViewTextBoxColumn.ReadOnly = true;
-            this.statusDataGridViewTextBoxColumn.ToolTipText = "Status zlecenia";
-            // 
-            // bsTasks
-            // 
-            this.bsTasks.DataSource = typeof(Workshop.DataAccessLayer.ViewModel.TaskViewModel);
-            // 
             // panelContent
             // 
             this.panelContent.Controls.Add(this.panelData);
@@ -207,6 +155,10 @@ namespace Workshop.UserInterface.Forms
             this.panelControl.Padding = new System.Windows.Forms.Padding(0, 5, 0, 5);
             this.panelControl.Size = new System.Drawing.Size(215, 515);
             this.panelControl.TabIndex = 6;
+            // 
+            // bsTasks
+            // 
+            this.bsTasks.DataSource = typeof(Workshop.DataAccessLayer.ViewModel.TaskViewModel);
             // 
             // btnAdd
             // 
@@ -251,6 +203,7 @@ namespace Workshop.UserInterface.Forms
             this.btnFinish.Text = "Zakończ";
             this.btnFinish.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnFinish.UseVisualStyleBackColor = true;
+            this.btnFinish.Click += new System.EventHandler(this.btnFinish_Click);
             // 
             // btnHistory
             // 
@@ -284,6 +237,54 @@ namespace Workshop.UserInterface.Forms
             this.btnCall.Visible = false;
             this.btnCall.Click += new System.EventHandler(this.btnCall_Click);
             // 
+            // idDataGridViewTextBoxColumn
+            // 
+            this.idDataGridViewTextBoxColumn.DataPropertyName = "Id";
+            this.idDataGridViewTextBoxColumn.HeaderText = "Id";
+            this.idDataGridViewTextBoxColumn.Name = "idDataGridViewTextBoxColumn";
+            this.idDataGridViewTextBoxColumn.ReadOnly = true;
+            this.idDataGridViewTextBoxColumn.Visible = false;
+            // 
+            // bikeManufacturerDataGridViewTextBoxColumn
+            // 
+            this.bikeManufacturerDataGridViewTextBoxColumn.DataPropertyName = "BikeManufacturer";
+            this.bikeManufacturerDataGridViewTextBoxColumn.HeaderText = "Producent";
+            this.bikeManufacturerDataGridViewTextBoxColumn.Name = "bikeManufacturerDataGridViewTextBoxColumn";
+            this.bikeManufacturerDataGridViewTextBoxColumn.ReadOnly = true;
+            this.bikeManufacturerDataGridViewTextBoxColumn.ToolTipText = "Producent roweru";
+            // 
+            // bikeModelDataGridViewTextBoxColumn
+            // 
+            this.bikeModelDataGridViewTextBoxColumn.DataPropertyName = "BikeModel";
+            this.bikeModelDataGridViewTextBoxColumn.HeaderText = "Model";
+            this.bikeModelDataGridViewTextBoxColumn.Name = "bikeModelDataGridViewTextBoxColumn";
+            this.bikeModelDataGridViewTextBoxColumn.ReadOnly = true;
+            this.bikeModelDataGridViewTextBoxColumn.ToolTipText = "Model roweru";
+            // 
+            // startDateDataGridViewTextBoxColumn
+            // 
+            this.startDateDataGridViewTextBoxColumn.DataPropertyName = "StartDate";
+            this.startDateDataGridViewTextBoxColumn.HeaderText = "Data przyjecia";
+            this.startDateDataGridViewTextBoxColumn.Name = "startDateDataGridViewTextBoxColumn";
+            this.startDateDataGridViewTextBoxColumn.ReadOnly = true;
+            this.startDateDataGridViewTextBoxColumn.ToolTipText = "Data przyjecia roweru do serwisu";
+            // 
+            // endDateDataGridViewTextBoxColumn
+            // 
+            this.endDateDataGridViewTextBoxColumn.DataPropertyName = "EndDate";
+            this.endDateDataGridViewTextBoxColumn.HeaderText = "Data odbioru";
+            this.endDateDataGridViewTextBoxColumn.Name = "endDateDataGridViewTextBoxColumn";
+            this.endDateDataGridViewTextBoxColumn.ReadOnly = true;
+            this.endDateDataGridViewTextBoxColumn.ToolTipText = "Przewidywana data realizacji zlecenia";
+            // 
+            // statusDataGridViewTextBoxColumn
+            // 
+            this.statusDataGridViewTextBoxColumn.DataPropertyName = "Status";
+            this.statusDataGridViewTextBoxColumn.HeaderText = "Status";
+            this.statusDataGridViewTextBoxColumn.Name = "statusDataGridViewTextBoxColumn";
+            this.statusDataGridViewTextBoxColumn.ReadOnly = true;
+            this.statusDataGridViewTextBoxColumn.ToolTipText = "Status zlecenia";
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -301,10 +302,10 @@ namespace Workshop.UserInterface.Forms
             this.menuStrip.ResumeLayout(false);
             this.menuStrip.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvTasks)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.bsTasks)).EndInit();
             this.panelContent.ResumeLayout(false);
             this.panelData.ResumeLayout(false);
             this.panelControl.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.bsTasks)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 

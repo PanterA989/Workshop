@@ -42,7 +42,7 @@ namespace Workshop.DataAccessLayer.DatabaseConnection
         }
 
         /// <summary>
-        /// Gets specific task from databese, based on its id
+        /// Gets specific task from databese, based on its id.
         /// </summary>
         /// <param name="id">id of task to be returned</param>
         /// <returns>Single task based on its id</returns>
@@ -88,7 +88,7 @@ namespace Workshop.DataAccessLayer.DatabaseConnection
         }
 
         /// <summary>
-        /// Updates in database all fields of given task .
+        /// Updates all fields of given task in database.
         /// </summary>
         /// <param name="taskData">Task with all its fields to be updated in database</param>
         /// <returns>True if task has been updated successfully.</returns>
@@ -97,9 +97,25 @@ namespace Workshop.DataAccessLayer.DatabaseConnection
             using (IDbConnection connection = new SqlConnection(ConnectionHelper.ConnectionString()))
             {
                 string updateQuery = $@"UPDATE [dbo].Task SET [FirstName] = @FirstName, [LastName] = @LastName, [PhoneNumber] = @PhoneNumber, [Email] = @Email, [BikeManufacturer] = @BikeManufacturer, [BikeModel] = @BikeModel, [FrameNumber] = @FrameNumber, [AdditionalInfo] = @AdditionalInfo, [StartDate] = @StartDate, [EndDate] = @EndDate, [Cost] = @Cost, [TaskDescription] = @TaskDescription, [StatusID] = {taskData.Status.Id} WHERE [Id] = @Id";
-                if (connection.Execute(updateQuery, taskData) > 0) return true;
+                if (connection.Execute(updateQuery, taskData) == 1) return true;
                 else return false;
 
+            }
+        }
+
+        /// <summary>
+        /// Updates status of given task in database.
+        /// </summary>
+        /// <param name="taskId">Id of task of which status should be updated</param>
+        /// <param name="newStatusId">id of new status</param>
+        /// <returns></returns>
+        public bool UpdateStatus(int taskId, int newStatusId)
+        {
+            using (IDbConnection connection = new SqlConnection(ConnectionHelper.ConnectionString()))
+            {
+                string updateQuery = $@"UPDATE [dbo].Task SET [StatusID] = {newStatusId} WHERE [Id] = {taskId}";
+                if (connection.Execute(updateQuery) == 1) return true;
+                else return false;
             }
         }
     }

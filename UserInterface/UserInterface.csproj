@@ -52,6 +52,12 @@
     <Compile Include="Forms\AuthorForm.Designer.cs">
       <DependentUpon>AuthorForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\FinishTaskForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FinishTaskForm.Designer.cs">
+      <DependentUpon>FinishTaskForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\ManageTaskForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -75,6 +81,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Forms\AuthorForm.resx">
       <DependentUpon>AuthorForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FinishTaskForm.resx">
+      <DependentUpon>FinishTaskForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\ManageTaskForm.resx">
       <DependentUpon>ManageTaskForm.cs</DependentUpon>

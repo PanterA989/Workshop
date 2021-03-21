@@ -443,7 +443,7 @@ namespace Workshop.UserInterface.Forms
             this.gbTask.Size = new System.Drawing.Size(388, 396);
             this.gbTask.TabIndex = 1;
             this.gbTask.TabStop = false;
-            this.gbTask.Text = "Usterka";
+            this.gbTask.Text = "Zlecenie";
             // 
             // tlpTask
             // 
@@ -488,9 +488,10 @@ namespace Workshop.UserInterface.Forms
             // 
             this.labelStartDate.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.labelStartDate.AutoSize = true;
-            this.labelStartDate.Location = new System.Drawing.Point(20, 11);
+            this.labelStartDate.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.labelStartDate.Location = new System.Drawing.Point(5, 11);
             this.labelStartDate.Name = "labelStartDate";
-            this.labelStartDate.Size = new System.Drawing.Size(77, 13);
+            this.labelStartDate.Size = new System.Drawing.Size(92, 13);
             this.labelStartDate.TabIndex = 0;
             this.labelStartDate.Text = "Data przyjęcia:";
             // 
