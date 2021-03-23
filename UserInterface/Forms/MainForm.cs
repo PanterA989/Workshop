@@ -30,7 +30,7 @@ namespace Workshop.UserInterface.Forms
         }
 
         /// <summary>
-        /// Checks which list of tasks (historical or current) is beeing viewed and updates its content.
+        /// Checks which list of tasks (historical or current) is beeing viewed and updates its content in dataGridView inside MainForm.
         /// </summary>
         private async void PrepareTasksData()
         {
@@ -82,13 +82,15 @@ namespace Workshop.UserInterface.Forms
             {
                 btnHistory.Image = Properties.Resources.tasks64;
                 btnHistory.Text = "Aktualne zlecenia";
-                btnFinish.Visible = false;
+                btnFinish.Image = Properties.Resources.delete64;
+                btnFinish.Text = "Usuń";
             }
             else 
             {
                 btnHistory.Image = Properties.Resources.history64;
                 btnHistory.Text = "Historia zleceń";
-                btnFinish.Visible = true;
+                btnFinish.Image = Properties.Resources.checked64;
+                btnFinish.Text = "Zakończ";
             }
 
             PrepareTasksData();
@@ -106,20 +108,38 @@ namespace Workshop.UserInterface.Forms
 
         private void btnFinish_Click(object sender, EventArgs e)
         {
-
+            int taskId;
             try
             {
-                var id = (int)dgvTasks.CurrentRow.Cells[0].Value;
-                FinishTaskForm finishTaskForm = new FinishTaskForm(db.GetTaskModel(id));
-                finishTaskForm.ShowDialog();
-                PrepareTasksData();
-
+                taskId = (int)dgvTasks.CurrentRow.Cells[0].Value;
             }
             catch (Exception err)
             {
                 MessageBox.Show($"Błąd podczas zakończania zlecenia.\n" +
                     $"{err.Message}", "Błąd");
+                return;
             }
+
+            if (checkingHistory)
+            {
+                DialogResult result = MessageBox.Show("Czy na pewno chcesz usunąć zlecenie dla:\n" +
+                    $"Producent: {dgvTasks.CurrentRow.Cells[1].Value}\n" +
+                    $"Model: {dgvTasks.CurrentRow.Cells[2].Value}",
+                    "Usuwanie zlecenia",
+                    MessageBoxButtons.YesNo);
+                if (result == DialogResult.Yes)
+                {
+                    if (db.DeleteTask(taskId)) MessageBox.Show("Zlecenie zostało usunięte pomyślnie.", "Usunięto");
+                    else MessageBox.Show("Wystąpił błąd podczas usuwania zlecenia.", "Błąd");
+                }
+            }
+            else 
+            {
+                FinishTaskForm finishTaskForm = new FinishTaskForm(db.GetTaskModel(taskId));
+                finishTaskForm.ShowDialog();
+            }
+            
+            PrepareTasksData();
         }
     }
 }

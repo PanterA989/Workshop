@@ -23,7 +23,7 @@ namespace Workshop.DataAccessLayer.DatabaseConnection
         /// <returns>List of active tasks.</returns>
         public async Task<List<TaskViewModel>> GetActiveTasks()
         {
-            using (IDbConnection connection = new SqlConnection(ConnectionHelper.ConnectionString()))
+            using (IDbConnection connection = new SqlConnection(ConnectionHelper.GetConnectionString()))
             {
                 var result = await connection.QueryAsync<TaskViewModel>("SELECT t.Id, BikeManufacturer, BikeModel, StartDate, EndDate, s.Status FROM Task t INNER JOIN Status s ON t.StatusId = s.Id WHERE s.Status IN ('Przyjęty', 'Do odbioru', 'Anulowany - do odbioru') ORDER BY 1 ASC;");
                 return result.ToList();
@@ -37,7 +37,7 @@ namespace Workshop.DataAccessLayer.DatabaseConnection
         /// <returns>List of historical tasks.</returns>
         public async Task<List<TaskViewModel>> GetHistoryTasks()
         {
-            using (IDbConnection connection = new SqlConnection(ConnectionHelper.ConnectionString()))
+            using (IDbConnection connection = new SqlConnection(ConnectionHelper.GetConnectionString()))
             {
                 var restult = await connection.QueryAsync<TaskViewModel>("SELECT t.Id, BikeManufacturer, BikeModel, StartDate, EndDate, s.Status FROM Task t INNER JOIN Status s ON t.StatusId = s.Id WHERE s.Status IN ('Zrealizowany', 'Anulowany - odebrany') ORDER BY 1 DESC;");
                 return restult.ToList();
@@ -52,7 +52,7 @@ namespace Workshop.DataAccessLayer.DatabaseConnection
         public TaskModel GetTaskModel(int id)
         {
             var sql = $"SELECT t.Id, FirstName, LastName, PhoneNumber, Email, BikeManufacturer, BikeModel, FrameNumber, AdditionalInfo, StartDate, EndDate, Cost, TaskDescription, s.Id, s.Status AS Value FROM Task t INNER JOIN Status s ON t.StatusId = s.Id WHERE t.Id = {id};";
-            using (IDbConnection connection = new SqlConnection(ConnectionHelper.ConnectionString()))
+            using (IDbConnection connection = new SqlConnection(ConnectionHelper.GetConnectionString()))
             {
                 var result = connection.Query<TaskModel, StatusModel, TaskModel>(sql, (taskModel, statusModel) => { taskModel.Status = statusModel; return taskModel; });
                 var post = result.First();
@@ -66,7 +66,7 @@ namespace Workshop.DataAccessLayer.DatabaseConnection
         /// <returns>List of statuses.</returns>
         public List<StatusModel> GetStatuses()
         {
-            using (IDbConnection connection = new SqlConnection(ConnectionHelper.ConnectionString()))
+            using (IDbConnection connection = new SqlConnection(ConnectionHelper.GetConnectionString()))
             {
                 List<StatusModel> list = connection.Query<StatusModel>($"SELECT Id, Status as Value FROM Status;").ToList();
                 return list;
@@ -81,7 +81,7 @@ namespace Workshop.DataAccessLayer.DatabaseConnection
         /// <returns>True if task has been added successfully.</returns>
         public bool AddTask(TaskModel taskData)
         {
-            using (IDbConnection connection = new SqlConnection(ConnectionHelper.ConnectionString()))
+            using (IDbConnection connection = new SqlConnection(ConnectionHelper.GetConnectionString()))
             {
                 string addQuery = @"INSERT INTO [dbo].Task (FirstName, LastName, PhoneNumber, Email, BikeManufacturer, BikeModel, FrameNumber, AdditionalInfo, StartDate, EndDate, Cost, TaskDescription, StatusID) VALUES (@FirstName, @LastName, @PhoneNumber, @Email, @BikeManufacturer, @BikeModel, @FrameNumber, @AdditionalInfo, @StartDate, @EndDate, @Cost, @TaskDescription, @StatusID)";
                 if (connection.Execute(addQuery, new { taskData.FirstName, taskData.LastName, taskData.PhoneNumber, taskData.Email, taskData.BikeManufacturer, taskData.BikeModel, taskData.FrameNumber, taskData.AdditionalInfo, taskData.StartDate, taskData.EndDate, taskData.Cost, taskData.TaskDescription, StatusID = taskData.Status.Id }) == 1) return true;
@@ -97,7 +97,7 @@ namespace Workshop.DataAccessLayer.DatabaseConnection
         /// <returns>True if task has been updated successfully.</returns>
         public bool UpdateTask(TaskModel taskData)
         {
-            using (IDbConnection connection = new SqlConnection(ConnectionHelper.ConnectionString()))
+            using (IDbConnection connection = new SqlConnection(ConnectionHelper.GetConnectionString()))
             {
                 string updateQuery = $@"UPDATE [dbo].Task SET [FirstName] = @FirstName, [LastName] = @LastName, [PhoneNumber] = @PhoneNumber, [Email] = @Email, [BikeManufacturer] = @BikeManufacturer, [BikeModel] = @BikeModel, [FrameNumber] = @FrameNumber, [AdditionalInfo] = @AdditionalInfo, [StartDate] = @StartDate, [EndDate] = @EndDate, [Cost] = @Cost, [TaskDescription] = @TaskDescription, [StatusID] = {taskData.Status.Id} WHERE [Id] = @Id";
                 if (connection.Execute(updateQuery, taskData) == 1) return true;
@@ -114,9 +114,19 @@ namespace Workshop.DataAccessLayer.DatabaseConnection
         /// <returns></returns>
         public bool UpdateStatus(int taskId, int newStatusId)
         {
-            using (IDbConnection connection = new SqlConnection(ConnectionHelper.ConnectionString()))
+            using (IDbConnection connection = new SqlConnection(ConnectionHelper.GetConnectionString()))
             {
                 string updateQuery = $@"UPDATE [dbo].Task SET [StatusID] = {newStatusId} WHERE [Id] = {taskId}";
+                if (connection.Execute(updateQuery) == 1) return true;
+                else return false;
+            }
+        }
+
+        public bool DeleteTask(int taskId)
+        {
+            using (IDbConnection connection = new SqlConnection(ConnectionHelper.GetConnectionString()))
+            {
+                string updateQuery = $@"DELETE FROM [dbo].Task WHERE [Id] = {taskId}";
                 if (connection.Execute(updateQuery) == 1) return true;
                 else return false;
             }
