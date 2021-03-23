@@ -37,7 +37,7 @@ In those windows, the user can see basic information of active and finished task
  - Phone number
  - Bicycle manufacturer
  - Bicycle model
- - Date of admission (set to current day and blocked by default - to unlock it user has to check checbox under label)
+ - Date of admission
  - Task description
  
  #### Optional fields:
