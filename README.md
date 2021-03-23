@@ -46,7 +46,7 @@ In those windows, the user can see basic information of active and finished task
  - e-mail of customer
  - Bicycle frame number
  - Additional informations about bicycle
- - Estimated date of  task completion (blockeb by defauld!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+ - Estimated date of task completion
  - Estimated cost of task
  
  By default date of admission and estimated date of  task completion are locked. To unlock them user has to check checkboxes under label (admission) or inside field (completion).
