@@ -18,8 +18,10 @@ namespace Workshop.DataAccessLayer.DataAccess
             base.OnConfiguring(optionsBuilder);
         }
 
-        public DbSet<TaskModel> TaskModels { get; set; }
-        public DbSet<StatusModel> StatusModels { get; set; }
+        public DbSet<WorkshopTask> WorkshopTasks { get; set; }
+        public DbSet<WorkshopTaskStatus> WorkshopTaskStatuses { get; set; }
+        public DbSet<Bike> Bikes { get; set; }
+        public DbSet<Client> Clients { get; set; }
 
     }
 }

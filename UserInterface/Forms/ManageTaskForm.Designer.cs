@@ -172,7 +172,7 @@ namespace Workshop.UserInterface.Forms
             // 
             // bsStatus
             // 
-            this.bsStatus.DataSource = typeof(Workshop.DataAccessLayer.Models.Dictionaries.StatusModel);
+            this.bsStatus.DataSource = typeof(Workshop.DataAccessLayer.Models.Dictionaries.WorkshopTaskStatus);
             // 
             // tlpLeft
             // 

@@ -60,7 +60,7 @@ namespace Workshop.UserInterface.Forms
             try
             {
                 var id = (int)dgvTasks.CurrentRow.Cells[0].Value;
-                ManageTaskForm manageTaskForm = new ManageTaskForm(db.GetTaskModel(id));
+                ManageTaskForm manageTaskForm = new ManageTaskForm(db.GetWorkshopTask(id));
                 manageTaskForm.ShowDialog();
                 PrepareTasksData();
             }
@@ -135,7 +135,7 @@ namespace Workshop.UserInterface.Forms
             }
             else 
             {
-                FinishTaskForm finishTaskForm = new FinishTaskForm(db.GetTaskModel(taskId));
+                FinishTaskForm finishTaskForm = new FinishTaskForm(db.GetWorkshopTask(taskId));
                 finishTaskForm.ShowDialog();
             }
             

@@ -20,7 +20,7 @@ namespace Workshop.UserInterface.Forms
     {
         private readonly int? taskId = null;
         private MyDbConnection db;
-        private List<StatusModel> statuses;
+        private List<WorkshopTaskStatus> statuses;
 
         /// <summary>
         /// Creates add form.
@@ -34,19 +34,19 @@ namespace Workshop.UserInterface.Forms
         }
 
         /// <summary>
-        /// Creates edit form with filled fields, based on TaskModel object.
+        /// Creates edit form with filled fields, based on WorkshopTask object.
         /// </summary>
         /// <param name="taskModel">Task which should be put into edit form.</param>
-        public ManageTaskForm(TaskModel taskModel) : this()
+        public ManageTaskForm(WorkshopTask workshopTask) : this()
         {
             cbStartDateEditable.Text = "Inna data";
             buttonConfirm.Image = Properties.Resources.edit_24;
             buttonConfirm.Text = "Edytuj";
             this.Text = "Edycja zlecenie";
 
-            InitializeData(taskModel);
-            taskId = taskModel.Id;
-            if (taskModel.EndDate.HasValue) dtpEndDate.Checked = true;
+            InitializeData(workshopTask);
+            taskId = workshopTask.Id;
+            if (workshopTask.EndDate.HasValue) dtpEndDate.Checked = true;
         }
 
         /// <summary>
@@ -96,17 +96,17 @@ namespace Workshop.UserInterface.Forms
         /// Fills form with task data.
         /// </summary>
         /// <param name="task">object representing task to be done.</param>
-        private void InitializeData(TaskModel task)
+        private void InitializeData(WorkshopTask task)
         {
 
-            tbFirstName.Text = task?.FirstName;
-            tbLastName.Text = task?.LastName;
-            tbPhone.Text = task.PhoneNumber;
-            tbEmail.Text = task?.Email;
-            tbManufacturer.Text = task.BikeManufacturer;
-            tbModel.Text = task.BikeModel;
-            tbFrameNo.Text = task?.FrameNumber;
-            tbAdditionalInfo.Text = task?.AdditionalInfo;
+            tbFirstName.Text = task?.Client.FirstName;
+            tbLastName.Text = task?.Client.LastName;
+            tbPhone.Text = task.Client.PhoneNumber;
+            tbEmail.Text = task?.Client.Email;
+            tbManufacturer.Text = task.Bike.Manufacturer;
+            tbModel.Text = task.Bike.Model;
+            tbFrameNo.Text = task?.Bike.FrameNumber;
+            tbAdditionalInfo.Text = task?.Bike.AdditionalInfo;
             dtpStartDate.Value = task.StartDate;
             if (task.EndDate.HasValue) dtpEndDate.Value = task.EndDate.Value;
             tbCost.Text = task?.Cost.ToString();
@@ -133,7 +133,7 @@ namespace Workshop.UserInterface.Forms
             TrimFields();
             if (ValidateControls())
             {
-                TaskModel taskData = CreateTaskFromFields();
+                WorkshopTask taskData = CreateTaskFromFields();
 
                 if (taskId == null)
                 {
@@ -172,21 +172,21 @@ namespace Workshop.UserInterface.Forms
         }
 
         /// <summary>
-        /// Creates TaskModel based on data gathered in form.
+        /// Creates WorkshopTask based on data gathered in form.
         /// </summary>
-        /// <returns>TaskModel object with values given in form.</returns>
-        private TaskModel CreateTaskFromFields()
+        /// <returns>WorkshopTask object with values given in form.</returns>
+        private WorkshopTask CreateTaskFromFields()
         {
-            TaskModel taskData = new TaskModel();
+            WorkshopTask taskData = new WorkshopTask();
 
-            taskData.FirstName = tbFirstName.Text;
-            taskData.LastName = tbLastName.Text;
-            taskData.PhoneNumber = tbPhone.Text;
-            taskData.Email = tbEmail.Text;
-            taskData.BikeManufacturer = tbManufacturer.Text;
-            taskData.BikeModel = tbModel.Text;
-            taskData.FrameNumber = tbFrameNo.Text;
-            taskData.AdditionalInfo = tbAdditionalInfo.Text;
+            taskData.Client.FirstName = tbFirstName.Text;
+            taskData.Client.LastName = tbLastName.Text;
+            taskData.Client.PhoneNumber = tbPhone.Text;
+            taskData.Client.Email = tbEmail.Text;
+            taskData.Bike.Manufacturer = tbManufacturer.Text;
+            taskData.Bike.Model = tbModel.Text;
+            taskData.Bike.FrameNumber = tbFrameNo.Text;
+            taskData.Bike.AdditionalInfo = tbAdditionalInfo.Text;
             taskData.StartDate = dtpStartDate.Value.Date;
             if (dtpEndDate.Checked) taskData.EndDate = dtpEndDate.Value.Date;
             if (ValidatorHelper.CostCheckAndSetErrors(tbCost.Text, epCost, labelCost, tbCost) && !string.IsNullOrWhiteSpace(tbCost.Text)) taskData.Cost = decimal.Parse(tbCost.Text, CultureInfo.InvariantCulture);

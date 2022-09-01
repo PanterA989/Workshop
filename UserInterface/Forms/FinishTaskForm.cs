@@ -18,13 +18,13 @@ namespace Workshop.UserInterface.Forms
         private int taskId;
         private int newStatusId;
         private MyDbConnection db;
-        public FinishTaskForm(TaskModel task)
+        public FinishTaskForm(WorkshopTask task)
         {
             db = new MyDbConnection();
             taskId = task.Id;
             newStatusId = ++task.Status.Id;
-            List<StatusModel> statuses = db.GetStatuses();
-            StatusModel newStatus = statuses.FirstOrDefault(x => x.Id == newStatusId);
+            List<WorkshopTaskStatus> statuses = db.GetStatuses();
+            WorkshopTaskStatus newStatus = statuses.FirstOrDefault(x => x.Id == newStatusId);
             if (newStatus == null)
             {
                 this.Opacity = 0;
@@ -34,9 +34,9 @@ namespace Workshop.UserInterface.Forms
             }
 
             InitializeComponent();
-            labelTaskManufacturer.Text = task.BikeManufacturer;
-            labelTaskModel.Text = task.BikeModel;
-            labelTaskPhone.Text = task.PhoneNumber;
+            labelTaskManufacturer.Text = task.Bike.Manufacturer;
+            labelTaskModel.Text = task.Bike.Model;
+            labelTaskPhone.Text = task.Client.PhoneNumber;
             labelTaskStatus.Text = newStatus.Value;
         }
 
