@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Workshop.DataAccessLayer.DataAccess;
 
 namespace Workshop.DataAccessLayer.Migrations
 {
     [DbContext(typeof(WorkshopTaskContext))]
-    partial class WorkshopTaskContextModelSnapshot : ModelSnapshot
+    [Migration("20220902193718_SeedStatuses")]
+    partial class SeedStatuses
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

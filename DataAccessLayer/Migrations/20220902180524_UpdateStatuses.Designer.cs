@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Workshop.DataAccessLayer.DataAccess;
 
 namespace Workshop.DataAccessLayer.Migrations
 {
     [DbContext(typeof(WorkshopTaskContext))]
-    partial class WorkshopTaskContextModelSnapshot : ModelSnapshot
+    [Migration("20220902180524_UpdateStatuses")]
+    partial class UpdateStatuses
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -101,48 +103,6 @@ namespace Workshop.DataAccessLayer.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("WorkshopTaskStatuses");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            IsActive = true,
-                            StatusGroupNumber = 0,
-                            StatusGroupNumberOrder = 0,
-                            Value = "Przyjęty"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            IsActive = true,
-                            StatusGroupNumber = 0,
-                            StatusGroupNumberOrder = 1,
-                            Value = "Do odbioru"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            IsActive = false,
-                            StatusGroupNumber = 0,
-                            StatusGroupNumberOrder = 2,
-                            Value = "Zrealizowany"
-                        },
-                        new
-                        {
-                            Id = 4,
-                            IsActive = true,
-                            StatusGroupNumber = 1,
-                            StatusGroupNumberOrder = 0,
-                            Value = "Anulowany - do odbioru"
-                        },
-                        new
-                        {
-                            Id = 5,
-                            IsActive = false,
-                            StatusGroupNumber = 1,
-                            StatusGroupNumberOrder = 1,
-                            Value = "Anulowany - odebrany"
-                        });
                 });
 
             modelBuilder.Entity("Workshop.DataAccessLayer.Models.WorkshopTask", b =>

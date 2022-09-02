@@ -17,13 +17,11 @@ namespace Workshop.UserInterface.Forms
     {
         private int taskId;
         private int newStatusId;
-        private MyDbConnection db;
         public FinishTaskForm(WorkshopTask task)
         {
-            db = new MyDbConnection();
             taskId = task.Id;
             newStatusId = ++task.Status.Id;
-            List<WorkshopTaskStatus> statuses = db.GetStatuses();
+            List<WorkshopTaskStatus> statuses = MyDbConnection.GetStatuses();
             WorkshopTaskStatus newStatus = statuses.FirstOrDefault(x => x.Id == newStatusId);
             if (newStatus == null)
             {
@@ -42,7 +40,7 @@ namespace Workshop.UserInterface.Forms
 
         private void btnConfirm_Click(object sender, EventArgs e)
         {
-            if (db.UpdateStatus(taskId, newStatusId))
+            if (MyDbConnection.UpdateStatus(taskId, newStatusId))
             {
                 this.Opacity = 0;
                 MessageBox.Show("Pomyślnie zaktualizowano status!", "Zaktualizowano.");

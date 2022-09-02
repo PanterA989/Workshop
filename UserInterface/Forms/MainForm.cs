@@ -7,7 +7,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Workshop.DataAccessLayer.DataAccess;
 using Workshop.DataAccessLayer.DatabaseConnection;
+using Workshop.DataAccessLayer.Enums;
 using Workshop.DataAccessLayer.Models;
 using Workshop.DataAccessLayer.Models.Dictionaries;
 using Workshop.DataAccessLayer.ViewModel;
@@ -18,14 +20,13 @@ namespace Workshop.UserInterface.Forms
     {
 
         private List<TaskViewModel> tasksViewModels = new List<TaskViewModel>();
-        private MyDbConnection db = new MyDbConnection();
-        private bool checkingHistory = false;
+        private WorkshopTasksListType listType = WorkshopTasksListType.Active;
 
         public MainForm()
         {
             InitializeComponent();
             dgvTasks.RowTemplate.MinimumHeight = 22;
-
+            
             PrepareTasksData();
         }
 
@@ -34,9 +35,7 @@ namespace Workshop.UserInterface.Forms
         /// </summary>
         private async void PrepareTasksData()
         {
-            if (!checkingHistory) tasksViewModels = await db.GetActiveTasks();
-            else tasksViewModels = await db.GetHistoryTasks();
-            
+            tasksViewModels = await MyDbConnection.GetWorkshopTasks(listType);
             
             bsTasks.DataSource = new BindingList<TaskViewModel>(tasksViewModels);
             dgvTasks.DataSource = bsTasks;
@@ -60,7 +59,7 @@ namespace Workshop.UserInterface.Forms
             try
             {
                 var id = (int)dgvTasks.CurrentRow.Cells[0].Value;
-                ManageTaskForm manageTaskForm = new ManageTaskForm(db.GetWorkshopTask(id));
+                ManageTaskForm manageTaskForm = new ManageTaskForm(MyDbConnection.GetWorkshopTask(id));
                 manageTaskForm.ShowDialog();
                 PrepareTasksData();
             }
@@ -76,14 +75,13 @@ namespace Workshop.UserInterface.Forms
         /// </summary>
         private void btnHistory_Click(object sender, EventArgs e)
         {
-            checkingHistory = !checkingHistory;
-
-            if (checkingHistory)
+            if (listType == WorkshopTasksListType.Active)
             {
                 btnHistory.Image = Properties.Resources.tasks64;
                 btnHistory.Text = "Aktualne zlecenia";
                 btnFinish.Image = Properties.Resources.delete64;
                 btnFinish.Text = "Usuń";
+                listType = WorkshopTasksListType.Historical;
             }
             else 
             {
@@ -91,8 +89,9 @@ namespace Workshop.UserInterface.Forms
                 btnHistory.Text = "Historia zleceń";
                 btnFinish.Image = Properties.Resources.checked64;
                 btnFinish.Text = "Zakończ";
-            }
-
+                listType = WorkshopTasksListType.Active;
+            };
+            
             PrepareTasksData();
         }
 
@@ -115,12 +114,12 @@ namespace Workshop.UserInterface.Forms
             }
             catch (Exception err)
             {
-                MessageBox.Show($"Błąd podczas zakończania zlecenia.\n" +
+                MessageBox.Show("Błąd podczas zakończania zlecenia.\n" +
                     $"{err.Message}", "Błąd");
                 return;
             }
 
-            if (checkingHistory)
+            if (listType == WorkshopTasksListType.Historical)
             {
                 DialogResult result = MessageBox.Show("Czy na pewno chcesz usunąć zlecenie dla:\n" +
                     $"Producent: {dgvTasks.CurrentRow.Cells[1].Value}\n" +
@@ -129,13 +128,13 @@ namespace Workshop.UserInterface.Forms
                     MessageBoxButtons.YesNo);
                 if (result == DialogResult.Yes)
                 {
-                    if (db.DeleteTask(taskId)) MessageBox.Show("Zlecenie zostało usunięte pomyślnie.", "Usunięto");
+                    if (MyDbConnection.DeleteTask(taskId)) MessageBox.Show("Zlecenie zostało usunięte pomyślnie.", "Usunięto");
                     else MessageBox.Show("Wystąpił błąd podczas usuwania zlecenia.", "Błąd");
                 }
             }
             else 
             {
-                FinishTaskForm finishTaskForm = new FinishTaskForm(db.GetWorkshopTask(taskId));
+                FinishTaskForm finishTaskForm = new FinishTaskForm(MyDbConnection.GetWorkshopTask(taskId));
                 finishTaskForm.ShowDialog();
             }
             

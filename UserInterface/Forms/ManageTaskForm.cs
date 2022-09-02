@@ -19,7 +19,6 @@ namespace Workshop.UserInterface.Forms
     public partial class ManageTaskForm : BaseAddEditForm
     {
         private readonly int? taskId = null;
-        private MyDbConnection db;
         private List<WorkshopTaskStatus> statuses;
 
         /// <summary>
@@ -27,7 +26,6 @@ namespace Workshop.UserInterface.Forms
         /// </summary>
         public ManageTaskForm()
         {
-            db = new MyDbConnection();
             InitializeComponent();
             InitializeErrorProviders();
             InitializeStatuses();
@@ -120,7 +118,7 @@ namespace Workshop.UserInterface.Forms
         /// </summary>
         private void InitializeStatuses()
         {
-            statuses = db.GetStatuses();
+            statuses = MyDbConnection.GetStatuses();
             bsStatus.DataSource = statuses;
         }
 
@@ -138,7 +136,7 @@ namespace Workshop.UserInterface.Forms
                 if (taskId == null)
                 {
 
-                    if (!db.AddTask(taskData))
+                    if (!MyDbConnection.AddTask(taskData))
                     {
                         MessageBox.Show("Wystąpił błąd podczas dodawania zlecenia", "Błąd", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
@@ -152,7 +150,7 @@ namespace Workshop.UserInterface.Forms
                 else
                 {
                     taskData.Id = (int)taskId;
-                    if (!db.UpdateTask(taskData))
+                    if (!MyDbConnection.UpdateTask(taskData))
                     {
                         MessageBox.Show("Wystąpił błąd podczas edycji zlecenia", "Błąd", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
@@ -192,7 +190,6 @@ namespace Workshop.UserInterface.Forms
             if (ValidatorHelper.CostCheckAndSetErrors(tbCost.Text, epCost, labelCost, tbCost) && !string.IsNullOrWhiteSpace(tbCost.Text)) taskData.Cost = decimal.Parse(tbCost.Text, CultureInfo.InvariantCulture);
             taskData.TaskDescription = tbDescription.Text;
             taskData.Status = statuses.FirstOrDefault(x => x.Id == (int)cbStatus.SelectedValue);
-            //taskData.Status = cbStatus.SelectedValue;
 
             return taskData;
         }

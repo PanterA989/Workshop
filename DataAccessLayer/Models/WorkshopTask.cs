@@ -9,11 +9,11 @@ namespace Workshop.DataAccessLayer.Models
     {
         public int Id { get; set; }
 
-        [Required]
-        public Client Client { get; set; }
+        [Required] 
+        public Client Client { get; set; } = new Client();
 
-        [Required]
-        public Bike Bike { get; set; }
+        [Required] 
+        public Bike Bike { get; set; } = new Bike();
 
         [Required]
         public DateTime StartDate { get; set; }
@@ -25,7 +25,7 @@ namespace Workshop.DataAccessLayer.Models
         [Required]
         public string TaskDescription { get; set; }
 
-        [Required]
-        public WorkshopTaskStatus Status { get; set; }
+        [Required] 
+        public WorkshopTaskStatus Status { get; set; } = new WorkshopTaskStatus();
     }
 }

@@ -7,40 +7,36 @@ using System.Data;
 using Workshop.DataAccessLayer.Models;
 using Workshop.DataAccessLayer.Models.Dictionaries;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
+using Workshop.DataAccessLayer.DataAccess;
+using Workshop.DataAccessLayer.Enums;
 
 namespace Workshop.DataAccessLayer.DatabaseConnection
 {
-    public class MyDbConnection
+    public static class MyDbConnection
     {
-
-        public MyDbConnection()
-        {
-        }
-
         /// <summary>
-        /// Executes asynchronous database query gathering all active tasks.
+        /// Executes asynchronous database query gathering historical or active workshop tasks.
         /// </summary>
-        /// <returns>List of active tasks.</returns>
-        public async Task<List<TaskViewModel>> GetActiveTasks()
+        /// <param name="listType">Type of searched tasks</param>
+        /// <returns>List of task of given type</returns>
+        public static async Task<List<TaskViewModel>> GetWorkshopTasks(WorkshopTasksListType listType)
         {
-            using (IDbConnection connection = new SqlConnection(ConnectionHelper.GetConnectionString()))
+            using (WorkshopTaskContext dbContext = new WorkshopTaskContext())
             {
-                var result = await connection.QueryAsync<TaskViewModel>("SELECT t.Id, BikeManufacturer, BikeModel, StartDate, EndDate, s.Status FROM Task t INNER JOIN Status s ON t.StatusId = s.Id WHERE s.Status IN ('Przyjęty', 'Do odbioru', 'Anulowany - do odbioru') ORDER BY 1 ASC;");
-                return result.ToList();
-            }
+                var searchForActiveTasks = listType == WorkshopTasksListType.Active;
 
-        }
-
-        /// <summary>
-        /// Executes asynchronous database query gathering all historical tasks.
-        /// </summary>
-        /// <returns>List of historical tasks.</returns>
-        public async Task<List<TaskViewModel>> GetHistoryTasks()
-        {
-            using (IDbConnection connection = new SqlConnection(ConnectionHelper.GetConnectionString()))
-            {
-                var restult = await connection.QueryAsync<TaskViewModel>("SELECT t.Id, BikeManufacturer, BikeModel, StartDate, EndDate, s.Status FROM Task t INNER JOIN Status s ON t.StatusId = s.Id WHERE s.Status IN ('Zrealizowany', 'Anulowany - odebrany') ORDER BY 1 DESC;");
-                return restult.ToList();
+                return await dbContext.WorkshopTasks
+                    .Where(x => x.Status.IsActive == searchForActiveTasks)
+                    .Select(x => new TaskViewModel()
+                    {
+                        Id = x.Id,
+                        BikeManufacturer = x.Bike.Manufacturer,
+                        BikeModel = x.Bike.Model,
+                        StartDate = x.StartDate,
+                        EndDate = x.EndDate,
+                        Status = x.Status.Value
+                    }).ToListAsync();
             }
         }
 
@@ -48,15 +44,12 @@ namespace Workshop.DataAccessLayer.DatabaseConnection
         /// Gets specific task from databese, based on its id.
         /// </summary>
         /// <param name="id">id of task to be returned</param>
-        /// <returns>Single task based on its id</returns>
-        public WorkshopTask GetWorkshopTask(int id)
+        /// <returns>Single task based on its id or null if not found</returns>
+        public static WorkshopTask GetWorkshopTask(int id)
         {
-            var sql = $"SELECT t.Id, FirstName, LastName, PhoneNumber, Email, BikeManufacturer, BikeModel, FrameNumber, AdditionalInfo, StartDate, EndDate, Cost, TaskDescription, s.Id, s.Status AS Value FROM Task t INNER JOIN Status s ON t.StatusId = s.Id WHERE t.Id = {id};";
-            using (IDbConnection connection = new SqlConnection(ConnectionHelper.GetConnectionString()))
+            using (WorkshopTaskContext dbContext = new WorkshopTaskContext())
             {
-                var result = connection.Query<WorkshopTask, WorkshopTaskStatus, WorkshopTask>(sql, (workshopTask, statusModel) => { workshopTask.Status = statusModel; return workshopTask; });
-                var post = result.First();
-                return post;
+                return dbContext.WorkshopTasks.Find(id);
             }
         }
 
@@ -64,29 +57,26 @@ namespace Workshop.DataAccessLayer.DatabaseConnection
         /// Gets all statuses from database.
         /// </summary>
         /// <returns>List of statuses.</returns>
-        public List<WorkshopTaskStatus> GetStatuses()
+        public static List<WorkshopTaskStatus> GetStatuses()
         {
-            using (IDbConnection connection = new SqlConnection(ConnectionHelper.GetConnectionString()))
+            using (WorkshopTaskContext dbContext = new WorkshopTaskContext())
             {
-                List<WorkshopTaskStatus> list = connection.Query<WorkshopTaskStatus>($"SELECT Id, Status as Value FROM Status;").ToList();
-                return list;
+                return dbContext.WorkshopTaskStatuses.ToList();
             }
         }
-
 
         /// <summary>
         /// Adds task to database.
         /// </summary>
         /// <param name="workshopTask">TaskModel object to be put into database.</param>
         /// <returns>True if task has been added successfully.</returns>
-        public bool AddTask(WorkshopTask workshopTask)
+        public static bool AddTask(WorkshopTask workshopTask)
         {
-            using (IDbConnection connection = new SqlConnection(ConnectionHelper.GetConnectionString()))
+            using (WorkshopTaskContext dbContext = new WorkshopTaskContext())
             {
-                string addQuery = @"INSERT INTO [dbo].Task (FirstName, LastName, PhoneNumber, Email, BikeManufacturer, BikeModel, FrameNumber, AdditionalInfo, StartDate, EndDate, Cost, TaskDescription, StatusID) VALUES (@FirstName, @LastName, @PhoneNumber, @Email, @BikeManufacturer, @BikeModel, @FrameNumber, @AdditionalInfo, @StartDate, @EndDate, @Cost, @TaskDescription, @StatusID)";
-                if (connection.Execute(addQuery, new { workshopTask.Client.FirstName, workshopTask.Client.LastName, workshopTask.Client.PhoneNumber, workshopTask.Client.Email, workshopTask.Bike.Manufacturer, workshopTask.Bike.Model, workshopTask.Bike.FrameNumber, workshopTask.Bike.AdditionalInfo, workshopTask.StartDate, workshopTask.EndDate, workshopTask.Cost, workshopTask.TaskDescription, StatusID = workshopTask.Status.Id }) == 1) return true;
-                else return false;
-
+                dbContext.WorkshopTasks.Add(workshopTask);
+                dbContext.Entry(workshopTask.Status).State = EntityState.Unchanged;
+                return dbContext.SaveChanges() > 0;
             }
         }
 
@@ -95,14 +85,19 @@ namespace Workshop.DataAccessLayer.DatabaseConnection
         /// </summary>
         /// <param name="taskData">Task with all its fields to be updated in database</param>
         /// <returns>True if task has been updated successfully.</returns>
-        public bool UpdateTask(WorkshopTask taskData)
+        public static bool UpdateTask(WorkshopTask taskData)
         {
-            using (IDbConnection connection = new SqlConnection(ConnectionHelper.GetConnectionString()))
+            using (WorkshopTaskContext dbContext = new WorkshopTaskContext())
             {
-                string updateQuery = $@"UPDATE [dbo].Task SET [FirstName] = @FirstName, [LastName] = @LastName, [PhoneNumber] = @PhoneNumber, [Email] = @Email, [BikeManufacturer] = @BikeManufacturer, [BikeModel] = @BikeModel, [FrameNumber] = @FrameNumber, [AdditionalInfo] = @AdditionalInfo, [StartDate] = @StartDate, [EndDate] = @EndDate, [Cost] = @Cost, [TaskDescription] = @TaskDescription, [StatusID] = {taskData.Status.Id} WHERE [Id] = @Id";
-                if (connection.Execute(updateQuery, taskData) == 1) return true;
-                else return false;
-
+                var result = dbContext.WorkshopTasks.Find(taskData.Id);
+                if (result == null)
+                    return false;
+                
+                dbContext.Entry(result).CurrentValues.SetValues(taskData);
+                return true;
+                //TODO: Test
+                // dbContext.WorkshopTasks.Update(taskData);
+                // dbContext.SaveChanges();
             }
         }
 
@@ -112,8 +107,18 @@ namespace Workshop.DataAccessLayer.DatabaseConnection
         /// <param name="taskId">Id of task of which status should be updated</param>
         /// <param name="newStatusId">id of new status</param>
         /// <returns></returns>
-        public bool UpdateStatus(int taskId, int newStatusId)
+        public static bool UpdateStatus(int taskId, int newStatusId)
         {
+
+            //TODO
+
+            using (WorkshopTaskContext dbContext = new WorkshopTaskContext())
+            {
+                var result = dbContext.WorkshopTasks.Find(taskId);
+                if (result == null)
+                    return false;
+            }
+
             using (IDbConnection connection = new SqlConnection(ConnectionHelper.GetConnectionString()))
             {
                 string updateQuery = $@"UPDATE [dbo].Task SET [StatusID] = {newStatusId} WHERE [Id] = {taskId}";
@@ -122,14 +127,21 @@ namespace Workshop.DataAccessLayer.DatabaseConnection
             }
         }
 
-        public bool DeleteTask(int taskId)
+        public static bool DeleteTask(int taskId)
         {
-            using (IDbConnection connection = new SqlConnection(ConnectionHelper.GetConnectionString()))
+            using (WorkshopTaskContext dbContext = new WorkshopTaskContext())
             {
-                string updateQuery = $@"DELETE FROM [dbo].Task WHERE [Id] = {taskId}";
-                if (connection.Execute(updateQuery) == 1) return true;
-                else return false;
+                var taskToDelete = dbContext.WorkshopTasks.SingleOrDefault(x => x.Id == taskId);
+                if (taskToDelete != null)
+                {
+                    dbContext.WorkshopTasks.Remove(taskToDelete);
+                    dbContext.SaveChanges();
+                    return true;
+                }
+
+                return false;
             }
+
         }
     }
 }

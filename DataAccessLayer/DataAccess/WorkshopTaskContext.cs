@@ -23,5 +23,9 @@ namespace Workshop.DataAccessLayer.DataAccess
         public DbSet<Bike> Bikes { get; set; }
         public DbSet<Client> Clients { get; set; }
 
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Seed();
+        }
     }
 }
