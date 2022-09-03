@@ -35,7 +35,7 @@ namespace Workshop.UserInterface.Forms
         /// </summary>
         private async void PrepareTasksData()
         {
-            tasksViewModels = await MyDbConnection.GetWorkshopTasks(listType);
+            tasksViewModels = await MyDbConnection.GetWorkshopTaskList(listType);
             
             bsTasks.DataSource = new BindingList<TaskViewModel>(tasksViewModels);
             dgvTasks.DataSource = bsTasks;

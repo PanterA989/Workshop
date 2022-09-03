@@ -18,7 +18,8 @@ namespace Workshop.UserInterface.Forms
 {
     public partial class ManageTaskForm : BaseAddEditForm
     {
-        private readonly int? taskId = null;
+        private readonly int? taskId;
+        private WorkshopTask managedTask;
         private List<WorkshopTaskStatus> statuses;
 
         /// <summary>
@@ -29,6 +30,8 @@ namespace Workshop.UserInterface.Forms
             InitializeComponent();
             InitializeErrorProviders();
             InitializeStatuses();
+
+            managedTask = new WorkshopTask();
         }
 
         /// <summary>
@@ -41,9 +44,11 @@ namespace Workshop.UserInterface.Forms
             buttonConfirm.Image = Properties.Resources.edit_24;
             buttonConfirm.Text = "Edytuj";
             this.Text = "Edycja zlecenie";
+            managedTask = workshopTask;
+            taskId = workshopTask.Id;
 
             InitializeData(workshopTask);
-            taskId = workshopTask.Id;
+            
             if (workshopTask.EndDate.HasValue) dtpEndDate.Checked = true;
         }
 
@@ -131,12 +136,12 @@ namespace Workshop.UserInterface.Forms
             TrimFields();
             if (ValidateControls())
             {
-                WorkshopTask taskData = CreateTaskFromFields();
+                UpdateTaskFromFields();
 
                 if (taskId == null)
                 {
 
-                    if (!MyDbConnection.AddTask(taskData))
+                    if (!MyDbConnection.AddTask(managedTask))
                     {
                         MessageBox.Show("Wystąpił błąd podczas dodawania zlecenia", "Błąd", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
@@ -149,8 +154,9 @@ namespace Workshop.UserInterface.Forms
                 }
                 else
                 {
-                    taskData.Id = (int)taskId;
-                    if (!MyDbConnection.UpdateTask(taskData))
+                    //TODO: Redundant?
+                    managedTask.Id = (int)taskId;
+                    if (!MyDbConnection.UpdateTask(managedTask))
                     {
                         MessageBox.Show("Wystąpił błąd podczas edycji zlecenia", "Błąd", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
@@ -173,25 +179,21 @@ namespace Workshop.UserInterface.Forms
         /// Creates WorkshopTask based on data gathered in form.
         /// </summary>
         /// <returns>WorkshopTask object with values given in form.</returns>
-        private WorkshopTask CreateTaskFromFields()
+        private void UpdateTaskFromFields()
         {
-            WorkshopTask taskData = new WorkshopTask();
-
-            taskData.Client.FirstName = tbFirstName.Text;
-            taskData.Client.LastName = tbLastName.Text;
-            taskData.Client.PhoneNumber = tbPhone.Text;
-            taskData.Client.Email = tbEmail.Text;
-            taskData.Bike.Manufacturer = tbManufacturer.Text;
-            taskData.Bike.Model = tbModel.Text;
-            taskData.Bike.FrameNumber = tbFrameNo.Text;
-            taskData.Bike.AdditionalInfo = tbAdditionalInfo.Text;
-            taskData.StartDate = dtpStartDate.Value.Date;
-            if (dtpEndDate.Checked) taskData.EndDate = dtpEndDate.Value.Date;
-            if (ValidatorHelper.CostCheckAndSetErrors(tbCost.Text, epCost, labelCost, tbCost) && !string.IsNullOrWhiteSpace(tbCost.Text)) taskData.Cost = decimal.Parse(tbCost.Text, CultureInfo.InvariantCulture);
-            taskData.TaskDescription = tbDescription.Text;
-            taskData.Status = statuses.FirstOrDefault(x => x.Id == (int)cbStatus.SelectedValue);
-
-            return taskData;
+            managedTask.Client.FirstName = tbFirstName.Text;
+            managedTask.Client.LastName = tbLastName.Text;
+            managedTask.Client.PhoneNumber = tbPhone.Text;
+            managedTask.Client.Email = tbEmail.Text;
+            managedTask.Bike.Manufacturer = tbManufacturer.Text;
+            managedTask.Bike.Model = tbModel.Text;
+            managedTask.Bike.FrameNumber = tbFrameNo.Text;
+            managedTask.Bike.AdditionalInfo = tbAdditionalInfo.Text;
+            managedTask.StartDate = dtpStartDate.Value.Date;
+            if (dtpEndDate.Checked) managedTask.EndDate = dtpEndDate.Value.Date;
+            if (ValidatorHelper.CostCheckAndSetErrors(tbCost.Text, epCost, labelCost, tbCost) && !string.IsNullOrWhiteSpace(tbCost.Text)) managedTask.Cost = decimal.Parse(tbCost.Text, CultureInfo.InvariantCulture);
+            managedTask.TaskDescription = tbDescription.Text;
+            managedTask.Status = statuses.FirstOrDefault(x => x.Id == (int)cbStatus.SelectedValue);
         }
 
         /// <summary>

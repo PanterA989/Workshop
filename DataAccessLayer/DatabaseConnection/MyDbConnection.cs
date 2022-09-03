@@ -20,7 +20,7 @@ namespace Workshop.DataAccessLayer.DatabaseConnection
         /// </summary>
         /// <param name="listType">Type of searched tasks</param>
         /// <returns>List of task of given type</returns>
-        public static async Task<List<TaskViewModel>> GetWorkshopTasks(WorkshopTasksListType listType)
+        public static async Task<List<TaskViewModel>> GetWorkshopTaskList(WorkshopTasksListType listType)
         {
             using (WorkshopTaskContext dbContext = new WorkshopTaskContext())
             {
@@ -49,7 +49,11 @@ namespace Workshop.DataAccessLayer.DatabaseConnection
         {
             using (WorkshopTaskContext dbContext = new WorkshopTaskContext())
             {
-                return dbContext.WorkshopTasks.Find(id);
+                return dbContext.WorkshopTasks
+                    .Include(t => t.Bike)
+                    .Include(t => t.Client)
+                    .Include(t => t.Status)
+                    .FirstOrDefault(x => x.Id == id);
             }
         }
 
@@ -76,6 +80,7 @@ namespace Workshop.DataAccessLayer.DatabaseConnection
             {
                 dbContext.WorkshopTasks.Add(workshopTask);
                 dbContext.Entry(workshopTask.Status).State = EntityState.Unchanged;
+
                 return dbContext.SaveChanges() > 0;
             }
         }
@@ -85,19 +90,19 @@ namespace Workshop.DataAccessLayer.DatabaseConnection
         /// </summary>
         /// <param name="taskData">Task with all its fields to be updated in database</param>
         /// <returns>True if task has been updated successfully.</returns>
-        public static bool UpdateTask(WorkshopTask taskData)
+        public static bool UpdateTask(WorkshopTask updatedTaskData)
         {
             using (WorkshopTaskContext dbContext = new WorkshopTaskContext())
             {
-                var result = dbContext.WorkshopTasks.Find(taskData.Id);
-                if (result == null)
+                var existingTask = GetWorkshopTask(updatedTaskData.Id);
+                if (existingTask == null)
                     return false;
-                
-                dbContext.Entry(result).CurrentValues.SetValues(taskData);
+
+                dbContext.Update(updatedTaskData);
+                dbContext.Entry(updatedTaskData.Status).State = EntityState.Unchanged;
+                dbContext.SaveChanges();
+
                 return true;
-                //TODO: Test
-                // dbContext.WorkshopTasks.Update(taskData);
-                // dbContext.SaveChanges();
             }
         }
 
@@ -109,21 +114,18 @@ namespace Workshop.DataAccessLayer.DatabaseConnection
         /// <returns></returns>
         public static bool UpdateStatus(int taskId, int newStatusId)
         {
-
-            //TODO
-
             using (WorkshopTaskContext dbContext = new WorkshopTaskContext())
             {
-                var result = dbContext.WorkshopTasks.Find(taskId);
-                if (result == null)
-                    return false;
-            }
+                var updatedWorkshopTask = dbContext.WorkshopTasks
+                    .FirstOrDefault(x => x.Id == taskId);
 
-            using (IDbConnection connection = new SqlConnection(ConnectionHelper.GetConnectionString()))
-            {
-                string updateQuery = $@"UPDATE [dbo].Task SET [StatusID] = {newStatusId} WHERE [Id] = {taskId}";
-                if (connection.Execute(updateQuery) == 1) return true;
-                else return false;
+                if (updatedWorkshopTask == null)
+                    return false;
+                
+                updatedWorkshopTask.StatusId = newStatusId;
+                dbContext.SaveChanges();
+
+                return true;
             }
         }
 
@@ -132,16 +134,15 @@ namespace Workshop.DataAccessLayer.DatabaseConnection
             using (WorkshopTaskContext dbContext = new WorkshopTaskContext())
             {
                 var taskToDelete = dbContext.WorkshopTasks.SingleOrDefault(x => x.Id == taskId);
-                if (taskToDelete != null)
-                {
-                    dbContext.WorkshopTasks.Remove(taskToDelete);
-                    dbContext.SaveChanges();
-                    return true;
-                }
+                
+                if (taskToDelete == null) 
+                    return false;
 
-                return false;
+                dbContext.WorkshopTasks.Remove(taskToDelete);
+                dbContext.SaveChanges();
+
+                return true;
             }
-
         }
     }
 }

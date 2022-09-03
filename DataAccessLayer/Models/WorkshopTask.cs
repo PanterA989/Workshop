@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using Workshop.DataAccessLayer.Models.Dictionaries;
 
 namespace Workshop.DataAccessLayer.Models
@@ -27,5 +28,14 @@ namespace Workshop.DataAccessLayer.Models
 
         [Required] 
         public WorkshopTaskStatus Status { get; set; } = new WorkshopTaskStatus();
+
+        [ForeignKey("Client")]
+        public int ClientId { get; set; }
+
+        [ForeignKey("Bike")]
+        public int BikeId { get; set; }
+
+        [ForeignKey("Status")]
+        public int StatusId { get; set; }
     }
 }
