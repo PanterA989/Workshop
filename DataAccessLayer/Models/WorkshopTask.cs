@@ -65,7 +65,7 @@ namespace Workshop.DataAccessLayer.Models
             this.EndDate = workshopApiTask.EndDate;
             this.Cost = workshopApiTask.Cost;
             this.TaskDescription = workshopApiTask.TaskDescription;
-            this.StatusId = 1;
+            this.StatusId = workshopApiTask.StatusId;
         }
     }
 }

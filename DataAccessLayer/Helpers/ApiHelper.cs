@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Workshop.DataAccessLayer.DatabaseConnection;
 using Workshop.DataAccessLayer.Enums;
 using Workshop.DataAccessLayer.Models;
 
@@ -10,7 +11,7 @@ namespace Workshop.DataAccessLayer.Helpers
 {
     public static class ApiHelper
     {
-        public static bool ValidateAddedTaskFromAPI(WorkshopApiTask workshopTask, out Dictionary<string, List<string>> errorsDictionary)
+        public static bool ValidateTaskFromAPI(WorkshopApiTask workshopTask, out Dictionary<string, List<string>> errorsDictionary)
         {
             errorsDictionary = new Dictionary<string, List<string>>();
             
@@ -110,11 +111,33 @@ namespace Workshop.DataAccessLayer.Helpers
             {
                 errorsDictionary.Add(nameof(workshopTask.TaskDescription), DataValidatorHelper.ErrorDescriptionCreator(errors));
             }
+
+            //Status
+            errors = DataValidatorHelper.ValidateStatusId(workshopTask.StatusId);
+            if (errors != 0)
+            {
+                errorsDictionary.Add(nameof(workshopTask.StatusId), DataValidatorHelper.ErrorDescriptionCreator(errors));
+            }
         }
 
         public static WorkshopTask GenerateWorkshopTaskFromWorkshopApiTask(WorkshopApiTask workshopApiTask)
         {
             WorkshopTask generatedWorkshopTask = new WorkshopTask(workshopApiTask);
+            return generatedWorkshopTask;
+        }
+
+        public static WorkshopTask GenerateWorkshopTaskFromWorkshopApiTask(WorkshopApiTask workshopApiTask, WorkshopTask oldWorkshopTask)
+        {
+            WorkshopTask generatedWorkshopTask = new WorkshopTask(workshopApiTask)
+            {
+                Id = oldWorkshopTask.Id,
+                ClientId = oldWorkshopTask.ClientId,
+                BikeId = oldWorkshopTask.BikeId,
+            };
+
+            generatedWorkshopTask.Client.Id = oldWorkshopTask.Client.Id;
+            generatedWorkshopTask.Bike.Id = oldWorkshopTask.Bike.Id;
+
             return generatedWorkshopTask;
         }
     }

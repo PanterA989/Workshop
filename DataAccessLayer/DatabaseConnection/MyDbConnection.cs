@@ -71,11 +71,7 @@ namespace Workshop.DataAccessLayer.DatabaseConnection
             }
         }
 
-        /// <summary>
-        /// Gets all statuses from database.
-        /// </summary>
-        /// <returns>List of statuses.</returns>
-        public static WorkshopTaskStatus GetStatuses(int id)
+        public static WorkshopTaskStatus GetStatus(int id)
         {
             using (WorkshopTaskContext dbContext = new WorkshopTaskContext())
             {
@@ -159,13 +155,14 @@ namespace Workshop.DataAccessLayer.DatabaseConnection
             }
         }
 
-        public static async Task<(Dictionary<string, List<string>> errorsDictionary, WorkshopTask CreatedWorkshopTask)> AddTaskFromApi(WorkshopApiTask workshopApiTask)
+        public static async Task<(Dictionary<string, List<string>> errorsDictionary, WorkshopTask CreatedWorkshopTask)> 
+            AddTaskFromApi(WorkshopApiTask workshopApiTask)
         {
-            if (!ApiHelper.ValidateAddedTaskFromAPI(workshopApiTask, out Dictionary<string, List<string>> errorList))
+            if (!ApiHelper.ValidateTaskFromAPI(workshopApiTask, out Dictionary<string, List<string>> errorList))
                 return (errorList,null);
 
             var workshopTask = ApiHelper.GenerateWorkshopTaskFromWorkshopApiTask(workshopApiTask);
-            workshopTask.Status = MyDbConnection.GetStatuses(workshopTask.StatusId);
+            workshopTask.Status = GetStatus(workshopTask.StatusId);
 
             using (WorkshopTaskContext dbContext = new WorkshopTaskContext())
             {
@@ -179,6 +176,27 @@ namespace Workshop.DataAccessLayer.DatabaseConnection
                 await dbContext.SaveChangesAsync();
                 return (errorList, result.Entity);
             }
+        }
+
+        public static async Task<(Dictionary<string, List<string>> errorsDictionary, WorkshopTask CreatedWorkshopTask)>
+            UpdateTaskFromApi(WorkshopApiTask workshopApiTaskWithUpdates, WorkshopTask oldWorkshopTask)
+        {
+
+            if (!ApiHelper.ValidateTaskFromAPI(workshopApiTaskWithUpdates, out Dictionary<string, List<string>> errorList))
+                return (errorList, null);
+
+            using (WorkshopTaskContext dbContext = new WorkshopTaskContext())
+            {
+                var updatedWorkshopTask = ApiHelper.GenerateWorkshopTaskFromWorkshopApiTask(workshopApiTaskWithUpdates, oldWorkshopTask);
+                updatedWorkshopTask.Status = GetStatus(updatedWorkshopTask.StatusId);
+
+                dbContext.Entry(updatedWorkshopTask.Status).State = EntityState.Unchanged;
+                var result = dbContext.WorkshopTasks.Update(updatedWorkshopTask);
+
+                await dbContext.SaveChangesAsync();
+                return (errorList, result.Entity);
+            }
+
         }
     }
 }

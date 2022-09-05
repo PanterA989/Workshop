@@ -10,6 +10,7 @@ namespace Workshop.DataAccessLayer.Models
         public DateTime? EndDate { get; set; }
         public decimal? Cost { get; set; }
         public string TaskDescription { get; set; }
+        public int StatusId { get; set; } = 1;
     }
 
     public class AddedClient

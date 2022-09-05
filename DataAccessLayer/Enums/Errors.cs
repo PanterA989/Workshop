@@ -18,7 +18,7 @@ namespace Workshop.DataAccessLayer.Enums
         BadFormat = 1 << 2,
         EndBeforeStart = 1 << 3,
         StartFromFuture = 1 << 4,
-        Additional1 = 1 << 5,
+        BadStatus = 1 << 5,
         Additional2 = 1 << 6,
         Additional3 = 1 << 7
     }

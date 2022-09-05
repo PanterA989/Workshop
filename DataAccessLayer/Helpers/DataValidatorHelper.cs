@@ -5,6 +5,7 @@ using System.Net.Mail;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using Workshop.DataAccessLayer.DatabaseConnection;
 using Workshop.DataAccessLayer.Enums;
 
 namespace Workshop.DataAccessLayer.Helpers
@@ -223,6 +224,16 @@ namespace Workshop.DataAccessLayer.Helpers
             return errors;
         }
 
+        public static Errors ValidateStatusId(int statusId)
+        {
+            Errors errors = Errors.None;
+
+            if(MyDbConnection.GetStatus(statusId) == null)
+                errors |= Errors.BadFormat;
+            
+            return errors;
+        }
+
         /// <summary>
         /// Validates description.
         /// </summary>
@@ -280,6 +291,10 @@ namespace Workshop.DataAccessLayer.Helpers
             if (errors.HasFlag(Errors.StartFromFuture))
             {
                 errorList.Add("Data przyjęcia jest z przyszłości.");
+            }
+            if (errors.HasFlag(Errors.BadStatus))
+            {
+                errorList.Add("Błędny status zlecenia.");
             }
 
             return errorList;
