@@ -37,5 +37,35 @@ namespace Workshop.DataAccessLayer.Models
 
         [ForeignKey("Status")]
         public int StatusId { get; set; }
+
+        public WorkshopTask()
+        {
+            
+        }
+
+        public WorkshopTask(WorkshopApiTask workshopApiTask)
+        {
+            this.Client = new Client()
+            {
+                Email = workshopApiTask.Client.Email,
+                FirstName = workshopApiTask.Client.FirstName,
+                LastName = workshopApiTask.Client.LastName,
+                PhoneNumber = workshopApiTask.Client.PhoneNumber
+            };
+
+            this.Bike = new Bike()
+            {
+                Manufacturer = workshopApiTask.Bike.Manufacturer,
+                Model = workshopApiTask.Bike.Model,
+                FrameNumber = workshopApiTask.Bike.FrameNumber,
+                AdditionalInfo = workshopApiTask.Bike.AdditionalInfo
+            };
+
+            this.StartDate = workshopApiTask.StartDate;
+            this.EndDate = workshopApiTask.EndDate;
+            this.Cost = workshopApiTask.Cost;
+            this.TaskDescription = workshopApiTask.TaskDescription;
+            this.StatusId = 1;
+        }
     }
 }

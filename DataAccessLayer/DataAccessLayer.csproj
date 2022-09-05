@@ -166,7 +166,10 @@
     <Compile Include="DataAccess\WorkshopTaskContext.cs" />
     <Compile Include="DatabaseConnection\ConnectionHelper.cs" />
     <Compile Include="DatabaseConnection\MyDbConnection.cs" />
+    <Compile Include="Enums\Errors.cs" />
     <Compile Include="Enums\WorkshopTasksListType.cs" />
+    <Compile Include="Helpers\ApiHelper.cs" />
+    <Compile Include="Helpers\DataValidatorHelper.cs" />
     <Compile Include="Migrations\20220901172221_InitialDBCreation.cs" />
     <Compile Include="Migrations\20220901172221_InitialDBCreation.designer.cs">
       <DependentUpon>20220901172221_InitialDBCreation.cs</DependentUpon>
@@ -183,6 +186,7 @@
     <Compile Include="Models\Bike.cs" />
     <Compile Include="Models\Client.cs" />
     <Compile Include="Extensions\ModelBuilderExtension.cs" />
+    <Compile Include="Models\WorkshopApiTask.cs" />
     <Compile Include="Models\WorkshopTaskStatus.cs" />
     <Compile Include="Models\WorkshopTask.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

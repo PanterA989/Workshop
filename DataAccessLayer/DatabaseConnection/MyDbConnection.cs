@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
 using Workshop.DataAccessLayer.ViewModel;
@@ -10,6 +11,7 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Workshop.DataAccessLayer.DataAccess;
 using Workshop.DataAccessLayer.Enums;
+using Workshop.DataAccessLayer.Helpers;
 
 namespace Workshop.DataAccessLayer.DatabaseConnection
 {
@@ -66,6 +68,18 @@ namespace Workshop.DataAccessLayer.DatabaseConnection
             using (WorkshopTaskContext dbContext = new WorkshopTaskContext())
             {
                 return dbContext.WorkshopTaskStatuses.ToList();
+            }
+        }
+
+        /// <summary>
+        /// Gets all statuses from database.
+        /// </summary>
+        /// <returns>List of statuses.</returns>
+        public static WorkshopTaskStatus GetStatuses(int id)
+        {
+            using (WorkshopTaskContext dbContext = new WorkshopTaskContext())
+            {
+                return dbContext.WorkshopTaskStatuses.FirstOrDefault(x => x.Id == id);
             }
         }
 
@@ -142,6 +156,28 @@ namespace Workshop.DataAccessLayer.DatabaseConnection
                 dbContext.SaveChanges();
 
                 return true;
+            }
+        }
+
+        public static async Task<(Dictionary<string, List<string>> errorsDictionary, WorkshopTask CreatedWorkshopTask)> AddTaskFromApi(WorkshopApiTask workshopApiTask)
+        {
+            if (!ApiHelper.ValidateAddedTaskFromAPI(workshopApiTask, out Dictionary<string, List<string>> errorList))
+                return (errorList,null);
+
+            var workshopTask = ApiHelper.GenerateWorkshopTaskFromWorkshopApiTask(workshopApiTask);
+            workshopTask.Status = MyDbConnection.GetStatuses(workshopTask.StatusId);
+
+            using (WorkshopTaskContext dbContext = new WorkshopTaskContext())
+            {
+                if (workshopTask.Status != null)
+                {
+                    dbContext.Entry(workshopTask.Status).State = EntityState.Unchanged;
+                }
+
+                var result = await dbContext.WorkshopTasks.AddAsync(workshopTask);
+
+                await dbContext.SaveChangesAsync();
+                return (errorList, result.Entity);
             }
         }
     }

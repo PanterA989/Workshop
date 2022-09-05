@@ -2,7 +2,7 @@
 {
     public enum WorkshopTasksListType
     {
-        Active,
-        Historical
+        Historical,
+        Active
     }
 }
