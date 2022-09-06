@@ -6,13 +6,11 @@ namespace Workshop.DataAccessLayer.DatabaseConnection
     {
 
         /// <summary>
-        /// Gets database connection string from App.config file.
+        /// Gets database connection string from App.config.
         /// </summary>
         /// <returns>Database connection string.</returns>
         public static string GetConnectionString()
         {
-            //TODO: Cannot get the connectionstring from config
-            return "Data Source=.;Initial Catalog=WorkshopDB;Integrated Security=True;";
             return ConfigurationManager.ConnectionStrings["WorkshopDB"].ConnectionString;
         }
     }
