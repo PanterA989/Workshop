@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Mime;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -12,11 +13,20 @@ using Workshop.DataAccessLayer.Models;
 namespace WorkshopAPI.Controllers
 {
     [Route("api/[controller]")]
+    [Produces(MediaTypeNames.Application.Json)]
+    [Consumes(MediaTypeNames.Application.Json)]
     [ApiController]
     public class WorkshopTasksController : ControllerBase
     {
+        /// <summary>
+        /// Gets list of all historical or active tasks
+        /// </summary>
+        /// <param name="isActive">Search for active or historical tasks</param>
+        /// <returns><see cref="List{T}"/> of workshop tasks</returns>
         [HttpGet]
-        public async Task<ActionResult> GetWorkshopTaskList(WorkshopTasksListType isActive)
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<ActionResult<List<WorkshopTask>>> GetWorkshopTaskList(WorkshopTasksListType isActive)
         {
             try
             {
@@ -29,7 +39,15 @@ namespace WorkshopAPI.Controllers
             }
         }
 
+        /// <summary>
+        /// Gets specific task based on given id
+        /// </summary>
+        /// <param name="id">id of task to find</param>
+        /// <returns><see cref="WorkshopTask"/> with given id</returns>
         [HttpGet("{id:int}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public ActionResult<WorkshopTask> GetWorkshopTask(int id)
         {
             try
@@ -38,7 +56,7 @@ namespace WorkshopAPI.Controllers
                 if (result == null)
                     return NotFound();
 
-                return result;
+                return Ok(result);
             }
             catch (Exception e)
             {
@@ -47,7 +65,15 @@ namespace WorkshopAPI.Controllers
             }
         }
 
+        /// <summary>
+        /// Creates new workshop task
+        /// </summary>
+        /// <param name="workshopTask">Workshop task data</param>
+        /// <returns>Created task</returns>
         [HttpPost]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<ActionResult<WorkshopTask>> CreateWorkshopTask(WorkshopApiTask workshopTask)
         {
             if (workshopTask == null)
@@ -70,7 +96,16 @@ namespace WorkshopAPI.Controllers
             }
         }
 
+        /// <summary>
+        /// Updates task with given id with provided data
+        /// </summary>
+        /// <param name="id">id of task to update</param>
+        /// <param name="workshopTaskWithUpdates">New data for task</param>
+        /// <returns>Updated task</returns>
         [HttpPut("{id:int}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<ActionResult<WorkshopTask>> UpdateWorkshopTask(int id, WorkshopApiTask workshopTaskWithUpdates)
         {
             if (workshopTaskWithUpdates == null)
@@ -86,7 +121,7 @@ namespace WorkshopAPI.Controllers
                 if (updatedTask == null)
                     return BadRequest(JsonConvert.SerializeObject(errorDictionary));
 
-                return updatedTask;
+                return Ok(updatedTask);
             }
             catch (Exception e)
             {
@@ -95,7 +130,14 @@ namespace WorkshopAPI.Controllers
             }
         }
 
+        /// <summary>
+        /// Deletes task with given id
+        /// </summary>
+        /// <param name="id">id of task which should be deleted</param>
         [HttpDelete("{id:int}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<ActionResult> DeleteWorkshopTask(int id)
         {
             try

@@ -8,7 +8,9 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 using Microsoft.OpenApi.Models;
 
@@ -36,6 +38,11 @@ namespace WorkshopAPI
                     Title = "Workshop API",
                     Description = "API for managing workshop."
                 });
+
+                var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+                var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+
+                s.IncludeXmlComments(xmlPath);
             });
         }
 

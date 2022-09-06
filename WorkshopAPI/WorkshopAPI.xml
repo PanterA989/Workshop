@@ -1,0 +1,56 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>WorkshopAPI</name>
+    </assembly>
+    <members>
+        <member name="M:WorkshopAPI.Controllers.WorkshopTasksController.GetWorkshopTaskList(Workshop.DataAccessLayer.Enums.WorkshopTasksListType)">
+            <summary>
+            Gets list of all historical or active tasks
+            </summary>
+            <param name="isActive">Search for active or historical tasks</param>
+            <returns><see cref="T:System.Collections.Generic.List`1"/> of workshop tasks</returns>
+        </member>
+        <member name="M:WorkshopAPI.Controllers.WorkshopTasksController.GetWorkshopTask(System.Int32)">
+            <summary>
+            Gets specific task based on given id
+            </summary>
+            <param name="id">id of task to find</param>
+            <returns><see cref="T:Workshop.DataAccessLayer.Models.WorkshopTask"/> with given id</returns>
+        </member>
+        <member name="M:WorkshopAPI.Controllers.WorkshopTasksController.CreateWorkshopTask(Workshop.DataAccessLayer.Models.WorkshopApiTask)">
+            <summary>
+            Creates new workshop task
+            </summary>
+            <param name="workshopTask">Workshop task data</param>
+            <returns>Created task</returns>
+        </member>
+        <member name="M:WorkshopAPI.Controllers.WorkshopTasksController.UpdateWorkshopTask(System.Int32,Workshop.DataAccessLayer.Models.WorkshopApiTask)">
+            <summary>
+            Updates task with given id with provided data
+            </summary>
+            <param name="id">id of task to update</param>
+            <param name="workshopTaskWithUpdates">New data for task</param>
+            <returns>Updated task</returns>
+        </member>
+        <member name="M:WorkshopAPI.Controllers.WorkshopTasksController.DeleteWorkshopTask(System.Int32)">
+            <summary>
+            Deletes task with given id
+            </summary>
+            <param name="id">id of task which should be deleted</param>
+        </member>
+        <member name="M:WorkshopAPI.Controllers.WorkshopTaskStatusesController.GetWorkshopStatuses">
+            <summary>
+            Gets list of all WorkshopTaskStatus available in workshop
+            </summary>
+            <returns><see cref="T:System.Collections.Generic.List`1"/> of <see cref="T:Workshop.DataAccessLayer.Models.Dictionaries.WorkshopTaskStatus"/></returns>
+        </member>
+        <member name="M:WorkshopAPI.Controllers.WorkshopTaskStatusesController.GetWorkshopStatus(System.Int32)">
+            <summary>
+            Gets specific status with given id.
+            </summary>
+            <param name="id">Id of the searched status</param>
+            <returns><see cref="T:Workshop.DataAccessLayer.Models.Dictionaries.WorkshopTaskStatus"/> with given id</returns>
+        </member>
+    </members>
+</doc>
