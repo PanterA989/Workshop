@@ -224,12 +224,17 @@ namespace Workshop.DataAccessLayer.Helpers
             return errors;
         }
 
+        /// <summary>
+        /// Validates status id to check if status exist in database
+        /// </summary>
+        /// <param name="statusId">id of status</param>
+        /// <returns>Flags of errors.</returns>
         public static Errors ValidateStatusId(int statusId)
         {
             Errors errors = Errors.None;
 
             if(MyDbConnection.GetStatus(statusId) == null)
-                errors |= Errors.BadFormat;
+                errors |= Errors.BadStatus;
             
             return errors;
         }
@@ -267,7 +272,7 @@ namespace Workshop.DataAccessLayer.Helpers
         /// Creates error provider messages based on errors flags
         /// </summary>
         /// <param name="errors">Flags of errors</param>
-        /// <returns>Full errors description.</returns>
+        /// <returns>List of descriptions for matching errors</returns>
         public static List<string> ErrorDescriptionCreator(Errors errors)
         {
             List<string> errorList = new List<string>();

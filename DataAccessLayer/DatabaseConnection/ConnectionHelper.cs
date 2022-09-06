@@ -4,7 +4,6 @@ namespace Workshop.DataAccessLayer.DatabaseConnection
 {
     public static class ConnectionHelper
     {
-
         /// <summary>
         /// Gets database connection string from App.config.
         /// </summary>

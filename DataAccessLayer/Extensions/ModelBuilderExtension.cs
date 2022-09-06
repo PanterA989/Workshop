@@ -10,6 +10,10 @@ namespace Workshop.DataAccessLayer.Models
 {
     public static class ModelBuilderExtension
     {
+        /// <summary>
+        /// Extension method for seeding database with default statuses
+        /// </summary>
+        /// <param name="modelBuilder"></param>
         public static void Seed(this ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<WorkshopTaskStatus>().HasData(

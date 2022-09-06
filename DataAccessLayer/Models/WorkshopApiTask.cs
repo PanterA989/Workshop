@@ -2,10 +2,13 @@
 
 namespace Workshop.DataAccessLayer.Models
 {
+    /// <summary>
+    /// Simplified representation of WorkshopTask
+    /// </summary>
     public class WorkshopApiTask
     {
-        public AddedClient Client { get; set; }
-        public AddedBike Bike { get; set; }
+        public SimpleClient Client { get; set; }
+        public SimpleBike Bike { get; set; }
         public DateTime StartDate { get; set; } = DateTime.Now;
         public DateTime? EndDate { get; set; }
         public decimal? Cost { get; set; }
@@ -13,7 +16,10 @@ namespace Workshop.DataAccessLayer.Models
         public int StatusId { get; set; } = 1;
     }
 
-    public class AddedClient
+    /// <summary>
+    /// Simplified representation of Client
+    /// </summary>
+    public class SimpleClient
     {
         public string FirstName { get; set; }
         public string LastName { get; set; }
@@ -21,7 +27,10 @@ namespace Workshop.DataAccessLayer.Models
         public string Email { get; set; }
     }
 
-    public class AddedBike
+    /// <summary>
+    /// Simplified representation of Bike
+    /// </summary>
+    public class SimpleBike
     {
         public string Manufacturer { get; set; }
         public string Model { get; set; }

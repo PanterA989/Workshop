@@ -78,12 +78,10 @@ namespace WorkshopAPI.Controllers
 
             try
             {
-                var taskToUpdate = MyDbConnection.GetWorkshopTask(id);
+                var (errorDictionary, updatedTask) = await MyDbConnection.UpdateTaskFromApi(id, workshopTaskWithUpdates);
 
-                if (taskToUpdate == null)
+                if (errorDictionary.ContainsKey(nameof(WorkshopTask.Id)))
                     return NotFound($"Cannot find task with id = {id}");
-
-                var (errorDictionary, updatedTask) = await MyDbConnection.UpdateTaskFromApi(workshopTaskWithUpdates, taskToUpdate);
 
                 if (updatedTask == null)
                     return BadRequest(JsonConvert.SerializeObject(errorDictionary));

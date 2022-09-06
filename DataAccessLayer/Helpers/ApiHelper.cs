@@ -11,6 +11,12 @@ namespace Workshop.DataAccessLayer.Helpers
 {
     public static class ApiHelper
     {
+        /// <summary>
+        /// Validates task data received from API
+        /// </summary>
+        /// <param name="workshopTask">Simple representation of task</param>
+        /// <param name="errorsDictionary">out parameter with dictionary of parameters and list of errors for given parameter</param>
+        /// <returns>True if object successfully passed validation. If any errors are found - false</returns>
         public static bool ValidateTaskFromAPI(WorkshopApiTask workshopTask, out Dictionary<string, List<string>> errorsDictionary)
         {
             errorsDictionary = new Dictionary<string, List<string>>();
@@ -22,9 +28,14 @@ namespace Workshop.DataAccessLayer.Helpers
             return errorsDictionary.Count == 0;
         }
 
-        
 
-        private static void ValidateClient(WorkshopApiTask workshopTask, Dictionary<string, List<string>> errorsDictionary)
+        /// <summary>
+        /// Validates client data
+        /// </summary>
+        /// <param name="workshopTask">Simple representation of task</param>
+        /// <param name="errorsDictionary">out parameter with dictionary of parameters and list of errors for given parameter</param>
+        /// <returns>True if object successfully passed validation. If any errors are found - false</returns>
+        private static bool ValidateClient(WorkshopApiTask workshopTask, Dictionary<string, List<string>> errorsDictionary)
         {
             Errors errors;
 
@@ -55,9 +66,17 @@ namespace Workshop.DataAccessLayer.Helpers
             {
                 errorsDictionary.Add(nameof(WorkshopApiTask.Client.Email), DataValidatorHelper.ErrorDescriptionCreator(errors));
             }
+
+            return errors == 0;
         }
 
-        private static void ValidateBike(WorkshopApiTask workshopTask, Dictionary<string, List<string>> errorsDictionary)
+        /// <summary>
+        /// Validates bike data
+        /// </summary>
+        /// <param name="workshopTask">Simple representation of task</param>
+        /// <param name="errorsDictionary">out parameter with dictionary of parameters and list of errors for given parameter</param>
+        /// <returns>True if object successfully passed validation. If any errors are found - false</returns>
+        private static bool ValidateBike(WorkshopApiTask workshopTask, Dictionary<string, List<string>> errorsDictionary)
         {
             Errors errors;
 
@@ -81,9 +100,17 @@ namespace Workshop.DataAccessLayer.Helpers
             {
                 errorsDictionary.Add(nameof(WorkshopApiTask.Bike.FrameNumber), DataValidatorHelper.ErrorDescriptionCreator(errors));
             }
+
+            return errors == 0;
         }
 
-        private static void ValidateTaskInformations(WorkshopApiTask workshopTask, Dictionary<string, List<string>> errorsDictionary)
+        /// <summary>
+        /// Validates task information data
+        /// </summary>
+        /// <param name="workshopTask">Simple representation of task</param>
+        /// <param name="errorsDictionary">out parameter with dictionary of parameters and list of errors for given parameter</param>
+        /// <returns>True if object successfully passed validation. If any errors are found - false</returns>
+        private static bool ValidateTaskInformations(WorkshopApiTask workshopTask, Dictionary<string, List<string>> errorsDictionary)
         {
             Errors errors;
 
@@ -118,25 +145,38 @@ namespace Workshop.DataAccessLayer.Helpers
             {
                 errorsDictionary.Add(nameof(workshopTask.StatusId), DataValidatorHelper.ErrorDescriptionCreator(errors));
             }
+
+            return errors == 0;
         }
 
+        /// <summary>
+        /// Generates advanced WorkshopTask from simplified WorkshopApiTask
+        /// </summary>
+        /// <param name="workshopApiTask">Simple representation of task</param>
+        /// <returns>WorkshopTask with data from simple WorkshopApiTask</returns>
         public static WorkshopTask GenerateWorkshopTaskFromWorkshopApiTask(WorkshopApiTask workshopApiTask)
         {
             WorkshopTask generatedWorkshopTask = new WorkshopTask(workshopApiTask);
             return generatedWorkshopTask;
         }
 
-        public static WorkshopTask GenerateWorkshopTaskFromWorkshopApiTask(WorkshopApiTask workshopApiTask, WorkshopTask oldWorkshopTask)
+        /// <summary>
+        /// Generates advanced WorkshopTask from simplified WorkshopApiTask with copying missing values from given
+        /// </summary>
+        /// <param name="workshopApiTask">Simple representation of task</param>
+        /// <param name="baseWorkshopTask">Base for creating new WorkshopTask</param>
+        /// <returns>WorkshopTask with data from simple WorkshopApiTask and given WorkshopTask</returns>
+        public static WorkshopTask GenerateWorkshopTaskFromWorkshopApiTask(WorkshopApiTask workshopApiTask, WorkshopTask baseWorkshopTask)
         {
             WorkshopTask generatedWorkshopTask = new WorkshopTask(workshopApiTask)
             {
-                Id = oldWorkshopTask.Id,
-                ClientId = oldWorkshopTask.ClientId,
-                BikeId = oldWorkshopTask.BikeId,
+                Id = baseWorkshopTask.Id,
+                ClientId = baseWorkshopTask.ClientId,
+                BikeId = baseWorkshopTask.BikeId
             };
 
-            generatedWorkshopTask.Client.Id = oldWorkshopTask.Client.Id;
-            generatedWorkshopTask.Bike.Id = oldWorkshopTask.Bike.Id;
+            generatedWorkshopTask.Client.Id = baseWorkshopTask.Client.Id;
+            generatedWorkshopTask.Bike.Id = baseWorkshopTask.Bike.Id;
 
             return generatedWorkshopTask;
         }
