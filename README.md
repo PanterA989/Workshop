@@ -67,14 +67,28 @@ This window is mostly the same as adding task window but allow user to edit sele
 <br/>
 <br/>
 
-## Configuration
-Application requires database connection to work properly. Inside the main directory is located a file called `WorkshopDB.sql` with proper tables and fields and example data.
-Database was created using MS SQL Server Management Studio 18.
-<br/>
-After importing database change connection string in `App.config`
+## Bicycle workshop API
+Project has been extended with API for managing tasks in workshop. Documentation available in Swagger UI after starting the project.
+### Swagger UI of API:
+ ![Swagger UI of API](PreviewImages/API.png)
 
+## Configuration
+Application requires database connection to work properly. Application will automaticaly create database and seed it with default tasks statuses.
+<br/>
+<br/>
+Application requires connection string in `App.config` to work properly
+<br/>
 <pre lang="xml">
 &ltconnectionStrings&gt
-    &ltadd name="WorkshopDB" connectionString="YOUR CONNECTION STRING"/&gt
+    &ltadd name="WorkshopDB" connectionString="YOUR CONNECTION STRING" providerName="System.Data.SqlClient"/&gt
+&lt/connectionStrings&gt
+</pre>
+<br/>
+
+By default:
+<br/>
+<pre lang="xml">
+&ltconnectionStrings&gt
+    &ltadd name="WorkshopDB" connectionString="Data Source=.;Initial Catalog=WorkshopDB;Integrated Security=True;" providerName="System.Data.SqlClient" /&gt
 &lt/connectionStrings&gt
 </pre>
