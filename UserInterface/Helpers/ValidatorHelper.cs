@@ -11,18 +11,15 @@ using Workshop.DataAccessLayer.Helpers;
 
 namespace Workshop.UserInterface.Helpers
 {
-
-
     public static class ValidatorHelper
     {
-
         /// <summary>
         /// Validates first name and sets eventual message in errors provider.
         /// </summary>
         /// <param name="firstName">String representing first name.</param>
         /// <param name="errorProvider">ErrorProvider for validated field.</param>
-        /// <param name="label">Label coresponding to error provider.</param>
-        /// <returns>True if field has been validated succesfully.</returns>
+        /// <param name="label">Label corresponding to error provider.</param>
+        /// <returns>True if field has been validated successfully.</returns>
         public static bool FirstNameCheckAndSetErrors(string firstName, ErrorProvider errorProvider, Label label)
         {
             Errors errors = DataValidatorHelper.ValidateFirstName(firstName);
@@ -34,8 +31,8 @@ namespace Workshop.UserInterface.Helpers
         /// </summary>
         /// <param name="lastName">String representing last name.</param>
         /// <param name="errorProvider">ErrorProvider for validated field.</param>
-        /// <param name="label">Label coresponding to error provider.</param>
-        /// <returns>True if field has been validated succesfully.</returns>
+        /// <param name="label">Label corresponding to error provider.</param>
+        /// <returns>True if field has been validated successfully.</returns>
         public static bool LastNameCheckAndSetErrors(string lastName, ErrorProvider errorProvider, Label label)
         {
             Errors errors = DataValidatorHelper.ValidateLastName(lastName);
@@ -47,8 +44,8 @@ namespace Workshop.UserInterface.Helpers
         /// </summary>
         /// <param name="phone">String representing phone number.</param>
         /// <param name="errorProvider">ErrorProvider for validated field.</param>
-        /// <param name="label">Label coresponding to error provider.</param>
-        /// <returns>True if field has been validated succesfully.</returns>
+        /// <param name="label">Label corresponding to error provider.</param>
+        /// <returns>True if field has been validated successfully.</returns>
         public static bool PhoneCheckAndSetErrors(string phone, ErrorProvider errorProvider, Label label)
         {
             Errors errors = DataValidatorHelper.ValidatePhone(phone);
@@ -60,8 +57,8 @@ namespace Workshop.UserInterface.Helpers
         /// </summary>
         /// <param name="email">String representing e-mail.</param>
         /// <param name="errorProvider">ErrorProvider for validated field.</param>
-        /// <param name="label">Label coresponding to error provider.</param>
-        /// <returns>True if field has been validated succesfully.</returns>
+        /// <param name="label">Label corresponding to error provider.</param>
+        /// <returns>True if field has been validated successfully.</returns>
         public static bool EmailCheckAndSetErrors(string email, ErrorProvider errorProvider, Label label)
         {
             Errors errors = DataValidatorHelper.ValidateEmail(email);
@@ -73,8 +70,8 @@ namespace Workshop.UserInterface.Helpers
         /// </summary>
         /// <param name="manufacturer">String representing bike manufacturer.</param>
         /// <param name="errorProvider">ErrorProvider for validated field.</param>
-        /// <param name="label">Label coresponding to error provider.</param>
-        /// <returns>True if field has been validated succesfully.</returns>
+        /// <param name="label">Label corresponding to error provider.</param>
+        /// <returns>True if field has been validated successfully.</returns>
         public static bool ManufacturerCheckAndSetErrors(string manufacturer, ErrorProvider errorProvider, Label label)
         {
             Errors errors = DataValidatorHelper.ValidateManufacturer(manufacturer);
@@ -86,8 +83,8 @@ namespace Workshop.UserInterface.Helpers
         /// </summary>
         /// <param name="model">String representing bike model.</param>
         /// <param name="errorProvider">ErrorProvider for validated field.</param>
-        /// <param name="label">Label coresponding to error provider.</param>
-        /// <returns>True if field has been validated succesfully.</returns>
+        /// <param name="label">Label corresponding to error provider.</param>
+        /// <returns>True if field has been validated successfully.</returns>
         public static bool ModelCheckAndSetErrors(string model, ErrorProvider errorProvider, Label label)
         {
             Errors errors = DataValidatorHelper.ValidateModel(model);
@@ -99,8 +96,8 @@ namespace Workshop.UserInterface.Helpers
         /// </summary>
         /// <param name="frameNo">String representing frame number.</param>
         /// <param name="errorProvider">ErrorProvider for validated field.</param>
-        /// <param name="label">Label coresponding to error provider.</param>
-        /// <returns>True if field has been validated succesfully.</returns>
+        /// <param name="label">Label corresponding to error provider.</param>
+        /// <returns>True if field has been validated successfully.</returns>
         public static bool FrameNoCheckAndSetErrors(string frameNo, ErrorProvider errorProvider, Label label)
         {
             Errors errors = DataValidatorHelper.ValidateFrameNo(frameNo);
@@ -115,9 +112,9 @@ namespace Workshop.UserInterface.Helpers
         /// <param name="endDate">DateTime of end date</param>
         /// <param name="errorProviderStart">ErrorProvider for start date.</param>
         /// <param name="errorProviderEnd">ErrorProvider for end date.</param>
-        /// <param name="labelStart">Label coresponding to start date error provider.</param>
-        /// <param name="labelEnd">Label coresponding to end date error provider.</param>
-        /// <returns>True if field has been validated succesfully.</returns>
+        /// <param name="labelStart">Label corresponding to start date error provider.</param>
+        /// <param name="labelEnd">Label corresponding to end date error provider.</param>
+        /// <returns>True if field has been validated successfully.</returns>
         public static bool DatesCheckAndSetErrors(DateTime startDate, DateTime? endDate, ErrorProvider errorProviderStart, ErrorProvider errorProviderEnd, Label labelStart, Label labelEnd)
         {
             Errors errors = DataValidatorHelper.ValidateDate(startDate, endDate);
@@ -147,9 +144,9 @@ namespace Workshop.UserInterface.Helpers
         /// </summary>
         /// <param name="cost">String representing frame cost.</param>
         /// <param name="errorProvider">ErrorProvider for validated field.</param>
-        /// <param name="label">Label coresponding to error provider.</param>
+        /// <param name="label">Label corresponding to error provider.</param>
         /// <param name="tbCost">TextBox of cost</param>
-        /// <returns>True if field has been validated succesfully.</returns>
+        /// <returns>True if field has been validated successfully.</returns>
         public static bool CostCheckAndSetErrors(string cost, ErrorProvider errorProvider, Label label, TextBox tbCost)
         {
             cost = cost.Replace(',', '.');
@@ -166,8 +163,8 @@ namespace Workshop.UserInterface.Helpers
         /// </summary>
         /// <param name="description">String representing description.</param>
         /// <param name="errorProvider">ErrorProvider for validated field.</param>
-        /// <param name="label">Label coresponding to error provider.</param>
-        /// <returns>True if field has been validated succesfully.</returns>
+        /// <param name="label">Label corresponding to error provider.</param>
+        /// <returns>True if field has been validated successfully.</returns>
         public static bool DescriptionCheckAndSetErrors(string description, ErrorProvider errorProvider, Label label)
         {
             Errors errors = DataValidatorHelper.ValidateDescription(description);
@@ -178,7 +175,7 @@ namespace Workshop.UserInterface.Helpers
         /// Sets and checks error providers messages.
         /// </summary>
         /// <param name="errorProvider">ErrorProvider for validated field.</param>
-        /// <param name="label">Label coresponding to error provider.</param>
+        /// <param name="label">Label corresponding to error provider.</param>
         /// <param name="errors">Flags of errors</param>
         /// <returns>True if validation returned no errors.</returns>
         private static bool SetAndCheckErrors(ErrorProvider errorProvider, Label label, Errors errors)

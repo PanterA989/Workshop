@@ -15,9 +15,9 @@ namespace Workshop.DataAccessLayer.Helpers
         /// Validates task data received from API
         /// </summary>
         /// <param name="workshopTask">Simple representation of task</param>
-        /// <param name="errorsDictionary">out parameter with dictionary of parameters and list of errors for given parameter</param>
-        /// <returns>True if object successfully passed validation. If any errors are found - false</returns>
-        public static bool ValidateTaskFromAPI(WorkshopApiTask workshopTask, out Dictionary<string, List<string>> errorsDictionary)
+        /// <param name="errorsDictionary">out parameter with <see cref="Dictionary{TKey,TValue}"/> of parameters and <see cref="List{T}"/> of errors for given parameter</param>
+        /// <returns>True if object successfully passed validation, otherwise false</returns>
+        public static bool ValidateTaskFromApi(WorkshopApiTask workshopTask, out Dictionary<string, List<string>> errorsDictionary)
         {
             errorsDictionary = new Dictionary<string, List<string>>();
             

@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
 using Workshop.DataAccessLayer.ViewModel;
-using Dapper;
 using System.Data;
 using Workshop.DataAccessLayer.Models;
 using Workshop.DataAccessLayer.Models.Dictionaries;
@@ -21,7 +20,7 @@ namespace Workshop.DataAccessLayer.DatabaseConnection
         /// Executes asynchronous database query gathering historical or active workshop tasks.
         /// </summary>
         /// <param name="listType">Type of searched tasks</param>
-        /// <returns>List of task of given type</returns>
+        /// <returns><see cref="List{T}"/> of task of given type</returns>
         public static async Task<List<TaskViewModel>> GetWorkshopTaskList(WorkshopTasksListType listType)
         {
             using (WorkshopTaskContext dbContext = new WorkshopTaskContext())
@@ -46,7 +45,7 @@ namespace Workshop.DataAccessLayer.DatabaseConnection
         /// Gets specific task from database, based on its id.
         /// </summary>
         /// <param name="id">id of task to be returned</param>
-        /// <returns>Single task based on its id or null if not found</returns>
+        /// <returns>Single <see cref="WorkshopTask"/> based on its id or null if not found</returns>
         public static WorkshopTask GetWorkshopTask(int id)
         {
             using (WorkshopTaskContext dbContext = new WorkshopTaskContext())
@@ -62,7 +61,7 @@ namespace Workshop.DataAccessLayer.DatabaseConnection
         /// <summary>
         /// Gets all possible statuses from database.
         /// </summary>
-        /// <returns>List of statuses</returns>
+        /// <returns><see cref="List{T}"/> of statuses</returns>
         public static List<WorkshopTaskStatus> GetStatuses()
         {
             using (WorkshopTaskContext dbContext = new WorkshopTaskContext())
@@ -75,7 +74,7 @@ namespace Workshop.DataAccessLayer.DatabaseConnection
         /// Gets specific status with given id.
         /// </summary>
         /// <param name="id">Id of the searched status</param>
-        /// <returns></returns>
+        /// <returns>Searched <see cref="WorkshopTaskStatus"/></returns>
         public static WorkshopTaskStatus GetStatus(int id)
         {
             using (WorkshopTaskContext dbContext = new WorkshopTaskContext())
@@ -163,12 +162,14 @@ namespace Workshop.DataAccessLayer.DatabaseConnection
         /// Executes asynchronous adding task to database.
         /// </summary>
         /// <param name="workshopApiTask">Simple representation of task to add</param>
-        /// <returns>When failed returns tuple with errors dictionary representing problematic fields with list of all errors, and null for added object.
-        /// When successful returns tuple with empty errors dictionary and object which has been added</returns>
+        /// <returns>When failed returns <see cref="Tuple{T1, T2}"/> with errors <see cref="Dictionary{TKey,TValue}"/>
+        /// representing problematic fields with <see cref="List{T}"/> of all errors, and null for added object.
+        /// When successful returns <see cref="Tuple{T1, T2}"/> with empty errors <see cref="Dictionary{TKey,TValue}"/>
+        /// and <see cref="WorkshopTask"/> which has been added</returns>
         public static async Task<(Dictionary<string, List<string>> errorsDictionary, WorkshopTask CreatedWorkshopTask)> 
             AddTaskFromApi(WorkshopApiTask workshopApiTask)
         {
-            if (!ApiHelper.ValidateTaskFromAPI(workshopApiTask, out Dictionary<string, List<string>> errorList))
+            if (!ApiHelper.ValidateTaskFromApi(workshopApiTask, out Dictionary<string, List<string>> errorList))
                 return (errorList,null);
 
             var workshopTask = ApiHelper.GenerateWorkshopTaskFromWorkshopApiTask(workshopApiTask);
@@ -193,8 +194,10 @@ namespace Workshop.DataAccessLayer.DatabaseConnection
         /// </summary>
         /// <param name="id">id of task which should be updated</param>
         /// <param name="workshopApiTaskWithUpdates">Simple representation of task with updated values</param>
-        /// <returns>When failed returns tuple with errors dictionary representing problematic fields with list of all errors, and null for updated object.
-        /// When successful returns tuple with empty errors dictionary and updated object</returns>
+        /// <returns>When failed returns <see cref="Tuple{T1, T2}"/> with errors <see cref="Dictionary{TKey,TValue}"/>
+        /// representing problematic fields with <see cref="List{T}"/> of all errors, and null for added object.
+        /// When successful returns <see cref="Tuple{T1, T2}"/> with empty errors <see cref="Dictionary{TKey,TValue}"/>
+        /// and updated <see cref="WorkshopTask"/></returns>
         public static async Task<(Dictionary<string, List<string>> errorsDictionary, WorkshopTask CreatedWorkshopTask)>
             UpdateTaskFromApi(int id, WorkshopApiTask workshopApiTaskWithUpdates)
         {
@@ -207,7 +210,7 @@ namespace Workshop.DataAccessLayer.DatabaseConnection
                 return (errorDictionary, null);
             }
 
-            if (!ApiHelper.ValidateTaskFromAPI(workshopApiTaskWithUpdates, out errorDictionary))
+            if (!ApiHelper.ValidateTaskFromApi(workshopApiTaskWithUpdates, out errorDictionary))
                 return (errorDictionary, null);
 
             using (WorkshopTaskContext dbContext = new WorkshopTaskContext())

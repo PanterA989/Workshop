@@ -36,7 +36,7 @@ namespace WorkshopAPI.Controllers
 
                 return result;
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 return StatusCode(StatusCodes.Status500InternalServerError,
                     "Error while retrieving data from database");
@@ -64,7 +64,7 @@ namespace WorkshopAPI.Controllers
 
                 return result;
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 return StatusCode(StatusCodes.Status500InternalServerError,
                     "Error while retrieving data from database");

@@ -32,7 +32,7 @@ namespace WorkshopAPI.Controllers
             {
                 return Ok(await MyDbConnection.GetWorkshopTaskList(isActive));
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 return StatusCode(StatusCodes.Status500InternalServerError,
                     "Error while retrieving data from database");
@@ -58,7 +58,7 @@ namespace WorkshopAPI.Controllers
 
                 return Ok(result);
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 return StatusCode(StatusCodes.Status500InternalServerError,
                     "Error while retrieving data from database");
@@ -89,7 +89,7 @@ namespace WorkshopAPI.Controllers
                 return CreatedAtAction(nameof(GetWorkshopTask),
                     new {id = createdTask.Id}, createdTask);
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 return StatusCode(StatusCodes.Status500InternalServerError,
                     "Error while creating workshop task");
@@ -123,7 +123,7 @@ namespace WorkshopAPI.Controllers
 
                 return Ok(updatedTask);
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 return StatusCode(StatusCodes.Status500InternalServerError,
                     "Error while updating workshop task");
@@ -138,7 +138,7 @@ namespace WorkshopAPI.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<ActionResult> DeleteWorkshopTask(int id)
+        public ActionResult DeleteWorkshopTask(int id)
         {
             try
             {
@@ -151,7 +151,7 @@ namespace WorkshopAPI.Controllers
 
                 return Ok($"Successfully deleted task with id = {id}");
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 return StatusCode(StatusCodes.Status500InternalServerError,
                     "Error while deleting workshop task");
