@@ -58,6 +58,9 @@ namespace Workshop.UserInterface.Forms
         {
             try
             {
+                if(dgvTasks.CurrentRow == null)
+                    return;
+
                 var id = (int)dgvTasks.CurrentRow.Cells[0].Value;
                 ManageTaskForm manageTaskForm = new ManageTaskForm(MyDbConnection.GetWorkshopTask(id));
                 manageTaskForm.ShowDialog();
@@ -110,6 +113,9 @@ namespace Workshop.UserInterface.Forms
             int taskId;
             try
             {
+                if(dgvTasks.CurrentRow == null)
+                    return;
+
                 taskId = (int)dgvTasks.CurrentRow.Cells[0].Value;
             }
             catch (Exception err)
