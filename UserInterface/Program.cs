@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Microsoft.EntityFrameworkCore;
 using Workshop.DataAccessLayer.DataAccess;
+using Workshop.DataAccessLayer.DatabaseConnection;
 using Workshop.UserInterface.Forms;
 
 namespace UserInterface
@@ -24,7 +25,7 @@ namespace UserInterface
 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new MainForm());
+            Application.Run(new MainForm(new MyDbConnection()));
         }
     }
 }

@@ -9,19 +9,20 @@ using Workshop.DataAccessLayer.Models.Dictionaries;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Workshop.DataAccessLayer.DataAccess;
+using Workshop.DataAccessLayer.DatabaseConnection.Interfaces;
 using Workshop.DataAccessLayer.Enums;
 using Workshop.DataAccessLayer.Helpers;
 
 namespace Workshop.DataAccessLayer.DatabaseConnection
 {
-    public static class MyDbConnection
+    public class MyDbConnection : IMyDbConnection
     {
         /// <summary>
         /// Executes asynchronous database query gathering historical or active workshop tasks.
         /// </summary>
         /// <param name="listType">Type of searched tasks</param>
         /// <returns><see cref="List{T}"/> of task of given type</returns>
-        public static async Task<List<TaskViewModel>> GetWorkshopTaskList(WorkshopTasksListType listType)
+        public async Task<List<TaskViewModel>> GetWorkshopTaskList(WorkshopTasksListType listType)
         {
             using (WorkshopTaskContext dbContext = new WorkshopTaskContext())
             {
@@ -46,7 +47,7 @@ namespace Workshop.DataAccessLayer.DatabaseConnection
         /// </summary>
         /// <param name="id">id of task to be returned</param>
         /// <returns>Single <see cref="WorkshopTask"/> based on its id or null if not found</returns>
-        public static WorkshopTask GetWorkshopTask(int id)
+        public WorkshopTask GetWorkshopTask(int id)
         {
             using (WorkshopTaskContext dbContext = new WorkshopTaskContext())
             {
@@ -62,7 +63,7 @@ namespace Workshop.DataAccessLayer.DatabaseConnection
         /// Gets all possible statuses from database.
         /// </summary>
         /// <returns><see cref="List{T}"/> of statuses</returns>
-        public static List<WorkshopTaskStatus> GetStatuses()
+        public List<WorkshopTaskStatus> GetStatuses()
         {
             using (WorkshopTaskContext dbContext = new WorkshopTaskContext())
             {
@@ -75,7 +76,7 @@ namespace Workshop.DataAccessLayer.DatabaseConnection
         /// </summary>
         /// <param name="id">Id of the searched status</param>
         /// <returns>Searched <see cref="WorkshopTaskStatus"/></returns>
-        public static WorkshopTaskStatus GetStatus(int id)
+        public WorkshopTaskStatus GetStatus(int id)
         {
             using (WorkshopTaskContext dbContext = new WorkshopTaskContext())
             {
@@ -88,7 +89,7 @@ namespace Workshop.DataAccessLayer.DatabaseConnection
         /// </summary>
         /// <param name="workshopTask">TaskModel object to be put into database.</param>
         /// <returns>True if task has been added successfully.</returns>
-        public static bool AddTask(WorkshopTask workshopTask)
+        public bool AddTask(WorkshopTask workshopTask)
         {
             using (WorkshopTaskContext dbContext = new WorkshopTaskContext())
             {
@@ -104,7 +105,7 @@ namespace Workshop.DataAccessLayer.DatabaseConnection
         /// </summary>
         /// <param name="updatedTaskData">Task with all its fields to be updated in database</param>
         /// <returns>True if task has been updated successfully.</returns>
-        public static bool UpdateTask(WorkshopTask updatedTaskData)
+        public bool UpdateTask(WorkshopTask updatedTaskData)
         {
             using (WorkshopTaskContext dbContext = new WorkshopTaskContext())
             {
@@ -124,7 +125,7 @@ namespace Workshop.DataAccessLayer.DatabaseConnection
         /// <param name="taskId">Id of task of which status should be updated</param>
         /// <param name="newStatusId">id of new status</param>
         /// <returns>True if status has been changed</returns>
-        public static bool UpdateStatus(int taskId, int newStatusId)
+        public bool UpdateStatus(int taskId, int newStatusId)
         {
             using (WorkshopTaskContext dbContext = new WorkshopTaskContext())
             {
@@ -144,7 +145,7 @@ namespace Workshop.DataAccessLayer.DatabaseConnection
         /// </summary>
         /// <param name="taskId">Id of task which should be deleted</param>
         /// <returns>True if task was deleted</returns>
-        public static bool DeleteTask(int taskId)
+        public bool DeleteTask(int taskId)
         {
             using (WorkshopTaskContext dbContext = new WorkshopTaskContext())
             {
@@ -166,7 +167,7 @@ namespace Workshop.DataAccessLayer.DatabaseConnection
         /// representing problematic fields with <see cref="List{T}"/> of all errors, and null for added object.
         /// When successful returns <see cref="Tuple{T1, T2}"/> with empty errors <see cref="Dictionary{TKey,TValue}"/>
         /// and <see cref="WorkshopTask"/> which has been added</returns>
-        public static async Task<(Dictionary<string, List<string>> errorsDictionary, WorkshopTask CreatedWorkshopTask)> 
+        public async Task<(Dictionary<string, List<string>> errorsDictionary, WorkshopTask CreatedWorkshopTask)> 
             AddTaskFromApi(WorkshopApiTask workshopApiTask)
         {
             if (!ApiHelper.ValidateTaskFromApi(workshopApiTask, out Dictionary<string, List<string>> errorList))
@@ -198,7 +199,7 @@ namespace Workshop.DataAccessLayer.DatabaseConnection
         /// representing problematic fields with <see cref="List{T}"/> of all errors, and null for added object.
         /// When successful returns <see cref="Tuple{T1, T2}"/> with empty errors <see cref="Dictionary{TKey,TValue}"/>
         /// and updated <see cref="WorkshopTask"/></returns>
-        public static async Task<(Dictionary<string, List<string>> errorsDictionary, WorkshopTask CreatedWorkshopTask)>
+        public async Task<(Dictionary<string, List<string>> errorsDictionary, WorkshopTask CreatedWorkshopTask)>
             UpdateTaskFromApi(int id, WorkshopApiTask workshopApiTaskWithUpdates)
         {
             var oldWorkshopTask = GetWorkshopTask(id);
@@ -226,4 +227,6 @@ namespace Workshop.DataAccessLayer.DatabaseConnection
             }
         }
     }
+
+    
 }

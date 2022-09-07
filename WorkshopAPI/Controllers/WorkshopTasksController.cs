@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using Workshop.DataAccessLayer.DatabaseConnection;
+using Workshop.DataAccessLayer.DatabaseConnection.Interfaces;
 using Workshop.DataAccessLayer.Enums;
 using Workshop.DataAccessLayer.Models;
 
@@ -18,6 +19,12 @@ namespace WorkshopAPI.Controllers
     [ApiController]
     public class WorkshopTasksController : ControllerBase
     {
+        private readonly IMyDbConnection _myDbConnection;
+        public WorkshopTasksController(IMyDbConnection myDbConnection)
+        {
+            _myDbConnection = myDbConnection;
+        }
+
         /// <summary>
         /// Gets list of all historical or active tasks
         /// </summary>
@@ -30,7 +37,7 @@ namespace WorkshopAPI.Controllers
         {
             try
             {
-                return Ok(await MyDbConnection.GetWorkshopTaskList(isActive));
+                return Ok(await _myDbConnection.GetWorkshopTaskList(isActive));
             }
             catch (Exception)
             {
@@ -52,7 +59,7 @@ namespace WorkshopAPI.Controllers
         {
             try
             {
-                var result = MyDbConnection.GetWorkshopTask(id);
+                var result = _myDbConnection.GetWorkshopTask(id);
                 if (result == null)
                     return NotFound();
 
@@ -81,7 +88,7 @@ namespace WorkshopAPI.Controllers
 
             try
             {
-                var (errorDictionary, createdTask) = await MyDbConnection.AddTaskFromApi(workshopTask);
+                var (errorDictionary, createdTask) = await _myDbConnection.AddTaskFromApi(workshopTask);
 
                 if (createdTask == null)
                     return BadRequest(JsonConvert.SerializeObject(errorDictionary));
@@ -113,7 +120,7 @@ namespace WorkshopAPI.Controllers
 
             try
             {
-                var (errorDictionary, updatedTask) = await MyDbConnection.UpdateTaskFromApi(id, workshopTaskWithUpdates);
+                var (errorDictionary, updatedTask) = await _myDbConnection.UpdateTaskFromApi(id, workshopTaskWithUpdates);
 
                 if (errorDictionary.ContainsKey(nameof(WorkshopTask.Id)))
                     return NotFound($"Cannot find task with id = {id}");
@@ -142,12 +149,12 @@ namespace WorkshopAPI.Controllers
         {
             try
             {
-                var taskToDelete = MyDbConnection.GetWorkshopTask(id);
+                var taskToDelete = _myDbConnection.GetWorkshopTask(id);
 
                 if (taskToDelete == null)
                     return NotFound($"Cannot find task with id = {id}");
 
-                MyDbConnection.DeleteTask(id);
+                _myDbConnection.DeleteTask(id);
 
                 return Ok($"Successfully deleted task with id = {id}");
             }

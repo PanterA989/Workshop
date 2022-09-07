@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Workshop.DataAccessLayer.DatabaseConnection;
+using Workshop.DataAccessLayer.DatabaseConnection.Interfaces;
 using Workshop.DataAccessLayer.Models;
 using Workshop.DataAccessLayer.Models.Dictionaries;
 using Workshop.UserInterface.Forms.Base;
@@ -21,16 +22,17 @@ namespace Workshop.UserInterface.Forms
         private readonly int? taskId;
         private WorkshopTask managedTask;
         private List<WorkshopTaskStatus> statuses;
+        private IMyDbConnection _myDbConnection;
 
         /// <summary>
         /// Creates add form.
         /// </summary>
-        public ManageTaskForm()
+        public ManageTaskForm(IMyDbConnection myDbConnection)
         {
+            _myDbConnection = myDbConnection;
             InitializeComponent();
             InitializeErrorProviders();
             InitializeStatuses();
-
             managedTask = new WorkshopTask();
         }
 
@@ -38,14 +40,15 @@ namespace Workshop.UserInterface.Forms
         /// Creates edit form with filled fields, based on WorkshopTask object.
         /// </summary>
         /// <param name="taskModel">Task which should be put into edit form.</param>
-        public ManageTaskForm(WorkshopTask workshopTask) : this()
+        public ManageTaskForm(IMyDbConnection myDbConnection, int managedTaskId) : this(myDbConnection)
         {
+            WorkshopTask workshopTask = myDbConnection.GetWorkshopTask(managedTaskId);
             cbStartDateEditable.Text = "Inna data";
             buttonConfirm.Image = Properties.Resources.edit_24;
             buttonConfirm.Text = "Edytuj";
             this.Text = "Edycja zlecenie";
             managedTask = workshopTask;
-            taskId = workshopTask.Id;
+            taskId = managedTaskId;
 
             InitializeData(workshopTask);
             
@@ -123,7 +126,7 @@ namespace Workshop.UserInterface.Forms
         /// </summary>
         private void InitializeStatuses()
         {
-            statuses = MyDbConnection.GetStatuses();
+            statuses = _myDbConnection.GetStatuses();
             bsStatus.DataSource = statuses;
         }
 
@@ -141,7 +144,7 @@ namespace Workshop.UserInterface.Forms
                 if (taskId == null)
                 {
 
-                    if (!MyDbConnection.AddTask(managedTask))
+                    if (!_myDbConnection.AddTask(managedTask))
                     {
                         MessageBox.Show("Wystąpił błąd podczas dodawania zlecenia", "Błąd", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
@@ -156,7 +159,7 @@ namespace Workshop.UserInterface.Forms
                 {
                     //TODO: Redundant?
                     managedTask.Id = (int)taskId;
-                    if (!MyDbConnection.UpdateTask(managedTask))
+                    if (!_myDbConnection.UpdateTask(managedTask))
                     {
                         MessageBox.Show("Wystąpił błąd podczas edycji zlecenia", "Błąd", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }

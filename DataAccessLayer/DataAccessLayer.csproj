@@ -162,6 +162,7 @@
   <ItemGroup>
     <Compile Include="DataAccess\WorkshopTaskContext.cs" />
     <Compile Include="DatabaseConnection\ConnectionHelper.cs" />
+    <Compile Include="DatabaseConnection\Interfaces\IMyDbConnection.cs" />
     <Compile Include="DatabaseConnection\MyDbConnection.cs" />
     <Compile Include="Enums\Errors.cs" />
     <Compile Include="Enums\WorkshopTasksListType.cs" />

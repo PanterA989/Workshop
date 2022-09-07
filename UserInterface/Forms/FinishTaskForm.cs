@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Workshop.DataAccessLayer.DatabaseConnection;
+using Workshop.DataAccessLayer.DatabaseConnection.Interfaces;
 using Workshop.DataAccessLayer.Models;
 using Workshop.DataAccessLayer.Models.Dictionaries;
 
@@ -17,11 +18,17 @@ namespace Workshop.UserInterface.Forms
     {
         private int taskId;
         private int newStatusId;
-        public FinishTaskForm(WorkshopTask task)
+        private IMyDbConnection _myDbConnection;
+        public FinishTaskForm(IMyDbConnection myDbConnection, int taskToFinishId)
         {
-            taskId = task.Id;
+            _myDbConnection = myDbConnection;
+            taskId = taskToFinishId;
+
+            var task = _myDbConnection.GetWorkshopTask(taskToFinishId);
+            
+            //TODO: implement new status logic
             newStatusId = ++task.Status.Id;
-            List<WorkshopTaskStatus> statuses = MyDbConnection.GetStatuses();
+            List<WorkshopTaskStatus> statuses = _myDbConnection.GetStatuses();
             WorkshopTaskStatus newStatus = statuses.FirstOrDefault(x => x.Id == newStatusId);
             if (newStatus == null)
             {
@@ -40,7 +47,7 @@ namespace Workshop.UserInterface.Forms
 
         private void btnConfirm_Click(object sender, EventArgs e)
         {
-            if (MyDbConnection.UpdateStatus(taskId, newStatusId))
+            if (_myDbConnection.UpdateStatus(taskId, newStatusId))
             {
                 this.Opacity = 0;
                 MessageBox.Show("Pomyślnie zaktualizowano status!", "Zaktualizowano.");

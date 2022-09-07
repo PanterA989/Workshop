@@ -233,7 +233,8 @@ namespace Workshop.DataAccessLayer.Helpers
         {
             Errors errors = Errors.None;
 
-            if(MyDbConnection.GetStatus(statusId) == null)
+            var myDbConnection = new MyDbConnection();
+            if(myDbConnection.GetStatus(statusId) == null)
                 errors |= Errors.BadStatus;
             
             return errors;

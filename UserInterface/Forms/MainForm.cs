@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Workshop.DataAccessLayer.DataAccess;
 using Workshop.DataAccessLayer.DatabaseConnection;
+using Workshop.DataAccessLayer.DatabaseConnection.Interfaces;
 using Workshop.DataAccessLayer.Enums;
 using Workshop.DataAccessLayer.Models;
 using Workshop.DataAccessLayer.Models.Dictionaries;
@@ -21,9 +22,11 @@ namespace Workshop.UserInterface.Forms
 
         private List<TaskViewModel> tasksViewModels = new List<TaskViewModel>();
         private WorkshopTasksListType listType = WorkshopTasksListType.Active;
+        private IMyDbConnection _myDbConnection;
 
-        public MainForm()
+        public MainForm(IMyDbConnection myDbConnection)
         {
+            _myDbConnection = myDbConnection;
             InitializeComponent();
             dgvTasks.RowTemplate.MinimumHeight = 22;
             
@@ -35,7 +38,7 @@ namespace Workshop.UserInterface.Forms
         /// </summary>
         private async void PrepareTasksData()
         {
-            tasksViewModels = await MyDbConnection.GetWorkshopTaskList(listType);
+            tasksViewModels = await _myDbConnection.GetWorkshopTaskList(listType);
             
             bsTasks.DataSource = new BindingList<TaskViewModel>(tasksViewModels);
             dgvTasks.DataSource = bsTasks;
@@ -49,7 +52,7 @@ namespace Workshop.UserInterface.Forms
 
         private void btnAdd_Click(object sender, EventArgs e)
         {
-            ManageTaskForm addTaskForm = new ManageTaskForm();
+            ManageTaskForm addTaskForm = new ManageTaskForm(_myDbConnection);
             addTaskForm.ShowDialog();
             PrepareTasksData();
         }
@@ -62,7 +65,7 @@ namespace Workshop.UserInterface.Forms
                     return;
 
                 var id = (int)dgvTasks.CurrentRow.Cells[0].Value;
-                ManageTaskForm manageTaskForm = new ManageTaskForm(MyDbConnection.GetWorkshopTask(id));
+                ManageTaskForm manageTaskForm = new ManageTaskForm(_myDbConnection, id);
                 manageTaskForm.ShowDialog();
                 PrepareTasksData();
             }
@@ -134,13 +137,13 @@ namespace Workshop.UserInterface.Forms
                     MessageBoxButtons.YesNo);
                 if (result == DialogResult.Yes)
                 {
-                    if (MyDbConnection.DeleteTask(taskId)) MessageBox.Show("Zlecenie zostało usunięte pomyślnie.", "Usunięto");
+                    if (_myDbConnection.DeleteTask(taskId)) MessageBox.Show("Zlecenie zostało usunięte pomyślnie.", "Usunięto");
                     else MessageBox.Show("Wystąpił błąd podczas usuwania zlecenia.", "Błąd");
                 }
             }
             else 
             {
-                FinishTaskForm finishTaskForm = new FinishTaskForm(MyDbConnection.GetWorkshopTask(taskId));
+                FinishTaskForm finishTaskForm = new FinishTaskForm(_myDbConnection, taskId);
                 finishTaskForm.ShowDialog();
             }
             

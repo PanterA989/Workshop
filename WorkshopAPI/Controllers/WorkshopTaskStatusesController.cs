@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Workshop.DataAccessLayer.DatabaseConnection;
+using Workshop.DataAccessLayer.DatabaseConnection.Interfaces;
 using Workshop.DataAccessLayer.Models.Dictionaries;
 
 namespace WorkshopAPI.Controllers
@@ -16,6 +17,12 @@ namespace WorkshopAPI.Controllers
     [ApiController]
     public class WorkshopTaskStatusesController : ControllerBase
     {
+        private readonly IMyDbConnection _myDbConnection;
+        public WorkshopTaskStatusesController(IMyDbConnection myDbConnection)
+        {
+            _myDbConnection = myDbConnection;
+        }
+
         /// <summary>
         /// Gets list of all WorkshopTaskStatus available in workshop
         /// </summary>
@@ -28,7 +35,7 @@ namespace WorkshopAPI.Controllers
         {
             try
             {
-                var result = MyDbConnection.GetStatuses();
+                var result = _myDbConnection.GetStatuses();
                 if (result == null)
                 {
                     return NotFound();
@@ -56,7 +63,7 @@ namespace WorkshopAPI.Controllers
         {
             try
             {
-                var result = MyDbConnection.GetStatus(id);
+                var result = _myDbConnection.GetStatus(id);
                 if (result == null)
                 {
                     return NotFound();
