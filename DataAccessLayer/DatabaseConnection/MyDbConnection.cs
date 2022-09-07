@@ -227,6 +227,4 @@ namespace Workshop.DataAccessLayer.DatabaseConnection
             }
         }
     }
-
-    
 }

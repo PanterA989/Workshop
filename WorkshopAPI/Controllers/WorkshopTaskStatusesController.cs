@@ -69,7 +69,7 @@ namespace WorkshopAPI.Controllers
                     return NotFound();
                 }
 
-                return result;
+                return Ok(result);
             }
             catch (Exception)
             {

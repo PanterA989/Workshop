@@ -21,8 +21,7 @@ namespace Workshop.DataAccessLayer.DatabaseConnection.Interfaces
        bool UpdateStatus(int taskId, int newStatusId);
        bool DeleteTask(int taskId);
        Task<(Dictionary<string, List<string>> errorsDictionary, WorkshopTask CreatedWorkshopTask)> AddTaskFromApi(
-           WorkshopApiTask workshopApiTask);
-
+           WorkshopApiTask workshopApiTask); 
        Task<(Dictionary<string, List<string>> errorsDictionary, WorkshopTask CreatedWorkshopTask)> UpdateTaskFromApi(
            int id, WorkshopApiTask workshopApiTaskWithUpdates);
     }
